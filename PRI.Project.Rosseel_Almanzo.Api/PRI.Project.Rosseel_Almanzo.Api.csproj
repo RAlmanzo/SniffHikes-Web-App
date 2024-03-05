@@ -16,4 +16,8 @@
     <Folder Include="Extensions\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PRI.Project.Rosseel_Almanzo.Infrastructure\PRI.Project.Rosseel_Almanzo.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
