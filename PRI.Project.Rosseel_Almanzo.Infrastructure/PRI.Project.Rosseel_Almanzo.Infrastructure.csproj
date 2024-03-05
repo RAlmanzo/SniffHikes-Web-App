@@ -24,4 +24,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PRI.Project.Rosseel_Almanzo.Core\PRI.Project.Rosseel_Almanzo.Core.csproj" />
+  </ItemGroup>
+
 </Project>
