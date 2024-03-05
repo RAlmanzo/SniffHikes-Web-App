@@ -36,7 +36,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data
             modelBuilder.Entity<Dog>()
                 .Property(p => p.Race)
                 .IsRequired();
-
+            
             modelBuilder.Entity<Event>()
                 .Property(p => p.Title)
                 .IsRequired()
@@ -49,11 +49,11 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data
                 .Property(p => p.Price)
                 .HasColumnType("money");
 
-            modelBuilder.Entity<Event>()
+            modelBuilder.Entity<Route>()
                 .Property(p => p.Title)
                 .IsRequired()
                 .HasMaxLength(100);
-            modelBuilder.Entity<Event>()
+            modelBuilder.Entity<Route>()
                 .Property(p => p.Description)
                 .IsRequired()
                 .HasMaxLength(750);
@@ -64,6 +64,19 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data
                 .HasMaxLength(200);
 
             modelBuilder.Entity<User>()
+                .HasMany(u => u.OrganizedEvents)
+                .WithOne(e => e.Organizer)
+                .HasForeignKey(e => e.OrganizerId)
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.AttendingEvents)
+                .WithMany(e => e.Users)
+                .UsingEntity(j => j.ToTable("EventUser"));
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Comments)
+                .WithOne(c => c.User)
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<User>()
                 .Property(p => p.FirstName)
                 .IsRequired()
                 .HasMaxLength(100);
@@ -71,6 +84,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data
                 .Property(p => p.LastName)
                 .IsRequired()
                 .HasMaxLength(100);
+
             //Seeder.Seed(modelBuilder);
         }
     }
