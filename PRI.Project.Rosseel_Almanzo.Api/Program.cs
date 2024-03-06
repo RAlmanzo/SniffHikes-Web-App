@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using PRI.Project.Rosseel_Almanzo.Infrastructure.Data;
+
 namespace PRI.Project.Rosseel_Almanzo.Api
 {
     public class Program
@@ -7,6 +10,9 @@ namespace PRI.Project.Rosseel_Almanzo.Api
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddDbContext<SniffHikesDbContext>
+                (options => options
+                .UseSqlServer(builder.Configuration.GetConnectionString("SniffHikestDb")));
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
