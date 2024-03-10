@@ -29,9 +29,10 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
             return await SaveChangesAsync();
         }
 
-        public Task<bool> DeleteAsync(T toDelete)
+        public async Task<bool> DeleteAsync(T toDelete)
         {
-            throw new NotImplementedException();
+            _targetTable.Remove(toDelete);
+            return await SaveChangesAsync();
         }
 
         public IQueryable<T> GetAll()
