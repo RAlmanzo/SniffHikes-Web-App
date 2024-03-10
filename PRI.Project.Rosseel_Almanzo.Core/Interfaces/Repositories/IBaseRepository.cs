@@ -9,6 +9,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Interfaces.Repositories
     public interface IBaseRepository<T>
     {
         Task<T> GetByIdAsync(int id);
+        IQueryable<T> GetAll();
         Task<IEnumerable<T>> GetAllAsync();
         Task<bool> DeleteAsync(T toDelete);
         Task<bool> AddAsync(T toAdd);
