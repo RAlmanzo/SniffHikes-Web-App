@@ -40,5 +40,52 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
             }
             return NotFound(result.Errors);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            //get the record
+            var result = await _eventService.GetByIdAsync(id);
+            //check if result is succes
+            if (result.Success)
+            {
+                var eventsGetResponseDto = new EventsGetResponseDto
+                {
+                    Id = result.Value.Id,
+                    Value = result.Value.Title,
+                    Description = result.Value.Description,
+                    Price = result.Value.Price,
+                    Date = result.Value.Date,
+                    DateCreated = DateTime.Now,
+                    Orginazer = new BaseDto
+                    {
+                        Id = result.Value.OrganizerId,
+                        Value = $"{result.Value.Organizer.FirstName} {result.Value.Organizer.LastName}",
+                    },
+                    Address = new BaseDto
+                    {
+                        Id = result.Value.Address.Id,
+                        Value = $"{result.Value.Address.Street} {result.Value.Address.City} {result.Value.Address.State} {result.Value.Address.Country}",
+                    },
+                    Images = result.Value.Images.Select(i => new BaseDto
+                    {
+                        Id = i.Id,
+                        Value = i.File,
+                    }),
+                    Comments = result.Value.Comments.Select(i => new BaseDto
+                    {
+                        Id = i.Id,
+                        Value = i.Content,
+                    }),
+                    Users = result.Value.Users.Select(i => new BaseDto
+                    {
+                        Id = i.Id,
+                        Value = $"{i.FirstName} {i.LastName}",
+                    }),
+                };
+                return Ok(eventsGetResponseDto);
+            }
+            return NotFound(result.Errors);
+        }
     }
 }
