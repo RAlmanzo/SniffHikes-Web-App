@@ -47,9 +47,22 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             };
         }
 
-        public Task<ResultModel<IEnumerable<Event>>> GetAllAsync()
+        public async Task<ResultModel<IEnumerable<Event>>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            //get the events
+            var events = await _eventRepository.GetAllAsync();
+            //create new resultmodel
+            var eventResultModel = new ResultModel<IEnumerable<Event>>();
+            //check if count > 0
+            if (events.Count() > 0)
+            {
+                eventResultModel.Success = true;
+                eventResultModel.Value = events;
+                return eventResultModel;
+            }
+            //if not
+            eventResultModel.Errors = new List<string> {"No events found"};
+            return eventResultModel;
         }
 
         public Task<ResultModel<Event>> GetByIdAsync(Guid id)
