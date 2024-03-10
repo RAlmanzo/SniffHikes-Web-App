@@ -12,8 +12,8 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Interfaces.Services
     {
         Task<ResultModel<IEnumerable<User>>> GetAllAsync();
         Task<ResultModel<User>> GetByIdAsync(Guid id);
-        //Task<ResultModel<User>> CreateRecordAsync(EventCreateRequestModel eventCreateRequestModel);
-        //Task<ResultModel<User>> UpdateRecordAsync(EventUpdateRequestModel eventUpdateRequestModel);
-        Task<ResultModel<User>> DeleteRecordAsync(int id);
+        //Task<ResultModel<User>> CreateRecordAsync(UserCreateRequestModel UserCreateRequestModel);
+        //Task<ResultModel<User>> UpdateRecordAsync(UserUpdateRequestModel UserUpdateRequestModel);
+        Task<ResultModel<User>> DeleteUserAsync(int id);
     }
 }
