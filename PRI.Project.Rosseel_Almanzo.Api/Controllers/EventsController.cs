@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PRI.Project.Rosseel_Almanzo.Api.Dtos;
 using PRI.Project.Rosseel_Almanzo.Core.Interfaces.Services;
 
 namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
@@ -18,9 +19,26 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
         {
-            return View();
+            //get all events
+            var result = await _eventService.GetAllAsync();
+            //create new eventsgetallresponsedto
+            //check if result is succes
+            if (result.Success)
+            {
+                var eventsGetAllResponseDto = new EventsGetAllResponseDto
+                {
+                    Events = result.Value.Select(e => new BaseDto
+                    {
+                        Id = e.Id,
+                        Value = e.Title,
+                    })
+                };
+                return Ok(eventsGetAllResponseDto);
+            }
+            return NotFound(result.Errors);
         }
     }
 }
