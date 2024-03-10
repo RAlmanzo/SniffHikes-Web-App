@@ -37,12 +37,12 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
 
         public IQueryable<T> GetAll()
         {
-            throw new NotImplementedException();
+            return _targetTable.AsQueryable();
         }
 
-        public Task<IEnumerable<T>> GetAllAsync()
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _targetTable.ToListAsync();
         }
 
         public Task<T> GetByIdAsync(int id)
