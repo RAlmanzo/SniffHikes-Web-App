@@ -65,9 +65,23 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             return eventResultModel;
         }
 
-        public Task<ResultModel<Event>> GetByIdAsync(Guid id)
+        public async Task<ResultModel<Event>> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            //get the event
+            var selectedEvent = await _eventRepository.GetByIdAsync(id);
+            //create new resultmodel
+            var eventResultModel = new ResultModel<Event>();
+            //check if exists
+            if (selectedEvent == null)
+            {
+                eventResultModel.Success = false;
+                eventResultModel.Errors = new List<string> { "No event found" };
+                return eventResultModel;
+            }
+            //if yes
+            eventResultModel.Success = true;
+            eventResultModel.Value = selectedEvent;
+            return eventResultModel;
         }
     }
 }
