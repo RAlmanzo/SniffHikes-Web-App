@@ -51,9 +51,10 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
             return _targetTable.FirstOrDefaultAsync(t => t.Id == id);
         }
 
-        public Task<bool> UpdateAsync(T toUpdate)
+        public async Task<bool> UpdateAsync(T toUpdate)
         {
-            throw new NotImplementedException();
+            _targetTable.Update(toUpdate);
+            return await SaveChangesAsync();
         }
 
         private async Task<bool> SaveChangesAsync()
