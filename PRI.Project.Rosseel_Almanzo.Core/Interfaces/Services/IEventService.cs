@@ -15,6 +15,6 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Interfaces.Services
         Task<ResultModel<Event>> GetByIdAsync(Guid id);
         //Task<ResultModel<Event>> CreateRecordAsync(EventCreateRequestModel eventCreateRequestModel);
         //Task<ResultModel<Event>> UpdateRecordAsync(EventUpdateRequestModel eventUpdateRequestModel);
-        Task<ResultModel<Event>> DeleteRecordAsync(int id);
+        Task<ResultModel<Event>> DeleteEventAsync(int id);
     }
 }
