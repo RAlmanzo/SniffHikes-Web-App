@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+using PRI.Project.Rosseel_Almanzo.Core.Interfaces.Repositories;
+using PRI.Project.Rosseel_Almanzo.Core.Interfaces.Services;
+using PRI.Project.Rosseel_Almanzo.Core.Services;
 using PRI.Project.Rosseel_Almanzo.Infrastructure.Data;
+using PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories;
 
 namespace PRI.Project.Rosseel_Almanzo.Api
 {
@@ -13,6 +17,9 @@ namespace PRI.Project.Rosseel_Almanzo.Api
             builder.Services.AddDbContext<SniffHikesDbContext>
                 (options => options
                 .UseSqlServer(builder.Configuration.GetConnectionString("SniffHikestDb")));
+
+            builder.Services.AddScoped<IEventRepository, EventRepository>();
+            builder.Services.AddScoped<IEventService, EventService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
