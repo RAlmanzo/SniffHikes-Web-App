@@ -27,14 +27,24 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
                 .AsQueryable();
         }
 
-        public override Task<IEnumerable<Event>> GetAllAsync()
+        public override async Task<IEnumerable<Event>> GetAllAsync()
         {
-            return base.GetAllAsync();
+            return await _targetTable
+                .Include(e => e.Address)
+                .Include(e => e.Comments)
+                .Include(e => e.Users)
+                .Include(e => e.Images)
+                .ToListAsync();
         }
 
-        public override Task<Event> GetByIdAsync(int id)
+        public override async Task<Event> GetByIdAsync(int id)
         {
-            return base.GetByIdAsync(id);
+            return await _targetTable
+                .Include(e => e.Address)
+                .Include(e => e.Comments)
+                .Include(e => e.Users)
+                .Include(e => e.Images)
+                .FirstOrDefaultAsync(e => e.Id == id);
         }
     }
 }
