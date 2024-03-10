@@ -14,7 +14,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
     public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
         private readonly SniffHikesDbContext _dbContext;
-        private readonly DbSet<T> _targetTable;
+        protected readonly DbSet<T> _targetTable;
         private readonly ILogger<BaseRepository<T>> _logger;
 
         public BaseRepository(SniffHikesDbContext context, ILogger<BaseRepository<T>> logger)
@@ -36,17 +36,17 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
             return await SaveChangesAsync();
         }
 
-        public IQueryable<T> GetAll()
+        public virtual IQueryable<T> GetAll()
         {
             return _targetTable.AsQueryable();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public virtual async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _targetTable.ToListAsync();
         }
 
-        public Task<T> GetByIdAsync(int id)
+        public virtual Task<T> GetByIdAsync(int id)
         {
             return _targetTable.FirstOrDefaultAsync(t => t.Id == id);
         }
