@@ -23,7 +23,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
             return _targetTable
                 .Include(e => e.Address)
                 .Include(e => e.Comments)
-                .Include(e => e.Users)
+                .Include(e => e.AttendingUsers)
                 .Include(e => e.Images)
                 .AsQueryable();
         }
@@ -33,7 +33,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
             return await _targetTable
                 .Include(e => e.Address)
                 .Include(e => e.Comments)
-                .Include(e => e.Users)
+                .Include(e => e.AttendingUsers)
                 .Include(e => e.Images)
                 .ToListAsync();
         }
@@ -43,7 +43,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
             return await _targetTable
                 .Include(e => e.Address)
                 .Include(e => e.Comments)
-                .Include(e => e.Users)
+                .Include(e => e.AttendingUsers)
                 .Include(e => e.Images)
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
