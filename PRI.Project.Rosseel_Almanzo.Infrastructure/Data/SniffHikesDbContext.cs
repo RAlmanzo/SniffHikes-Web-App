@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using PRI.Project.Rosseel_Almanzo.Core.Entities;
+using PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,6 +49,10 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data
             modelBuilder.Entity<Event>()
                 .Property(p => p.Price)
                 .HasColumnType("money");
+            modelBuilder.Entity<Event>()
+                .HasOne(e => e.Address)
+                .WithOne(a => a.Event)
+                .HasForeignKey<Address>(a => a.EventId);
 
             modelBuilder.Entity<Route>()
                 .Property(p => p.Title)
@@ -57,6 +62,10 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data
                 .Property(p => p.Description)
                 .IsRequired()
                 .HasMaxLength(750);
+            modelBuilder.Entity<Route>()
+                .HasOne(r => r.Address)
+                .WithOne(a => a.Route)
+                .HasForeignKey<Address>(a => a.RouteId);
 
             modelBuilder.Entity<Comment>()
                 .Property(p => p.Content)
@@ -70,7 +79,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data
                 .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<User>()
                 .HasMany(u => u.AttendingEvents)
-                .WithMany(e => e.Users)
+                .WithMany(e => e.AttendingUsers)
                 .UsingEntity(j => j.ToTable("EventUser"));
             modelBuilder.Entity<User>()
                 .HasMany(u => u.Comments)
@@ -84,8 +93,12 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data
                 .Property(p => p.LastName)
                 .IsRequired()
                 .HasMaxLength(100);
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Address)
+                .WithOne(a => a.User)
+                .HasForeignKey<Address>(a => a.UserId);
 
-            //Seeder.Seed(modelBuilder);
+            Seeder.Seed(modelBuilder);
         }
     }
 }
