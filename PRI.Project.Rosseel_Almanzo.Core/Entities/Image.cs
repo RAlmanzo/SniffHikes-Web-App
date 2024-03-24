@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace PRI.Project.Rosseel_Almanzo.Core.Entities
 {
-    public class Image
+    public class Image : BaseEntity
     {
-        public int Id { get; set; }
         public User User { get; set; }
         public int? UserId { get; set; }
         public string File { get; set; }
