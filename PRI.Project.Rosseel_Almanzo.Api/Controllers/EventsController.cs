@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PRI.Project.Rosseel_Almanzo.Api.Dtos;
+using PRI.Project.Rosseel_Almanzo.Api.Extensions;
 using PRI.Project.Rosseel_Almanzo.Core.Interfaces.Services;
 
 namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
@@ -24,19 +25,10 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
         {
             //get all events
             var result = await _eventService.GetAllAsync();
-            //create new eventsgetallresponsedto
             //check if result is succes
             if (result.Success)
             {
-                var eventsGetAllResponseDto = new EventsGetAllResponseDto
-                {
-                    Events = result.Value.Select(e => new BaseDto
-                    {
-                        Id = e.Id,
-                        Value = e.Title,
-                    })
-                };
-                return Ok(eventsGetAllResponseDto);
+                return Ok(result.Value.MapToDto());
             }
             return NotFound(result.Errors);
         }
@@ -49,41 +41,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
             //check if result is succes
             if (result.Success)
             {
-                var eventsGetResponseDto = new EventsGetResponseDto
-                {
-                    Id = result.Value.Id,
-                    Value = result.Value.Title,
-                    Description = result.Value.Description,
-                    Price = result.Value.Price,
-                    Date = result.Value.Date,
-                    DateCreated = DateTime.Now,
-                    Orginazer = new BaseDto
-                    {
-                        Id = result.Value.OrganizerId,
-                        Value = $"{result.Value.Organizer.FirstName} {result.Value.Organizer.LastName}",
-                    },
-                    Address = new BaseDto
-                    {
-                        Id = result.Value.Address.Id,
-                        Value = $"{result.Value.Address.Street} {result.Value.Address.City} {result.Value.Address.State} {result.Value.Address.Country}",
-                    },
-                    Images = result.Value.Images.Select(i => new BaseDto
-                    {
-                        Id = i.Id,
-                        Value = i.File,
-                    }),
-                    Comments = result.Value.Comments.Select(i => new BaseDto
-                    {
-                        Id = i.Id,
-                        Value = i.Content,
-                    }),
-                    Users = result.Value.Users.Select(i => new BaseDto
-                    {
-                        Id = i.Id,
-                        Value = $"{i.FirstName} {i.LastName}",
-                    }),
-                };
-                return Ok(eventsGetResponseDto);
+                return Ok(result.Value.MapToDto());
             }
             return NotFound(result.Errors);
         }
