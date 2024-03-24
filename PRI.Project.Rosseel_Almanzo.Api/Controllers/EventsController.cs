@@ -2,6 +2,7 @@
 using PRI.Project.Rosseel_Almanzo.Api.Dtos;
 using PRI.Project.Rosseel_Almanzo.Api.Extensions;
 using PRI.Project.Rosseel_Almanzo.Core.Interfaces.Services;
+using PRI.Project.Rosseel_Almanzo.Core.Services.Models;
 
 namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
 {
@@ -46,28 +47,34 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
             return NotFound(result.Errors);
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Add(RecordRequestDto recordRequestDto)
-        //{
-        //    var result = await _recordService.CreateRecordAsync(
-        //        new RecordCreateRequestModel
-        //        {
-        //            Title = recordRequestDto.Title,
-        //            Price = recordRequestDto.Price,
-        //            GenreId = recordRequestDto.GenreId,
-        //            ArtistId = recordRequestDto.ArtistId,
-        //            PropertyIds = recordRequestDto.PropertyIds,
-        //        });
-        //    if (result.IsSucces)
-        //    {
-        //        return CreatedAtAction(nameof(Get), new { ID = result.Value.Id }, result.Value
-        //            .MapToDto());
-        //    }
-        //    foreach (var error in result.Errors)
-        //    {
-        //        ModelState.AddModelError("", error);
-        //    }
-        //    return BadRequest(ModelState.Values);
-        //}
+        [HttpPost]
+        public async Task<IActionResult> Add(EventRequestDto eventRequestDto)
+        {
+            var result = await _eventService.CreateEventAsync(
+                new EventCreateRequestModel
+                {
+                    Title = eventRequestDto.Title,
+                    Description = eventRequestDto.Description,
+                    Price = eventRequestDto.Price,
+                    Street = eventRequestDto.Address.Street,
+                    City = eventRequestDto.Address.City,
+                    State = eventRequestDto.Address.State,
+                    Country = eventRequestDto.Address.Country,
+                    OrganizerId = eventRequestDto.OrganizerId,
+                    Date = eventRequestDto.Date,
+                });
+
+            if (result.Success)
+            {
+                return CreatedAtAction(nameof(Get), new { ID = result.Value.Id }, result.Value
+                    .MapToDto());
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+            return BadRequest(ModelState.Values);
+        }
     }
 }
