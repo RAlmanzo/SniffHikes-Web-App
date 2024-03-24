@@ -45,5 +45,29 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
             }
             return NotFound(result.Errors);
         }
+
+        //[HttpPost]
+        //public async Task<IActionResult> Add(RecordRequestDto recordRequestDto)
+        //{
+        //    var result = await _recordService.CreateRecordAsync(
+        //        new RecordCreateRequestModel
+        //        {
+        //            Title = recordRequestDto.Title,
+        //            Price = recordRequestDto.Price,
+        //            GenreId = recordRequestDto.GenreId,
+        //            ArtistId = recordRequestDto.ArtistId,
+        //            PropertyIds = recordRequestDto.PropertyIds,
+        //        });
+        //    if (result.IsSucces)
+        //    {
+        //        return CreatedAtAction(nameof(Get), new { ID = result.Value.Id }, result.Value
+        //            .MapToDto());
+        //    }
+        //    foreach (var error in result.Errors)
+        //    {
+        //        ModelState.AddModelError("", error);
+        //    }
+        //    return BadRequest(ModelState.Values);
+        //}
     }
 }
