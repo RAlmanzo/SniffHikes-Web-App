@@ -276,7 +276,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                     DateCreated = DateTime.Now,
                     //Images = images.Where(i => i.EventId == 1).ToList(),
                     //Comments = comments.Where(c => c.EventId == 1).ToList(),
-                    //AttendingUsers = users.Where(u => u.Id == 1 || u.Id == 2).ToList(),
+                    //AttendingUsers = new List<User> { users[1], users[2] }
                 },
                 new Event
                 {
@@ -290,7 +290,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                     DateCreated = DateTime.Now,
                     //Images = images.Where(i => i.EventId == 2).ToList(),
                     //Comments = comments.Where(c => c.EventId == 2).ToList(),
-                    //AttendingUsers = users.Where(u => u.Id == 2 || u.Id == 3).ToList(),
+                    //AttendingUsers = new List<User> { users[0], users[2] }
                 },
                 new Event
                 {
@@ -304,8 +304,18 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                     DateCreated = DateTime.Now,
                     //Images = images.Where(i => i.EventId == 3).ToList(),
                     //Comments = comments.Where(c => c.EventId == 3).ToList(),
-                    //AttendingUsers = users.Where(u => u.Id == 1 || u.Id == 3).ToList(),
+                    //AttendingUsers = new List<User> { users[0], users[1] }
                 },
+            };
+
+            var eventUsers = new[]
+            {
+                new {AttendingUsersId = 1, AttendingEventsId = 1 },            
+                new {AttendingUsersId = 2, AttendingEventsId = 1 },            
+                new {AttendingUsersId = 2, AttendingEventsId = 2 },            
+                new {AttendingUsersId = 3, AttendingEventsId = 2 },            
+                new {AttendingUsersId = 1, AttendingEventsId = 3 },            
+                new {AttendingUsersId = 3, AttendingEventsId = 3 },            
             };
 
 
@@ -316,6 +326,8 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
             modelBuilder.Entity<Route>().HasData(routes);
             modelBuilder.Entity<Event>().HasData(events);
             modelBuilder.Entity<User>().HasData(users);
+            modelBuilder.Entity($"{nameof(Event)}{nameof(User)}")
+                .HasData(eventUsers);
         }
     }
 }
