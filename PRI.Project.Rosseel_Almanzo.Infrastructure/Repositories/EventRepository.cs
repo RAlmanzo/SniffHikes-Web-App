@@ -13,8 +13,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
 {
     public class EventRepository : BaseRepository<Event>, IEventRepository
     {
-        public EventRepository(SniffHikesDbContext context, ILogger<BaseRepository<Event>> logger) 
-            : base(context, logger)
+        public EventRepository(SniffHikesDbContext context, ILogger<IBaseRepository<Event>> logger) : base(context, logger)
         {
         }
 
@@ -25,6 +24,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
                 .Include(e => e.Comments)
                 .Include(e => e.AttendingUsers)
                 .Include(e => e.Images)
+                .Include(e => e.Organizer)
                 .AsQueryable();
         }
 
@@ -35,6 +35,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
                 .Include(e => e.Comments)
                 .Include(e => e.AttendingUsers)
                 .Include(e => e.Images)
+                .Include(e => e.Organizer)
                 .ToListAsync();
         }
 
