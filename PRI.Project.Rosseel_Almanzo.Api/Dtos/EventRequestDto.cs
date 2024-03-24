@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using PRI.Project.Rosseel_Almanzo.Core.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace PRI.Project.Rosseel_Almanzo.Api.Dtos
 {
@@ -11,13 +12,13 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Dtos
         [Required]
         [Range(0.0, int.MaxValue)]
         public decimal Price { get; set; }
-        //[Required]
-        public int AddressId { get; set; }
         [Required]
         public DateTime Date { get; set; }
         public DateTime DateCreated { get; set; }
-        //[Required]
+        [Required]
         public int OrganizerId { get; set; }
+        [Required]
+        public Address Address { get; set; }
         public IEnumerable<int> ImageIds { get; set; }    
         public IEnumerable<int> CommentIds { get; set; }     
         public IEnumerable<int> AttendingUserIds { get; set; }
