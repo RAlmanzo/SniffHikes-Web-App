@@ -19,6 +19,16 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             _eventRepository = eventRepository;
         }
 
+        public async Task<ResultModel<Event>> CreateEventAsync(EventCreateRequestModel eventCreateRequestModel)
+        {
+            //check if addressid exists
+            //check if orginazerid exists
+            //create new event
+            //TODO:  check if comments, attendingusers and images are null and exist in database
+            //call the eventsrepo addAsync method
+            throw new NotImplementedException();
+        }
+
         public async Task<ResultModel<Event>> DeleteEventAsync(int id)
         {
             //get the event
