@@ -20,7 +20,5 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services.Models
         public DateTime Date { get; set; }
         public DateTime DateCreated { get; set; }
         //public IEnumerable<int> ImageIds { get; set; }     
-        //public IEnumerable<int> CommentIds { get; set; }
-        //public IEnumerable<int> AttendingUserIds { get; set; }
     }
 }

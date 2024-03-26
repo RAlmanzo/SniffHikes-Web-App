@@ -41,14 +41,13 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
 
         public override async Task<Event> GetByIdAsync(int id)
         {
-            var data = await _targetTable
+            return await _targetTable
                 .Include(e => e.Comments)
                 .Include(e => e.AttendingUsers)
                 .Include(e => e.Images)
                 .Include(e => e.Address)
+                .Include(e => e.Organizer)
                 .FirstOrDefaultAsync(e => e.Id == id);
-
-            return data;
         }
     }
 }
