@@ -97,5 +97,45 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
             }
             return BadRequest(ModelState.Values);
         }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(EventUpdateRequestDto eventUpdateRequestDto)
+        {
+            //check if event exists
+            if (!await _eventService.CheckIfExistsAsync(eventUpdateRequestDto.Id))
+            {
+                return NotFound("Record not found!");
+            }
+
+            var result = await _eventService.UpdateRecordAsync
+                (
+                    new EventUpdateRequestModel
+                    {
+                        Id = eventUpdateRequestDto.Id,
+                        Title = eventUpdateRequestDto.Title,
+                        Description = eventUpdateRequestDto.Description,
+                        Price = eventUpdateRequestDto.Price,
+                        Street = eventUpdateRequestDto.Address.Street,
+                        City = eventUpdateRequestDto.Address.City,
+                        State = eventUpdateRequestDto.Address.State,
+                        Country = eventUpdateRequestDto.Address.Country,
+                        OrganizerId = eventUpdateRequestDto.OrganizerId,
+                        Date = eventUpdateRequestDto.Date,
+                        DateCreated = eventUpdateRequestDto.DateCreated,
+                        ImageIds = eventUpdateRequestDto.ImageIds,
+                        CommentIds = eventUpdateRequestDto.CommentIds,
+                        AttendingUserIds = eventUpdateRequestDto.AttendingUserIds,
+                    }
+                );
+            if (result.Success)
+            {
+                return Ok();
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+            return BadRequest(ModelState.Values);
+        }
     }
 }
