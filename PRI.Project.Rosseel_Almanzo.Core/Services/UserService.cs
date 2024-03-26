@@ -76,9 +76,33 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             };
         }
 
-        public Task<ResultModel<User>> DeleteUserAsync(int id)
+        public async Task<ResultModel<User>> DeleteUserAsync(int id)
         {
-            throw new NotImplementedException();
+            //get the user
+            var selectedEvent = await _userRepository.GetByIdAsync(id);
+
+            //check iff user exists
+            if (selectedEvent == null)
+            {
+                return new ResultModel<User>
+                {
+                    Success = false,
+                    Errors = new List<string> { "Event does not exist!" }
+                };
+            }
+
+            //check if deleteAsync returns true
+            if (await _userRepository.DeleteAsync(selectedEvent))
+            {
+                return new ResultModel<User> { Success = true, };
+            }
+
+            //if not
+            return new ResultModel<User>
+            {
+                Success = false,
+                Errors = new List<string> { "Some error occured!" }
+            };
         }
 
         public async Task<ResultModel<IEnumerable<User>>> GetAllAsync()
@@ -116,6 +140,11 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             userResultModel.Success = true;
             userResultModel.Value = user;
             return userResultModel;
+        }
+
+        public async Task<bool> CheckIfExistsAsync(int id)
+        {
+            return await _userRepository.CheckIfExistsAsync(id);
         }
     }
 }
