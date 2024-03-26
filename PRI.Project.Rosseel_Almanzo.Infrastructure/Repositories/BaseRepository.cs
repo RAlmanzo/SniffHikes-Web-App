@@ -70,5 +70,10 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
                 return false;
             }
         }
+
+        public async Task<bool> CheckIfExistsAsync(int id)
+        {
+            return await _targetTable.AnyAsync(t => t.Id == id);
+        }
     }
 }
