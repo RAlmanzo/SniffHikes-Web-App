@@ -19,8 +19,8 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Dtos
         public int OrganizerId { get; set; }
         [Required]
         public Address Address { get; set; }
-        public IEnumerable<int> ImageIds { get; set; }    
-        public IEnumerable<int> CommentIds { get; set; }     
-        public IEnumerable<int> AttendingUserIds { get; set; }
+        //public IEnumerable<int> ImageIds { get; set; }    
+        //public IEnumerable<int> CommentIds { get; set; }     
+        //public IEnumerable<int> AttendingUserIds { get; set; }
     }
 }
