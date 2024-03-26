@@ -38,7 +38,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 return userResultModel;
             }
             //if not
-            userResultModel.Errors = new List<string> { "No events found" };
+            userResultModel.Errors = new List<string> { "No uers found" };
             return userResultModel;
         }
 
