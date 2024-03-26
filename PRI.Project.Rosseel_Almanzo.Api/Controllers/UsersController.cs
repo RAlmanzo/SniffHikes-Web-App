@@ -33,5 +33,18 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
             }
             return NotFound(result.Errors);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            //get the record
+            var result = await _userService.GetByIdAsync(id);
+            //check if result is succes
+            if (result.Success)
+            {
+                return Ok(result.Value.MapToDto());
+            }
+            return NotFound(result.Errors);
+        }
     }
 }

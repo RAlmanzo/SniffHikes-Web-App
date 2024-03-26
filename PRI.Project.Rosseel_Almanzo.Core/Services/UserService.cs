@@ -42,9 +42,23 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             return userResultModel;
         }
 
-        public Task<ResultModel<User>> GetByIdAsync(Guid id)
+        public async Task<ResultModel<User>> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            //get the user
+            var user = await _userRepository.GetByIdAsync(id);
+            //create new resultmodel
+            var userResultModel = new ResultModel<User>();
+            //check if exists
+            if (user == null)
+            {
+                userResultModel.Success = false;
+                userResultModel.Errors = new List<string> { "No event found" };
+                return userResultModel;
+            }
+            //if yes
+            userResultModel.Success = true;
+            userResultModel.Value = user;
+            return userResultModel;
         }
     }
 }

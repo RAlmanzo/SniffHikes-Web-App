@@ -31,7 +31,6 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                     Id = selectedEvent.OrganizerId,
                     Value = $"{selectedEvent.Organizer.FirstName} {selectedEvent.Organizer.LastName}",
                 },
-                //Address = $"{result.Value.Address.Street} {result.Value.Address.City} {result.Value.Address.State} {result.Value.Address.Country}",
                 Address = new BaseDto
                 {
                     Id = selectedEvent.AddressId,
@@ -64,6 +63,54 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                     Id = e.Id,
                     Value = $"{e.LastName} {e.FirstName}",
                 })
+            };
+        }
+
+        public static UsersGetResponseDto MapToDto(this User user)
+        {
+            return new UsersGetResponseDto
+            {
+                Id = user.Id,
+                Value = $"{user.LastName} {user.FirstName}",
+                DateOfBirth = user.DateOfBirth,
+                Gender = user.Gender,
+                Email = user.Email,
+                Password = user.Password,
+                Address = new BaseDto
+                {
+                    Id = user.AddressId,
+                    Value = $"{user.Address.Street} {user.Address.City} {user.Address.State} {user.Address.Country}",
+                },
+                Comments = user.Comments.Select(c => new BaseDto
+                {
+                    Id = c.Id,
+                    Value = c.Content,
+                }),
+                Dogs = user.Dogs.Select(d => new BaseDto
+                {
+                    Id = d.Id,
+                    Value = d.Name,
+                }),
+                Routes = user.Routes.Select(r => new BaseDto
+                {
+                    Id = r.Id,
+                    Value = r.Title,
+                }),
+                OrganizedEvents = user.OrganizedEvents.Select(u => new BaseDto
+                {
+                    Id = u.Id,
+                    Value = u.Title,
+                }),
+                AttendingEvents = user.AttendingEvents.Select(u => new BaseDto
+                {
+                    Id = u.Id,
+                    Value = u.Title,
+                }),
+                Images = user.Images.Select(i => new BaseDto
+                {
+                    Id = i.Id,
+                    Value = i.File,
+                }),
             };
         }
     }
