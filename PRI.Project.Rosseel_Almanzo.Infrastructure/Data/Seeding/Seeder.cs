@@ -310,12 +310,12 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
 
             var eventUsers = new[]
             {
-                new {AttendingUsersId = 1, AttendingEventsId = 1 },            
-                new {AttendingUsersId = 2, AttendingEventsId = 1 },            
-                new {AttendingUsersId = 2, AttendingEventsId = 2 },            
-                new {AttendingUsersId = 3, AttendingEventsId = 2 },            
-                new {AttendingUsersId = 1, AttendingEventsId = 3 },            
-                new {AttendingUsersId = 3, AttendingEventsId = 3 },            
+                new {AttendingUsersId = 1, AttendingEventsId = 1 },
+                new {AttendingUsersId = 2, AttendingEventsId = 1 },
+                new {AttendingUsersId = 2, AttendingEventsId = 2 },
+                new {AttendingUsersId = 3, AttendingEventsId = 2 },
+                new {AttendingUsersId = 1, AttendingEventsId = 3 },
+                new {AttendingUsersId = 3, AttendingEventsId = 3 },
             };
 
 
