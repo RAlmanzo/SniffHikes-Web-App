@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PRI.Project.Rosseel_Almanzo.Api.Dtos;
 using PRI.Project.Rosseel_Almanzo.Api.Extensions;
+using PRI.Project.Rosseel_Almanzo.Core.Entities;
 using PRI.Project.Rosseel_Almanzo.Core.Interfaces.Services;
 using PRI.Project.Rosseel_Almanzo.Core.Services;
+using PRI.Project.Rosseel_Almanzo.Core.Services.Models;
 
 namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
 {
@@ -45,6 +48,35 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
                 return Ok(result.Value.MapToDto());
             }
             return NotFound(result.Errors);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(UserRequestDto userRequestDto)
+        {
+            var result = await _userService.CreateUserAsync(
+                new UserCreateRequestModel
+                {
+                    FirstName = userRequestDto.FirstName,
+                    LastName = userRequestDto.LastName,
+                    DateOfBirth = userRequestDto.DateOfBirth,
+                    Gender = userRequestDto.Gender,
+                    Email = userRequestDto.Email,
+                    Password = userRequestDto.Password,
+                    Address = userRequestDto.Address,                   
+                    
+                });
+
+            if (result.Success)
+            {
+                return CreatedAtAction(nameof(Get), new { ID = result.Value.Id }, result.Value
+                    .MapToDto());
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+            return BadRequest(ModelState.Values);
         }
     }
 }
