@@ -21,6 +21,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api
             builder.Services.AddScoped<IEventRepository, EventRepository>();
             builder.Services.AddScoped<IEventService, EventService>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 
             builder.Services.AddControllers();
