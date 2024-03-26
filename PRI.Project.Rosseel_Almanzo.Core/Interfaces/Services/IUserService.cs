@@ -15,5 +15,6 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Interfaces.Services
         Task<ResultModel<User>> CreateUserAsync(UserCreateRequestModel UserCreateRequestModel);
         //Task<ResultModel<User>> UpdateRecordAsync(UserUpdateRequestModel UserUpdateRequestModel);
         Task<ResultModel<User>> DeleteUserAsync(int id);
+        Task<bool> CheckIfExistsAsync(int id);
     }
 }
