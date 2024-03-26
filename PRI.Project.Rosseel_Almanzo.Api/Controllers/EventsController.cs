@@ -82,7 +82,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
         {
             if (!await _eventService.CheckIfExistsAsync(id))
             {
-                return NotFound("Record not found!");
+                return NotFound("Event not found!");
             }
 
             var result = await _eventService.DeleteEventAsync(id);
@@ -104,10 +104,10 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
             //check if event exists
             if (!await _eventService.CheckIfExistsAsync(eventUpdateRequestDto.Id))
             {
-                return NotFound("Record not found!");
+                return NotFound("Event not found!");
             }
 
-            var result = await _eventService.UpdateRecordAsync
+            var result = await _eventService.UpdateEventAsync
                 (
                     new EventUpdateRequestModel
                     {
