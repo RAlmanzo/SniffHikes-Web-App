@@ -150,5 +150,100 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             //return await _recordRepository.GetAll().AnyAsync(t => t.Id == id);
             return await _eventRepository.CheckIfExistsAsync(id);
         }
+
+        public async Task<ResultModel<Event>> UpdateRecordAsync(EventUpdateRequestModel eventUpdateRequestModel)
+        {
+            //check if organizerid exists
+            if (_userRepository.GetAll().Any(g => g.Id == eventUpdateRequestModel.OrganizerId) == false) // waarom kan ik hier geen async gebruiken
+            {
+                return new ResultModel<Event>
+                {
+                    Success = false,
+                    Errors = new List<string> { "Orginazer does not exist!" }
+                };
+            }
+
+            //check if imagas are present
+            if (eventUpdateRequestModel.ImageIds != null)
+            {
+                //check if images exist in database
+                var images = _eventRepository.GetAllEventImages(eventUpdateRequestModel.Id);
+
+                if (images.Where(p => eventUpdateRequestModel.ImageIds.Contains(p.Id)).Count() != eventUpdateRequestModel.ImageIds.Distinct().Count())
+                {
+                    return new ResultModel<Event>
+                    {
+                        Success = false,
+                        Errors = new List<string> { "Image does not exist!" }
+                    };
+                }
+            }
+
+            //check if comments are present
+            if (eventUpdateRequestModel.ImageIds != null)
+            {
+                //check if comments exist in database
+                var images = _eventRepository.GetAllEventComments(eventUpdateRequestModel.Id);
+
+                if (images.Where(p => eventUpdateRequestModel.CommentIds.Contains(p.Id)).Count() != eventUpdateRequestModel.CommentIds.Distinct().Count())
+                {
+                    return new ResultModel<Event>
+                    {
+                        Success = false,
+                        Errors = new List<string> { "Image does not exist!" }
+                    };
+                }
+            }
+
+            //check if attendingusers are present
+            if (eventUpdateRequestModel.ImageIds != null)
+            {
+                //check if attendingusers exist in database
+                var images = _eventRepository.GetAllEventAttendingUsers(eventUpdateRequestModel.Id);
+
+                if (images.Where(p => eventUpdateRequestModel.AttendingUserIds.Contains(p.Id)).Count() != eventUpdateRequestModel.AttendingUserIds.Distinct().Count())
+                {
+                    return new ResultModel<Event>
+                    {
+                        Success = false,
+                        Errors = new List<string> { "Image does not exist!" }
+                    };
+                }
+            }
+
+            //get the event
+            var record = await _eventRepository.GetByIdAsync(eventUpdateRequestModel.Id);
+
+            //update
+            record.Id = eventUpdateRequestModel.Id;
+            record.Title = eventUpdateRequestModel.Title;
+            record.Description = eventUpdateRequestModel.Description;
+            record.Price = eventUpdateRequestModel.Price;
+            record.Address.Street = eventUpdateRequestModel.Street;
+            record.Address.City = eventUpdateRequestModel.City;
+            record.Address.State = eventUpdateRequestModel.State;
+            record.Address.Country = eventUpdateRequestModel.Country;
+            record.OrganizerId = eventUpdateRequestModel.OrganizerId;
+            record.Date = eventUpdateRequestModel.Date;
+            record.DateCreated = eventUpdateRequestModel.DateCreated;
+            record.Images = _eventRepository.GetAllEventImages(eventUpdateRequestModel.Id).ToList();
+            record.Comments = _eventRepository.GetAllEventComments(eventUpdateRequestModel.Id).ToList();
+            record.AttendingUsers = _eventRepository.GetAllEventAttendingUsers(eventUpdateRequestModel.Id).ToList();
+            
+
+            if (await _eventRepository.UpdateAsync(record))
+            {
+                return new ResultModel<Event>
+                {
+                    Success = true,
+                    Value = record,
+                };
+            }
+            return new ResultModel<Event>
+            {
+                Success = false,
+                Errors = new List<string> { "Record update failed!" }
+            };
+        }
     }
 }
