@@ -15,9 +15,9 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
     {
         private readonly SniffHikesDbContext _dbContext;
         protected readonly DbSet<T> _targetTable;
-        private readonly ILogger<BaseRepository<T>> _logger;
+        private readonly ILogger<IBaseRepository<T>> _logger;
 
-        public BaseRepository(SniffHikesDbContext context, ILogger<BaseRepository<T>> logger)
+        public BaseRepository(SniffHikesDbContext context, ILogger<IBaseRepository<T>> logger)
         {
             _dbContext = context;
             _targetTable = _dbContext.Set<T>();
@@ -69,6 +69,11 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
                 _logger.LogError(dbUpdateException.Message);
                 return false;
             }
+        }
+
+        public async Task<bool> CheckIfExistsAsync(int id)
+        {
+            return await _targetTable.AnyAsync(t => t.Id == id);
         }
     }
 }

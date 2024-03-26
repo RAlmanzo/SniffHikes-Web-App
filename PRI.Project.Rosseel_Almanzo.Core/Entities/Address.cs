@@ -1,12 +1,16 @@
 ﻿namespace PRI.Project.Rosseel_Almanzo.Core.Entities
 {
-    public class Address
+    public class Address : BaseEntity
     {
-        public int Id { get; set; }
         public string Street { get; set; }
         public string City { get; set; }
         public string State { get; set; }
         public string Country { get; set; }
-        //public int ZipCode { get; set; }
+        //public User User { get; set; }
+        //public int? UserId { get; set; }
+        //public Route Route { get; set; }
+        //public int? RouteId { get; set; }
+        //public Event Event { get; set; }
+        //public int? EventId { get; set; }
     }
 }

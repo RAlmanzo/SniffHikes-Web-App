@@ -14,5 +14,6 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Interfaces.Repositories
         Task<bool> DeleteAsync(T toDelete);
         Task<bool> AddAsync(T toAdd);
         Task<bool> UpdateAsync(T toUpdate);
+        Task<bool> CheckIfExistsAsync(int id);
     }
 }

@@ -2,10 +2,10 @@
 {
     public class Route : BaseEntity
     {
-        //public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public Address Address { get; set; }
+        public int AddressId { get; set; }
         public ICollection<Image> Images { get; set; }
         public DateTime DateCreated { get; set; }
         public ICollection<Comment> Comments { get; set; }
