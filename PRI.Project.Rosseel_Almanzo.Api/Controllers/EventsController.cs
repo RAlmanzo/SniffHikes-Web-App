@@ -76,5 +76,26 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
             }
             return BadRequest(ModelState.Values);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (!await _eventService.CheckIfExistsAsync(id))
+            {
+                return NotFound("Record not found!");
+            }
+
+            var result = await _eventService.DeleteEventAsync(id);
+            if (result.Success)
+            {
+                return Ok();
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+            return BadRequest(ModelState.Values);
+        }
     }
 }
