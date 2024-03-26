@@ -19,6 +19,63 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             _userRepository = userRepository;
         }
 
+        public async Task<ResultModel<User>> CreateUserAsync(UserCreateRequestModel userCreateRequestModel)
+        {
+            //create new user
+            var newUser = new User
+            {
+                FirstName = userCreateRequestModel.FirstName,
+                LastName = userCreateRequestModel.LastName,
+                DateOfBirth = userCreateRequestModel.DateOfBirth,
+                Gender = userCreateRequestModel.Gender,
+                Email = userCreateRequestModel.Email,
+                Password = userCreateRequestModel.Password,
+                Address = new Address
+                {
+                    Street = userCreateRequestModel.Address.Street,
+                    City = userCreateRequestModel.Address.City,
+                    State = userCreateRequestModel.Address.State,
+                    Country = userCreateRequestModel.Address.Country,
+                },
+            };
+            //newUser.Dogs = userCreateRequestModel.Dogs.Select(d => new Dog
+            //{
+            //    Name = d.Name,
+            //    Race = d.Race,
+            //    Gender = d.Gender,
+            //    DateOfBirth = d.DateOfBirth,
+            //    Image = d.Image,
+            //    UserId = newUser.Id,
+            //}).ToList();
+
+            //call the eventsrepo addAsync method for the event  and addres (images,...)
+            var result = await _userRepository.AddAsync(newUser);
+            //if (newEvent.Address == null)
+            //{
+            //    return new ResultModel<Event>
+            //    {
+            //        Success = false,
+            //        Errors = new List<string> { "Address is null!" }
+            //    };
+            //}
+            //var addressResult = await _addressRepository.AddAsync(newEvent.Address);
+            //check  result
+            if (result)
+            {
+                var createdRecord = await GetByIdAsync(newUser.Id);
+                return new ResultModel<User>
+                {
+                    Success = true,
+                    Value = createdRecord.Value,
+                };
+            }
+            return new ResultModel<User>
+            {
+                Success = false,
+                Errors = new List<string> { "Event not created!" }
+            };
+        }
+
         public Task<ResultModel<User>> DeleteUserAsync(int id)
         {
             throw new NotImplementedException();
