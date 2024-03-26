@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PRI.Project.Rosseel_Almanzo.Api.Extensions;
 using PRI.Project.Rosseel_Almanzo.Core.Interfaces.Services;
+using PRI.Project.Rosseel_Almanzo.Core.Services;
 
 namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
 {
@@ -19,6 +21,17 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
             _logger = logger;
         }
 
-        
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            //get all events
+            var result = await _userService.GetAllAsync();
+            //check if result is succes
+            if (result.Success)
+            {
+                return Ok(result.Value.MapToDto());
+            }
+            return NotFound(result.Errors);
+        }
     }
 }
