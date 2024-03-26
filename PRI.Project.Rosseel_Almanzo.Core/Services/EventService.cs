@@ -99,6 +99,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             {
                 return new ResultModel<Event> { Success = true, };
             }
+
             //if not
             return new ResultModel<Event>
             {
@@ -142,6 +143,12 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             eventResultModel.Success = true;
             eventResultModel.Value = selectedEvent;
             return eventResultModel;
+        }
+
+        public async Task<bool> CheckIfExistsAsync(int id)
+        {
+            //return await _recordRepository.GetAll().AnyAsync(t => t.Id == id);
+            return await _eventRepository.CheckIfExistsAsync(id);
         }
     }
 }
