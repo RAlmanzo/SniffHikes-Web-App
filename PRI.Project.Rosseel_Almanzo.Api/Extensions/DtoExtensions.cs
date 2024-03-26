@@ -54,5 +54,17 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                 }),
             };
         }
+
+        public static UsersGetAllResponseDto MapToDto(this IEnumerable<User> users)
+        {
+            return new UsersGetAllResponseDto
+            {
+                Users = users.Select(e => new BaseDto
+                {
+                    Id = e.Id,
+                    Value = $"{e.LastName} {e.FirstName}",
+                })
+            };
+        }
     }
 }
