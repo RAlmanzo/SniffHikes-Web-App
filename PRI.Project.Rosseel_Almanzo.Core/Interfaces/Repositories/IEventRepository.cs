@@ -9,5 +9,8 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Interfaces.Repositories
 {
     public interface IEventRepository : IBaseRepository<Event>
     {
+        IQueryable<Image> GetAllEventImages(int id);
+        IQueryable<Comment> GetAllEventComments(int id);
+        IQueryable<User> GetAllEventAttendingUsers(int id);
     }
 }
