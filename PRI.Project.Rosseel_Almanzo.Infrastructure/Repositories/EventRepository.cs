@@ -39,6 +39,27 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        public IQueryable<User> GetAllEventAttendingUsers(int id)
+        {
+            var selectedEvent = GetByIdAsync(id);
+
+            return selectedEvent.Result.AttendingUsers.AsQueryable();
+        }
+
+        public IQueryable<Comment> GetAllEventComments(int id)
+        {
+            var selectedEvent = GetByIdAsync(id);
+
+            return selectedEvent.Result.Comments.AsQueryable();
+        }
+
+        public IQueryable<Image> GetAllEventImages(int id)
+        {
+            var selectedEvent = GetByIdAsync(id);
+
+            return selectedEvent.Result.Images.AsQueryable();
+        }
+
         public override async Task<Event> GetByIdAsync(int id)
         {
             return await _targetTable
