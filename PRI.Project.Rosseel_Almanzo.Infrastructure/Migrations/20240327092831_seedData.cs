@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
 {
-    public partial class test : Migration
+    public partial class seedData : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -256,12 +256,12 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                 columns: new[] { "Id", "DateOfBirth", "Gender", "Image", "Name", "Race", "UserId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 3, 27, 10, 19, 13, 930, DateTimeKind.Local).AddTicks(9648), "Male", null, "Inca", "Husky", 1 },
-                    { 2, new DateTime(2024, 3, 27, 10, 19, 13, 930, DateTimeKind.Local).AddTicks(9697), "Female", null, "Zara", "Border-collie", 1 },
-                    { 3, new DateTime(2024, 3, 27, 10, 19, 13, 930, DateTimeKind.Local).AddTicks(9701), "Male", null, "Sleepy", "Duitse-herder", 2 },
-                    { 4, new DateTime(2024, 3, 27, 10, 19, 13, 930, DateTimeKind.Local).AddTicks(9704), "Male", null, "Sleepy", "Duitse-herder", 3 },
-                    { 5, new DateTime(2024, 3, 27, 10, 19, 13, 930, DateTimeKind.Local).AddTicks(9708), "Female", null, "Tunder", "Dog", 1 },
-                    { 6, new DateTime(2024, 3, 27, 10, 19, 13, 930, DateTimeKind.Local).AddTicks(9711), "Male", null, "Zira", "Husky", 2 }
+                    { 1, new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(752), "Male", null, "Inca", "Husky", 1 },
+                    { 2, new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(820), "Female", null, "Zara", "Border-collie", 1 },
+                    { 3, new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(825), "Male", null, "Sleepy", "Duitse-herder", 2 },
+                    { 4, new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(828), "Male", null, "Sleepy", "Duitse-herder", 3 },
+                    { 5, new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(832), "Female", null, "Tunder", "Dog", 1 },
+                    { 6, new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(835), "Male", null, "Zira", "Husky", 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -269,9 +269,9 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                 columns: new[] { "Id", "AddressId", "Date", "DateCreated", "Description", "OrganizerId", "Price", "Title" },
                 values: new object[,]
                 {
-                    { 1, 4, new DateTime(2024, 4, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 3, 27, 10, 19, 13, 930, DateTimeKind.Local).AddTicks(9822), "Geniet van een ontspannen wandeling met je hond in het prachtige bosgebied. Neem je viervoeter mee voor een leuke tijd in de natuur.", 1, 0m, "Hondenwandeling in het bos" },
-                    { 2, 5, new DateTime(2024, 4, 5, 12, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 3, 27, 10, 19, 13, 930, DateTimeKind.Local).AddTicks(9829), "Kom en bewonder verschillende hondenrassen tijdens de hondenshow in Brussel. Er zijn prijzen te winnen en veel plezier te beleven!", 2, 10.50m, "Hondenshow Brussel" },
-                    { 3, 6, new DateTime(2024, 4, 10, 10, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 3, 27, 10, 19, 13, 930, DateTimeKind.Local).AddTicks(9833), "Geniet van een ontspannen wandeling met je hond in het prachtige bosgebied. Neem je viervoeter mee voor een leuke tijd in de natuur.", 3, 0m, "Hondenwandeling aan zee" }
+                    { 1, 4, new DateTime(2024, 4, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(903), "Geniet van een ontspannen wandeling met je hond in het prachtige bosgebied. Neem je viervoeter mee voor een leuke tijd in de natuur.", 1, 0m, "Hondenwandeling in het bos" },
+                    { 2, 5, new DateTime(2024, 4, 5, 12, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(911), "Kom en bewonder verschillende hondenrassen tijdens de hondenshow in Brussel. Er zijn prijzen te winnen en veel plezier te beleven!", 2, 10.50m, "Hondenshow Brussel" },
+                    { 3, 6, new DateTime(2024, 4, 10, 10, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(915), "Geniet van een ontspannen wandeling met je hond in het prachtige bosgebied. Neem je viervoeter mee voor een leuke tijd in de natuur.", 3, 0m, "Hondenwandeling aan zee" }
                 });
 
             migrationBuilder.InsertData(
@@ -290,9 +290,9 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                 columns: new[] { "Id", "AddressId", "DateCreated", "Description", "Title", "UserId" },
                 values: new object[,]
                 {
-                    { 1, 7, new DateTime(2024, 3, 27, 10, 19, 13, 930, DateTimeKind.Local).AddTicks(9801), "Een mooie wandeling door het bos met je hond. Geniet van de natuur en de frisse lucht.", "Boswandeling", 1 },
-                    { 2, 8, new DateTime(2024, 3, 27, 10, 19, 13, 930, DateTimeKind.Local).AddTicks(9804), "Een ontspannen wandeling met je hond langs het strand. Laat je viervoeter lekker uitwaaien!", "Strandwandeling", 2 },
-                    { 3, 9, new DateTime(2024, 3, 27, 10, 19, 13, 930, DateTimeKind.Local).AddTicks(9807), "Een leuke wandeling met je hond door het park. Laat je hond lekker rennen en spelen.", "Parkwandeling", 3 }
+                    { 1, 7, new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(880), "Een mooie wandeling door het bos met je hond. Geniet van de natuur en de frisse lucht.", "Boswandeling", 1 },
+                    { 2, 8, new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(883), "Een ontspannen wandeling met je hond langs het strand. Laat je viervoeter lekker uitwaaien!", "Strandwandeling", 2 },
+                    { 3, 9, new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(887), "Een leuke wandeling met je hond door het park. Laat je hond lekker rennen en spelen.", "Parkwandeling", 3 }
                 });
 
             migrationBuilder.InsertData(
@@ -300,14 +300,14 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                 columns: new[] { "Id", "Content", "DateCreated", "EventId", "RouteId", "UserId" },
                 values: new object[,]
                 {
-                    { 1, "Gezellige avond!", new DateTime(2024, 3, 27, 10, 19, 13, 930, DateTimeKind.Local).AddTicks(9715), 1, null, 1 },
-                    { 2, "Leuke wandeling!", new DateTime(2024, 3, 27, 10, 19, 13, 930, DateTimeKind.Local).AddTicks(9718), 2, null, 1 },
-                    { 3, "Gezellige avond!", new DateTime(2024, 3, 27, 10, 19, 13, 930, DateTimeKind.Local).AddTicks(9722), 2, null, 2 },
-                    { 4, "Gezellige avond!", new DateTime(2024, 3, 27, 10, 19, 13, 930, DateTimeKind.Local).AddTicks(9725), 3, null, 3 },
-                    { 5, "Mooie route!", new DateTime(2024, 3, 27, 10, 19, 13, 930, DateTimeKind.Local).AddTicks(9728), null, 1, 1 },
-                    { 6, "Leuke wandeling!", new DateTime(2024, 3, 27, 10, 19, 13, 930, DateTimeKind.Local).AddTicks(9777), null, 2, 2 },
-                    { 7, "Mooie route!", new DateTime(2024, 3, 27, 10, 19, 13, 930, DateTimeKind.Local).AddTicks(9780), null, 2, 2 },
-                    { 8, "Mooie route!", new DateTime(2024, 3, 27, 10, 19, 13, 930, DateTimeKind.Local).AddTicks(9784), null, 3, 3 }
+                    { 1, "Gezellige avond!", new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(839), 1, null, 1 },
+                    { 2, "Leuke wandeling!", new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(843), 2, null, 1 },
+                    { 3, "Gezellige avond!", new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(846), 2, null, 2 },
+                    { 4, "Gezellige avond!", new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(849), 3, null, 3 },
+                    { 5, "Mooie route!", new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(852), null, 1, 1 },
+                    { 6, "Leuke wandeling!", new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(856), null, 2, 2 },
+                    { 7, "Mooie route!", new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(859), null, 2, 2 },
+                    { 8, "Mooie route!", new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(862), null, 3, 3 }
                 });
 
             migrationBuilder.InsertData(
