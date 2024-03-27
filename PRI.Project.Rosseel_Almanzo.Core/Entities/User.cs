@@ -26,7 +26,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Entities
         public ICollection<Dog> Dogs { get; set; }
         public ICollection<Route> Routes { get; set; }
         public ICollection<Event> OrganizedEvents { get; set; }
-        public ICollection<Event> AttendingEvents { get; set; }
+        public ICollection<EventUser> AttendingEvents { get; set; }
         public ICollection<Image> Images { get; set; }
     }
 }

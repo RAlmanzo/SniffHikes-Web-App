@@ -20,6 +20,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data
         public DbSet<Comment> Comments { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Address> Addresses { get; set; }
+        public DbSet<EventUser> EventsUser { get; set; }
 
         public SniffHikesDbContext(DbContextOptions<SniffHikesDbContext> 
             options) : base(options)
@@ -50,19 +51,6 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data
                 .Property(p => p.Price)
                 .HasColumnType("money");
 
-
-            //modelBuilder.Entity<Event>()
-            //    .HasMany(e => e.AttendingUsers)
-            //    .WithMany(u => u.AttendingEvents);
-
-            //modelBuilder.Entity<Event>()
-            //    .HasOne(e => e.Address);
-            //modelBuilder.Entity<Event>()
-            //    .HasOne(u => u.Organizer)
-            //    .WithMany(e => e.OrganizedEvents)
-            //    .HasForeignKey(u => u.OrganizerId)
-            //    .OnDelete(DeleteBehavior.Restrict);
-
             modelBuilder.Entity<Route>()
                 .Property(p => p.Title)
                 .IsRequired()
@@ -83,22 +71,18 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data
                 .Property(p => p.Content)
                 .IsRequired()
                 .HasMaxLength(200);
-
+           modelBuilder.Entity<EventUser>()
+                .HasKey(e => new {e.UserId, e.EventId});
+            modelBuilder.Entity<EventUser>()
+                .HasOne(u => u.User)
+                .WithMany(e => e.AttendingEvents)
+                .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<User>()
                 .HasMany(u => u.OrganizedEvents)
                 .WithOne(e => e.Organizer)
                 .HasForeignKey(e => e.OrganizerId)
                 .OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<User>()
-                .HasMany(u => u.AttendingEvents)
-                .WithMany(e => e.AttendingUsers)
-                .UsingEntity(j => j.ToTable("EventUser"));
 
-
-            //modelBuilder.Entity<User>()
-            //    .HasMany(u => u.Comments)
-            //    .WithOne(c => c.User)
-            //    .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<User>()
                 .Property(p => p.FirstName)
                 .IsRequired()
@@ -109,38 +93,6 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data
                 .HasMaxLength(100);
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Address);
-
-            //modelBuilder.Entity($"{nameof(Event)}{nameof(User)}");
-
-            //modelBuilder.Entity<Event>()
-            //    .HasMany(e => e.AttendingUsers)
-            //    .WithMany(u => u.AttendingEvents)
-            //    .UsingEntity(j =>
-            //    {
-            //        j.ToTable("EventUser"); // Naam van de tussentabel
-            //        j.HasKey("AttendingEventsId", "AttendingUsersId"); // Samengestelde sleutel
-            //        j.HasOne<Event>().WithMany().HasForeignKey("AttendingEventsId").OnDelete(DeleteBehavior.Restrict); // ForeignKey naar Event
-            //        j.HasOne<User>().WithMany().HasForeignKey("AttendingUsersId").OnDelete(DeleteBehavior.Restrict); // ForeignKey naar User
-            //    });
-
-            //modelBuilder.Entity<Event>()
-            //    .HasMany(e => e.AttendingUsers)
-            //    .WithMany(u => u.AttendingEvents)
-            //    .UsingEntity(
-            //        j =>
-            //        {
-            //            j.ToTable("EventUser"); // Naam van de tussentabel
-            //            j.HasKey("AttendingEventsId", "AttendingUsersId"); // Samengestelde sleutel
-            //            j.HasOne(eu => eu.Event)
-            //                .WithMany()
-            //                .HasForeignKey("AttendingEventsId")
-            //                .OnDelete(DeleteBehavior.Restrict); // ForeignKey naar Event
-            //            j.HasOne(eu => eu.User)
-            //                .WithMany()
-            //                .HasForeignKey("AttendingUsersId")
-            //                .OnDelete(DeleteBehavior.Restrict); // ForeignKey naar User
-            //        });
-
 
             Seeder.Seed(modelBuilder);
         }

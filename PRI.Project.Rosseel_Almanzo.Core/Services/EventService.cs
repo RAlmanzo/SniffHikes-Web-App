@@ -196,20 +196,20 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             }
 
             //check if attendingusers are present
-            if (eventUpdateRequestModel.ImageIds != null)
-            {
-                //check if attendingusers exist in database
-                var images = _eventRepository.GetAllEventAttendingUsers(eventUpdateRequestModel.Id);
+            //if (eventUpdateRequestModel.ImageIds != null)
+            //{
+            //    //check if attendingusers exist in database
+            //    var images = _eventRepository.GetAllEventAttendingUsers(eventUpdateRequestModel.Id);
 
-                if (images.Where(p => eventUpdateRequestModel.AttendingUserIds.Contains(p.Id)).Count() != eventUpdateRequestModel.AttendingUserIds.Distinct().Count())
-                {
-                    return new ResultModel<Event>
-                    {
-                        Success = false,
-                        Errors = new List<string> { "Image does not exist!" }
-                    };
-                }
-            }
+            //    if (images.Where(p => eventUpdateRequestModel.AttendingUserIds.Contains(p.Id)).Count() != eventUpdateRequestModel.AttendingUserIds.Distinct().Count())
+            //    {
+            //        return new ResultModel<Event>
+            //        {
+            //            Success = false,
+            //            Errors = new List<string> { "Image does not exist!" }
+            //        };
+            //    }
+            //}
 
             //get the event
             var record = await _eventRepository.GetByIdAsync(eventUpdateRequestModel.Id);
@@ -228,7 +228,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             record.DateCreated = eventUpdateRequestModel.DateCreated;
             record.Images = _eventRepository.GetAllEventImages(eventUpdateRequestModel.Id).ToList();
             record.Comments = _eventRepository.GetAllEventComments(eventUpdateRequestModel.Id).ToList();
-            record.AttendingUsers = _eventRepository.GetAllEventAttendingUsers(eventUpdateRequestModel.Id).ToList();
+            //record.AttendingUsers = _eventRepository.GetAllEventAttendingUsers(eventUpdateRequestModel.Id).ToList();
             
 
             if (await _eventRepository.UpdateAsync(record))

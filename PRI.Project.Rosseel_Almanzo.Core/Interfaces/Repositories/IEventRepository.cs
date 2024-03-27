@@ -11,6 +11,6 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Interfaces.Repositories
     {
         IQueryable<Image> GetAllEventImages(int id);
         IQueryable<Comment> GetAllEventComments(int id);
-        IQueryable<User> GetAllEventAttendingUsers(int id);
+        //IQueryable<User> GetAllEventAttendingUsers(int id);
     }
 }
