@@ -308,14 +308,14 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                 },
             };
 
-            var eventUsers = new[]
+            var eventUsers = new EventUser[]
             {
-                new {AttendingUsersId = 1, AttendingEventsId = 1 },
-                new {AttendingUsersId = 2, AttendingEventsId = 1 },
-                new {AttendingUsersId = 2, AttendingEventsId = 2 },
-                new {AttendingUsersId = 3, AttendingEventsId = 2 },
-                new {AttendingUsersId = 1, AttendingEventsId = 3 },
-                new {AttendingUsersId = 3, AttendingEventsId = 3 },
+                new EventUser { UserId = 1, EventId = 1 },
+                new EventUser { UserId = 2, EventId = 1 },
+                new EventUser { UserId = 2, EventId = 2 },
+                new EventUser { UserId = 3, EventId = 2 },
+                new EventUser { UserId = 1, EventId = 3 },
+                new EventUser { UserId = 3, EventId = 3 },
             };
 
 
@@ -326,8 +326,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
             modelBuilder.Entity<Route>().HasData(routes);
             modelBuilder.Entity<Event>().HasData(events);
             modelBuilder.Entity<User>().HasData(users);
-            modelBuilder.Entity($"{nameof(Event)}{nameof(User)}")
-                .HasData(eventUsers);
+            modelBuilder.Entity<EventUser>().HasData(eventUsers);
         }
     }
 }
