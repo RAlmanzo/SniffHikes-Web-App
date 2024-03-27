@@ -39,12 +39,12 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public IQueryable<User> GetAllEventAttendingUsers(int id)
-        {
-            var selectedEvent = GetByIdAsync(id);
+        //public IQueryable<User> GetAllEventAttendingUsers(int id)
+        //{
+        //    var selectedEvent = GetByIdAsync(id);
 
-            return selectedEvent.Result.AttendingUsers.AsQueryable();
-        }
+        //    return selectedEvent.Result.AttendingUsers.AsQueryable();
+        //}
 
         public IQueryable<Comment> GetAllEventComments(int id)
         {

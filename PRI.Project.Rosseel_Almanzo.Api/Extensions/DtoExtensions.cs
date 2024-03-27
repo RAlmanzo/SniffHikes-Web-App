@@ -46,11 +46,11 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                     Id = c.Id,
                     Value = c.Content,
                 }),
-                Users = selectedEvent.AttendingUsers.Select(u => new BaseDto
-                {
-                    Id = u.Id,
-                    Value = $"{u.FirstName} {u.LastName}",
-                }),
+                //Users = selectedEvent.AttendingUsers.Select(u => new BaseDto
+                //{
+                //    Id = u.Id,
+                //    Value = $"{u.FirstName} {u.LastName}",
+                //}),
             };
         }
 
@@ -96,12 +96,12 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                     Id = u.Id,
                     Value = u.Title,
                 }),
-                AttendingEvents = user.AttendingEvents?.Select(u => new BaseDto
-                {
-                    Id = u.Id,
-                    Value = u.Title,
-                }),
-                Images = user.Images?.Select(i => new BaseDto
+                //AttendingEvents = user.AttendingEvents.Select(u => new BaseDto
+                //{
+                //    Id = u.Id,
+                //    Value = u.Title,
+                //}),
+                Images = user.Images.Select(i => new BaseDto
                 {
                     Id = i.Id,
                     Value = i.File,
