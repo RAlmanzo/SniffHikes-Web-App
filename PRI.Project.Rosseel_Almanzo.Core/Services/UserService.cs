@@ -21,6 +21,27 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
 
         public async Task<ResultModel<User>> CreateUserAsync(UserCreateRequestModel userCreateRequestModel)
         {
+            //check if user excist
+            var users = await _userRepository.GetAllAsync();            
+            if(users.Any(u => u.Email.ToUpper().Equals(userCreateRequestModel.Email.ToUpper())))
+            {
+                return new ResultModel<User>
+                {
+                    Success = false,
+                    Errors = new List<string> { "User allready exists!" }
+                };
+            }
+
+            //check if address is null
+            if (userCreateRequestModel.Address == null)
+            {
+                return new ResultModel<User>
+                {
+                    Success = false,
+                    Errors = new List<string> { "Address is null!" }
+                };
+            }
+
             //create new user
             var newUser = new User
             {
@@ -38,27 +59,35 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                     Country = userCreateRequestModel.Address.Country,
                 },
             };
-            //newUser.Dogs = userCreateRequestModel.Dogs.Select(d => new Dog
-            //{
-            //    Name = d.Name,
-            //    Race = d.Race,
-            //    Gender = d.Gender,
-            //    DateOfBirth = d.DateOfBirth,
-            //    Image = d.Image,
-            //    UserId = newUser.Id,
-            //}).ToList();
+
+            if (userCreateRequestModel.Dogs.Count() != 0)
+            {
+                newUser.Dogs = userCreateRequestModel.Dogs.Select(d => new Dog
+                {
+                    Name = d.Name,
+                    Race = d.Race,
+                    Gender = d.Gender,
+                    DateOfBirth = d.DateOfBirth,
+                    Image = d.Image,
+                    UserId = newUser.Id,
+                }).ToList();
+            }
+            if (newUser.Address == null)
+            {
+                return new ResultModel<User>
+                {
+                    Success = false,
+                    Errors = new List<string> { "Address is null!" }
+                };
+            }
+
 
             //call the eventsrepo addAsync method for the event  and addres (images,...)
             var result = await _userRepository.AddAsync(newUser);
-            //if (newEvent.Address == null)
-            //{
-            //    return new ResultModel<Event>
-            //    {
-            //        Success = false,
-            //        Errors = new List<string> { "Address is null!" }
-            //    };
-            //}
+            
+
             //var addressResult = await _addressRepository.AddAsync(newEvent.Address);
+
             //check  result
             if (result)
             {
@@ -72,7 +101,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             return new ResultModel<User>
             {
                 Success = false,
-                Errors = new List<string> { "Event not created!" }
+                Errors = new List<string> { "User not created!" }
             };
         }
 
