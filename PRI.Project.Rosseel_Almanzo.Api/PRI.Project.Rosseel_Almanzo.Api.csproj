@@ -18,4 +18,8 @@
     <ProjectReference Include="..\PRI.Project.Rosseel_Almanzo.Infrastructure\PRI.Project.Rosseel_Almanzo.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
 </Project>
