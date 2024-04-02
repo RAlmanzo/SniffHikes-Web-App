@@ -81,36 +81,16 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                     Id = user.AddressId,
                     Value = $"{user.Address.Street} {user.Address.City} {user.Address.State} {user.Address.Country}",
                 },
-                Comments = user.Comments?.Select(c => new BaseDto
-                {
-                    Id = c.Id,
-                    Value = c.Content,
-                }),
-                Routes = user.Routes?.Select(r => new BaseDto
-                {
-                    Id = r.Id,
-                    Value = r.Title,
-                }),
-                OrganizedEvents = user.OrganizedEvents?.Select(u => new BaseDto
-                {
-                    Id = u.Id,
-                    Value = u.Title,
-                }),
-                //AttendingEvents = user.AttendingEvents.Select(u => new BaseDto
-                //{
-                //    Id = u.Id,
-                //    Value = u.Title,
-                //}),
                 Images = user.Images.Select(i => new BaseDto
                 {
                     Id = i.Id,
                     Value = i.File,
                 }),
-                //Dogs = user.Dogs.Select(d => new BaseDto
-                //{
-                //    Id = d.Id,
-                //    Value = d.Name,
-                //}),
+                Dogs = user.Dogs.Select(d => new BaseDto
+                {
+                    Id = d.Id,
+                    Value = d.Name,
+                }),
             };
         }
     }
