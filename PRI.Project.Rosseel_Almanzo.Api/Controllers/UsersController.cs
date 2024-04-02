@@ -62,8 +62,22 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
                     Gender = userRequestDto.Gender,
                     Email = userRequestDto.Email,
                     Password = userRequestDto.Password,
-                    Address = userRequestDto.Address,                   
-                    
+                    Address = new Address
+                    {
+                        Street = userRequestDto.Address.Street,
+                        City = userRequestDto.Address.City,
+                        State = userRequestDto.Address.State,
+                        Country = userRequestDto.Address.Country,
+                    },                   
+                    Dogs = userRequestDto.Dogs.Select(d => new Dog
+                    {
+                        Name = d.Value,
+                        Race = d.Race,
+                        Gender = d.Gender,
+                        DateOfBirth = d.DateOfBirth,
+                        Image = d.Image,
+                        UserId = userRequestDto.Id
+                    }),
                 });
 
             if (result.Success)
