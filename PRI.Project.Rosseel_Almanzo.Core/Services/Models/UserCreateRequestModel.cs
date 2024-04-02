@@ -16,7 +16,6 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services.Models
         public string Email { get; set; }
         public string Password { get; set; }
         public Address Address { get; set; }
-
-        //public IEnumerable<Dog> Dogs { get; set;}       
+        public IEnumerable<Dog> Dogs { get; set; }
     }
 }
