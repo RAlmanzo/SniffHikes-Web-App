@@ -9,11 +9,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Dtos
         public string Email { get; set; }
         public string Password { get; set; }
         public BaseDto Address { get; set; }
-        public IEnumerable<BaseDto> Comments { get; set; }
         public IEnumerable<BaseDto> Dogs { get; set; }
-        public IEnumerable<BaseDto> Routes { get; set; }
-        public IEnumerable<BaseDto> OrganizedEvents { get; set; }
-        public IEnumerable<BaseDto> AttendingEvents { get; set; }
         public IEnumerable<BaseDto> Images { get; set; }
     }
 }
