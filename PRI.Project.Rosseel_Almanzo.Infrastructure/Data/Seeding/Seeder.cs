@@ -16,28 +16,28 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
         {
             var images = new Image[]
             {
-                new Image{Id = 1, UserId = 1, File = null, EventId = 1},
-                new Image{Id = 2, UserId = 1, File = null, EventId = 1},
-                new Image{Id = 3, UserId = 1, File = null, RouteId = 1},
-                new Image{Id = 4, UserId = 1, File = null},
-                new Image{Id = 5, UserId = 1, File = null},
+                new Image{Id = 1, File = null, EventId = 1},
+                new Image{Id = 2, File = null, EventId = 1},
+                new Image{Id = 3, File = null, RouteId = 1},
+                new Image{Id = 4, File = null},
+                new Image{Id = 5, File = null},
 
-                new Image{Id = 6, UserId = 2, File = null, EventId = 2},
-                new Image{Id = 7, UserId = 2, File = null, RouteId = 2},
-                new Image{Id = 8, UserId = 2, File = null, RouteId = 2},
+                new Image{Id = 6 , File = null, EventId = 2},
+                new Image{Id = 7, File = null, RouteId = 2},
+                new Image{Id = 8, File = null, RouteId = 2},
 
-                new Image{Id = 9, UserId = 3, File = null, EventId = 2},
-                new Image{Id = 10, UserId = 3, File = null, RouteId = 2},
-                new Image{Id = 11, UserId = 3, File = null},
+                new Image{Id = 9, File = null, EventId = 2},
+                new Image{Id = 10, File = null, RouteId = 2},
+                new Image{Id = 11, File = null},
 
-                new Image{Id = 12, UserId = 1, File = null, EventId = 3},
-                new Image{Id = 13, UserId = 1, File = null, EventId = 2},
+                new Image{Id = 12, File = null, EventId = 3},
+                new Image{Id = 13, File = null, EventId = 2},
 
-                new Image{Id = 14, UserId = 2, File = null, RouteId = 3},
-                new Image{Id = 15, UserId = 2, File = null, EventId = 1},
-                new Image{Id = 16, UserId = 2, File = null, RouteId = 1},
-                new Image{Id = 17, UserId = 3, File = null, RouteId = 3},
-                new Image{Id = 18, UserId = 3, File = null},
+                new Image{Id = 14, File = null, RouteId = 3},
+                new Image{Id = 15, File = null, EventId = 1},
+                new Image{Id = 16, File = null, RouteId = 1},
+                new Image{Id = 17, File = null, RouteId = 3},
+                new Image{Id = 18, File = null},
             };
 
             var dogs = new Dog[]

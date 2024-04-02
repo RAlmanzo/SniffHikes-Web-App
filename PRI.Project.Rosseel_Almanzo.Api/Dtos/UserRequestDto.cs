@@ -32,7 +32,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Dtos
 
         [Required(ErrorMessage = "Address is required")]
         public AddressRequestDto Address { get; set; }
-        public IEnumerable<int> ImageIds { get; set; }
+        public string ImagePath { get; set; }
         public IEnumerable<DogRequestDto> Dogs { get; set; }
     }
 }

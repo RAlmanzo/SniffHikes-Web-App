@@ -35,9 +35,6 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data
                 .Property(p => p.Name)
                 .IsRequired()
                 .HasMaxLength(50);
-            modelBuilder.Entity<Dog>()
-                .Property(p => p.Race)
-                .IsRequired();
             
             modelBuilder.Entity<Event>()
                 .Property(p => p.Title)

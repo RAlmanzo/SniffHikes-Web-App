@@ -26,7 +26,6 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
                 .Include(u => u.Routes)
                 .Include(u => u.OrganizedEvents)
                 .Include(u => u.AttendingEvents)
-                .Include(u => u.Images)
                 .ToListAsync();
             return data;
         }
@@ -40,7 +39,6 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
                 .Include(u => u.Routes)
                 .Include(u => u.OrganizedEvents)
                 .Include(u => u.AttendingEvents)
-                .Include(u => u.Images)
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
     }

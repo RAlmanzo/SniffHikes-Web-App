@@ -81,11 +81,11 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                     Id = user.AddressId,
                     Value = $"{user.Address.Street} {user.Address.City} {user.Address.State} {user.Address.Country}",
                 },
-                Images = user.Images.Select(i => new BaseDto
+                Image = new BaseDto
                 {
-                    Id = i.Id,
-                    Value = i.File,
-                }),
+                    Id = user.Id,
+                    Value = user.Image,
+                },
                 Dogs = user.Dogs.Select(d => new BaseDto
                 {
                     Id = d.Id,

@@ -17,5 +17,6 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services.Models
         public string Password { get; set; }
         public Address Address { get; set; }
         public IEnumerable<Dog> Dogs { get; set; }
+        //todo create with image
     }
 }
