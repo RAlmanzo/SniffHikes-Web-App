@@ -28,7 +28,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                 DateCreated = DateTime.Now,
                 Orginazer = new BaseDto
                 {
-                    Id = selectedEvent.OrganizerId,
+                    Id = (int)selectedEvent.OrganizerId,
                     Value = $"{selectedEvent.Organizer.FirstName} {selectedEvent.Organizer.LastName}",
                 },
                 Address = new BaseDto
