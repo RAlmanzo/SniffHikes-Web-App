@@ -6,9 +6,6 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Dtos
 {
     public class UserRequestDto
     {
-        [HiddenInput]
-        public int Id { get; set; }
-
         [Required(ErrorMessage = "Firstname is required")]
         [StringLength(50, ErrorMessage = "Firstname is too long")]
         public string FirstName { get; set; }
@@ -16,7 +13,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Dtos
         [Required(ErrorMessage = "Lastname is required")]
         [StringLength(50, ErrorMessage = "Lastname is too long")]
         public string LastName { get; set; }
-
+        [Required(ErrorMessage = "Date of birth is required")]
         [DataType(DataType.Date, ErrorMessage = "Please enter a valid date")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DateOfBirth { get; set; }
@@ -32,7 +29,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Dtos
 
         [Required(ErrorMessage = "Address is required")]
         public AddressRequestDto Address { get; set; }
-        public string ImagePath { get; set; }
-        public IEnumerable<DogRequestDto> Dogs { get; set; }
+        //public IEnumerable<BaseDogRequestDto> Dogs { get; set; }
+        public IFormFile Image { get; set; }
     }
 }
