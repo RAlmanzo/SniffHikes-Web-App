@@ -112,11 +112,25 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            if (!await _userService.CheckIfExistsAsync(id))
+            var userResult = await _userService.GetByIdAsync(id);
+
+            if (!userResult.Success)
             {
                 return NotFound("User not found!");
             }
 
+            //if (!await _userService.CheckIfExistsAsync(id))
+            //{
+            //    return NotFound("User not found!");
+            //}
+            if(!string.IsNullOrWhiteSpace(userResult.Value.Image))
+            {
+                if (!_fileService.DeleteFile<User>(userResult.Value.Image))
+                {
+                    ModelState.AddModelError("", "Image not found");
+                }
+            }
+   
             var result = await _userService.DeleteUserAsync(id);
             if (result.Success)
             {
