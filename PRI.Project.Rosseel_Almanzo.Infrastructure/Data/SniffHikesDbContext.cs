@@ -47,6 +47,11 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data
             modelBuilder.Entity<Event>()
                 .Property(p => p.Price)
                 .HasColumnType("money");
+            modelBuilder.Entity<Event>()
+                .HasOne(u => u.Organizer)
+                .WithMany(e => e.OrganizedEvents)
+                .HasForeignKey(e => e.OrganizerId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Route>()
                 .Property(p => p.Title)
@@ -73,12 +78,18 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data
             modelBuilder.Entity<EventUser>()
                 .HasOne(u => u.User)
                 .WithMany(e => e.AttendingEvents)
+                .HasForeignKey(u => u.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<EventUser>()
+                .HasOne(u => u.Event)
+                .WithMany(e => e.AttendingUsers)
+                .HasForeignKey(u => u.EventId)
                 .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<User>()
                 .HasMany(u => u.OrganizedEvents)
                 .WithOne(e => e.Organizer)
                 .HasForeignKey(e => e.OrganizerId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<User>()
                 .Property(p => p.FirstName)

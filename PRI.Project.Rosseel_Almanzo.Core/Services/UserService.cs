@@ -13,10 +13,12 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IAddressRepository _addressRepository;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, IAddressRepository addressRepository)
         {
             _userRepository = userRepository;
+            _addressRepository = addressRepository;
         }
 
         public async Task<ResultModel<User>> CreateUserAsync(UserCreateRequestModel userCreateRequestModel)
@@ -99,10 +101,12 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
         public async Task<ResultModel<User>> DeleteUserAsync(int id)
         {
             //get the user
-            var selectedEvent = await _userRepository.GetByIdAsync(id);
+            var selectedUser = await _userRepository.GetByIdAsync(id);
+            //get user address
+            var userAddress = await _addressRepository.GetByIdAsync(selectedUser.AddressId);
 
             //check iff user exists
-            if (selectedEvent == null)
+            if (selectedUser == null)
             {
                 return new ResultModel<User>
                 {
@@ -111,13 +115,13 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 };
             }
 
-            //delete user address from db???
-            //delete user image from db???
-
             //check if deleteAsync returns true
-            if (await _userRepository.DeleteAsync(selectedEvent))
+            if (await _userRepository.DeleteAsync(selectedUser))
             {
-                return new ResultModel<User> { Success = true, };
+                if (await _addressRepository.DeleteAsync(userAddress))
+                {
+                    return new ResultModel<User> { Success = true, };
+                }             
             }
 
             //if not
