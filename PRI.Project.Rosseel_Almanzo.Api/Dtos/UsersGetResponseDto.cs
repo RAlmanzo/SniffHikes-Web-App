@@ -10,6 +10,6 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Dtos
         public string Password { get; set; }
         public BaseDto Address { get; set; }
         public IEnumerable<BaseDto> Dogs { get; set; }
-        public BaseDto Image { get; set; }
+        public string Image { get; set; }
     }
 }
