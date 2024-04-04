@@ -76,15 +76,11 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                 Gender = user.Gender,
                 Email = user.Email,
                 Password = user.Password,
+                Image = user.Image,
                 Address = new BaseDto
                 {
                     Id = user.AddressId,
                     Value = $"{user.Address.Street} {user.Address.City} {user.Address.State} {user.Address.Country}",
-                },
-                Image = new BaseDto
-                {
-                    Id = user.Id,
-                    Value = user.Image,
                 },
                 Dogs = user.Dogs.Select(d => new BaseDto
                 {

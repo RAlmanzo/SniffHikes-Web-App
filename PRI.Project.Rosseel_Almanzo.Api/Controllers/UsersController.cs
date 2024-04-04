@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PRI.Project.Rosseel_Almanzo.Api.Dtos;
 using PRI.Project.Rosseel_Almanzo.Api.Extensions;
+using PRI.Project.Rosseel_Almanzo.Api.Services.Interfaces;
 using PRI.Project.Rosseel_Almanzo.Core.Entities;
 using PRI.Project.Rosseel_Almanzo.Core.Interfaces.Services;
 using PRI.Project.Rosseel_Almanzo.Core.Services;
@@ -16,12 +17,14 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
         private readonly IUserService _userService;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly ILogger<EventsController> _logger;
+        private readonly IFileService _fileService;
 
-        public UsersController(IUserService userService, IWebHostEnvironment webHostEnvironment, ILogger<EventsController> logger)
+        public UsersController(IUserService userService, IWebHostEnvironment webHostEnvironment, ILogger<EventsController> logger, IFileService fileService)
         {
             _userService = userService;
             _webHostEnvironment = webHostEnvironment;
             _logger = logger;
+            _fileService = fileService;
         }
 
         [HttpGet]
@@ -51,8 +54,21 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(UserRequestDto userRequestDto)
+        public async Task<IActionResult> Add([FromForm]UserRequestDto userRequestDto)
         {
+            //check if image is given
+            var filename = "";
+            if (userRequestDto.Image != null)
+            {
+                filename = await _fileService.StoreFile<User>(userRequestDto.Image);
+            }
+
+            ////check if dogs is null
+            //if (userRequestDto.Dogs == null)
+            //{
+            //    userRequestDto.Dogs = new List<BaseDogRequestDto>();
+            //}
+
             var result = await _userService.CreateUserAsync(
                 new UserCreateRequestModel
                 {
@@ -62,22 +78,22 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
                     Gender = userRequestDto.Gender,
                     Email = userRequestDto.Email,
                     Password = userRequestDto.Password,
+                    Image = filename,
                     Address = new Address
                     {
                         Street = userRequestDto.Address.Street,
                         City = userRequestDto.Address.City,
                         State = userRequestDto.Address.State,
                         Country = userRequestDto.Address.Country,
-                    },                   
-                    Dogs = userRequestDto.Dogs.Select(d => new Dog
-                    {
-                        Name = d.Value,
-                        Race = d.Race,
-                        Gender = d.Gender,
-                        DateOfBirth = d.DateOfBirth,
-                        Image = d.Image,
-                        UserId = userRequestDto.Id
-                    }),
+                    },
+                    //Dogs = userRequestDto.Dogs.Select(d => new Dog
+                    //{
+                    //    Name = d.Value,
+                    //    Race = d.Race,
+                    //    Gender = d.Gender,
+                    //    DateOfBirth = d.DateOfBirth,
+                    //    Image = d.Image,
+                    //}),
                 });
 
             if (result.Success)
@@ -98,7 +114,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
         {
             if (!await _userService.CheckIfExistsAsync(id))
             {
-                return NotFound("Event not found!");
+                return NotFound("User not found!");
             }
 
             var result = await _userService.DeleteUserAsync(id);

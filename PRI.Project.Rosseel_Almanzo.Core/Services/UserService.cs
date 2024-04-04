@@ -32,13 +32,13 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 };
             }
 
-            //check if address is null
-            if (userCreateRequestModel.Address == null)
+            //check dateofbirth
+            if (userCreateRequestModel.DateOfBirth > DateTime.Now)
             {
                 return new ResultModel<User>
                 {
                     Success = false,
-                    Errors = new List<string> { "Address is null!" }
+                    Errors = new List<string> { "DateOfBirth cant be in the future!" }
                 };
             }
 
@@ -51,6 +51,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 Gender = userCreateRequestModel.Gender,
                 Email = userCreateRequestModel.Email,
                 Password = userCreateRequestModel.Password,
+                Image = userCreateRequestModel.Image,
                 Address = new Address
                 {
                     Street = userCreateRequestModel.Address.Street,
@@ -60,32 +61,22 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 },
             };
 
-            if (userCreateRequestModel.Dogs.Count() != 0)
-            {
-                newUser.Dogs = userCreateRequestModel.Dogs.Select(d => new Dog
-                {
-                    Name = d.Name,
-                    Race = d.Race,
-                    Gender = d.Gender,
-                    DateOfBirth = d.DateOfBirth,
-                    Image = d.Image,
-                    UserId = newUser.Id,
-                }).ToList();
-            }
-            if (newUser.Address == null)
-            {
-                return new ResultModel<User>
-                {
-                    Success = false,
-                    Errors = new List<string> { "Address is null!" }
-                };
-            }
-
+            ////check if dog(s) are added
+            //if (userCreateRequestModel.Dogs.Count() != 0)
+            //{
+            //    newUser.Dogs = userCreateRequestModel.Dogs.Select(d => new Dog
+            //    {
+            //        Name = d.Name,
+            //        Race = d.Race,
+            //        Gender = d.Gender,
+            //        DateOfBirth = d.DateOfBirth,
+            //        Image = d.Image,
+            //        UserId = newUser.Id,
+            //    }).ToList();
+            //}
 
             //call the eventsrepo addAsync method for the event  and addres (images,...)
-            var result = await _userRepository.AddAsync(newUser);
-            
-
+            var result = await _userRepository.AddAsync(newUser);        
             //var addressResult = await _addressRepository.AddAsync(newEvent.Address);
 
             //check  result
@@ -116,9 +107,12 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 return new ResultModel<User>
                 {
                     Success = false,
-                    Errors = new List<string> { "Event does not exist!" }
+                    Errors = new List<string> { "User does not exist!" }
                 };
             }
+
+            //delete user address from db???
+            //delete user image from db???
 
             //check if deleteAsync returns true
             if (await _userRepository.DeleteAsync(selectedEvent))
@@ -162,7 +156,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             if (user == null)
             {
                 userResultModel.Success = false;
-                userResultModel.Errors = new List<string> { "No event found" };
+                userResultModel.Errors = new List<string> { "User not found" };
                 return userResultModel;
             }
             //if yes
