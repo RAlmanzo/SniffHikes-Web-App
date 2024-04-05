@@ -29,7 +29,9 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Dtos
 
         [Required(ErrorMessage = "Address is required")]
         public AddressRequestDto Address { get; set; }
-        //public IEnumerable<BaseDogRequestDto> Dogs { get; set; }
+        public IEnumerable<BaseDogRequestDto> Dogs { get; set; }
+
+        //Zet image hier in comment zodat je kan testen om dogs toe te voegen zonder userimage.
         public IFormFile Image { get; set; }
     }
 }

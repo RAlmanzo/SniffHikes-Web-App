@@ -56,6 +56,10 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Add([FromForm]UserRequestDto userRequestDto)
         {
+            //in deze situatie zal dogs count 0 blijven, zelfs als je honden toevoegd in swagger
+            //Als je de fromform wegneemt en de code om de image opteslaan in commentaar zet zul je zien dat de honden dan wel
+            //meegegeven worden maar dan ik natuurlijk geen image uploaden
+
             //check if image is given
             var filename = "";
             if (userRequestDto.Image != null)
@@ -63,11 +67,11 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
                 filename = await _fileService.StoreFile<User>(userRequestDto.Image);
             }
 
-            ////check if dogs is null
-            //if (userRequestDto.Dogs == null)
-            //{
-            //    userRequestDto.Dogs = new List<BaseDogRequestDto>();
-            //}
+            //check if dogs is null
+            if (userRequestDto.Dogs == null)
+            {
+                userRequestDto.Dogs = new List<BaseDogRequestDto>();
+            }
 
             var result = await _userService.CreateUserAsync(
                 new UserCreateRequestModel
@@ -78,7 +82,8 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
                     Gender = userRequestDto.Gender,
                     Email = userRequestDto.Email,
                     Password = userRequestDto.Password,
-                    Image = filename,
+                    //zet hier image in comment om te testen 
+                    //Image = filename,
                     Address = new Address
                     {
                         Street = userRequestDto.Address.Street,
@@ -86,14 +91,14 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
                         State = userRequestDto.Address.State,
                         Country = userRequestDto.Address.Country,
                     },
-                    //Dogs = userRequestDto.Dogs.Select(d => new Dog
-                    //{
-                    //    Name = d.Value,
-                    //    Race = d.Race,
-                    //    Gender = d.Gender,
-                    //    DateOfBirth = d.DateOfBirth,
-                    //    Image = d.Image,
-                    //}),
+                    Dogs = userRequestDto.Dogs.Select(d => new Dog
+                    {
+                        Name = d.Value,
+                        Race = d.Race,
+                        Gender = d.Gender,
+                        DateOfBirth = d.DateOfBirth,
+                        Image = d.Image,
+                    }),
                 });
 
             if (result.Success)
