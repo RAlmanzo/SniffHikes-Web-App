@@ -15,12 +15,14 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
         private readonly IUserRepository _userRepository;
         private readonly IAddressRepository _addressRepository;
         private readonly IEventUserRepository _eventUserRepository;
+        private readonly IEventRepository _eventRepository;
 
-        public UserService(IUserRepository userRepository, IAddressRepository addressRepository, IEventUserRepository eventUserRepository)
+        public UserService(IUserRepository userRepository, IAddressRepository addressRepository, IEventUserRepository eventUserRepository, IEventRepository eventRepository)
         {
             _userRepository = userRepository;
             _addressRepository = addressRepository;
             _eventUserRepository = eventUserRepository;
+            _eventRepository = eventRepository;
         }
 
         public async Task<ResultModel<User>> CreateUserAsync(UserCreateRequestModel userCreateRequestModel)
@@ -174,6 +176,13 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 userResultModel.Errors = new List<string> { "User not found" };
                 return userResultModel;
             }
+
+            foreach (var attendingEvent in user.AttendingEvents) 
+            {
+                var result = await _eventRepository.GetByIdAsync((int)attendingEvent.EventId);
+                attendingEvent.Event = result;
+            }
+
             //if yes
             userResultModel.Success = true;
             userResultModel.Value = user;
