@@ -13,15 +13,136 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IAddressRepository _addressRepository;
+        private readonly IEventUserRepository _eventUserRepository;
+        private readonly IEventRepository _eventRepository;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, IAddressRepository addressRepository, IEventUserRepository eventUserRepository, IEventRepository eventRepository)
         {
             _userRepository = userRepository;
+            _addressRepository = addressRepository;
+            _eventUserRepository = eventUserRepository;
+            _eventRepository = eventRepository;
         }
 
-        public Task<ResultModel<User>> DeleteUserAsync(int id)
+        public async Task<ResultModel<User>> CreateUserAsync(UserCreateRequestModel userCreateRequestModel)
         {
-            throw new NotImplementedException();
+            //check if user excist
+            var users = await _userRepository.GetAllAsync();            
+            if(users.Any(u => u.Email.ToUpper().Equals(userCreateRequestModel.Email.ToUpper())))
+            {
+                return new ResultModel<User>
+                {
+                    Success = false,
+                    Errors = new List<string> { "User allready exists!" }
+                };
+            }
+
+            //check dateofbirth
+            if (userCreateRequestModel.DateOfBirth > DateTime.Now)
+            {
+                return new ResultModel<User>
+                {
+                    Success = false,
+                    Errors = new List<string> { "DateOfBirth cant be in the future!" }
+                };
+            }
+
+            //create new user
+            var newUser = new User
+            {
+                FirstName = userCreateRequestModel.FirstName,
+                LastName = userCreateRequestModel.LastName,
+                DateOfBirth = userCreateRequestModel.DateOfBirth,
+                Gender = userCreateRequestModel.Gender,
+                Email = userCreateRequestModel.Email,
+                Password = userCreateRequestModel.Password,
+                Image = userCreateRequestModel.Image,
+                Address = new Address
+                {
+                    Street = userCreateRequestModel.Address.Street,
+                    City = userCreateRequestModel.Address.City,
+                    State = userCreateRequestModel.Address.State,
+                    Country = userCreateRequestModel.Address.Country,
+                },
+            };
+
+            ////check if dog(s) are added
+            //if (userCreateRequestModel.Dogs.Count() != 0)
+            //{
+            //    newUser.Dogs = userCreateRequestModel.Dogs.Select(d => new Dog
+            //    {
+            //        Name = d.Name,
+            //        Race = d.Race,
+            //        Gender = d.Gender,
+            //        DateOfBirth = d.DateOfBirth,
+            //        Image = d.Image,
+            //        UserId = newUser.Id,
+            //    }).ToList();
+            //}
+
+            //call the eventsrepo addAsync method for the event  and addres (images,...)
+            var result = await _userRepository.AddAsync(newUser);        
+            //var addressResult = await _addressRepository.AddAsync(newEvent.Address);
+
+            //check  result
+            if (result)
+            {
+                var createdRecord = await GetByIdAsync(newUser.Id);
+                return new ResultModel<User>
+                {
+                    Success = true,
+                    Value = createdRecord.Value,
+                };
+            }
+            return new ResultModel<User>
+            {
+                Success = false,
+                Errors = new List<string> { "User not created!" }
+            };
+        }
+
+        public async Task<ResultModel<User>> DeleteUserAsync(int id)
+        {
+            //get the user
+            var selectedUser = await _userRepository.GetByIdAsync(id);
+            //get user address
+            var userAddress = await _addressRepository.GetByIdAsync(selectedUser.AddressId);
+
+            //check iff user exists
+            if (selectedUser == null)
+            {
+                return new ResultModel<User>
+                {
+                    Success = false,
+                    Errors = new List<string> { "User does not exist!" }
+                };
+            }
+
+            // get all EventUser records associated with the user
+            var userEventUsers = await _eventUserRepository.GetAllByUserId(id);
+
+            // delete all EventUser records associated with the user
+            foreach (var eventUser in userEventUsers)
+            {
+                await _eventUserRepository.DeleteAsync(eventUser);
+            }
+
+            //check if deleteAsync returns true
+            if (await _userRepository.DeleteAsync(selectedUser))
+            {
+                if (await _addressRepository.DeleteAsync(userAddress))
+                {
+                    return new ResultModel<User> { Success = true, };
+                }             
+            }
+
+            //if not
+            return new ResultModel<User>
+            {
+                Success = false,
+                Errors = new List<string> { "Some error occured!" }
+            };
         }
 
         public async Task<ResultModel<IEnumerable<User>>> GetAllAsync()
@@ -52,13 +173,25 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             if (user == null)
             {
                 userResultModel.Success = false;
-                userResultModel.Errors = new List<string> { "No event found" };
+                userResultModel.Errors = new List<string> { "User not found" };
                 return userResultModel;
             }
+
+            foreach (var attendingEvent in user.AttendingEvents) 
+            {
+                var result = await _eventRepository.GetByIdAsync((int)attendingEvent.EventId);
+                attendingEvent.Event = result;
+            }
+
             //if yes
             userResultModel.Success = true;
             userResultModel.Value = user;
             return userResultModel;
+        }
+
+        public async Task<bool> CheckIfExistsAsync(int id)
+        {
+            return await _userRepository.CheckIfExistsAsync(id);
         }
     }
 }

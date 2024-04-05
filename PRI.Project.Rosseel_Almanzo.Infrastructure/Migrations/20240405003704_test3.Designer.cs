@@ -12,8 +12,8 @@ using PRI.Project.Rosseel_Almanzo.Infrastructure.Data;
 namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
 {
     [DbContext(typeof(SniffHikesDbContext))]
-    [Migration("20240327092831_seedData")]
-    partial class seedData
+    [Migration("20240405003704_test3")]
+    partial class test3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -163,7 +163,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 1,
                             Content = "Gezellige avond!",
-                            DateCreated = new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(839),
+                            DateCreated = new DateTime(2024, 4, 5, 2, 37, 4, 760, DateTimeKind.Local).AddTicks(6034),
                             EventId = 1,
                             UserId = 1
                         },
@@ -171,7 +171,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 2,
                             Content = "Leuke wandeling!",
-                            DateCreated = new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(843),
+                            DateCreated = new DateTime(2024, 4, 5, 2, 37, 4, 760, DateTimeKind.Local).AddTicks(6036),
                             EventId = 2,
                             UserId = 1
                         },
@@ -179,7 +179,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 3,
                             Content = "Gezellige avond!",
-                            DateCreated = new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(846),
+                            DateCreated = new DateTime(2024, 4, 5, 2, 37, 4, 760, DateTimeKind.Local).AddTicks(6039),
                             EventId = 2,
                             UserId = 2
                         },
@@ -187,7 +187,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 4,
                             Content = "Gezellige avond!",
-                            DateCreated = new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(849),
+                            DateCreated = new DateTime(2024, 4, 5, 2, 37, 4, 760, DateTimeKind.Local).AddTicks(6040),
                             EventId = 3,
                             UserId = 3
                         },
@@ -195,7 +195,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 5,
                             Content = "Mooie route!",
-                            DateCreated = new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(852),
+                            DateCreated = new DateTime(2024, 4, 5, 2, 37, 4, 760, DateTimeKind.Local).AddTicks(6042),
                             RouteId = 1,
                             UserId = 1
                         },
@@ -203,7 +203,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 6,
                             Content = "Leuke wandeling!",
-                            DateCreated = new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(856),
+                            DateCreated = new DateTime(2024, 4, 5, 2, 37, 4, 760, DateTimeKind.Local).AddTicks(6044),
                             RouteId = 2,
                             UserId = 2
                         },
@@ -211,7 +211,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 7,
                             Content = "Mooie route!",
-                            DateCreated = new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(859),
+                            DateCreated = new DateTime(2024, 4, 5, 2, 37, 4, 760, DateTimeKind.Local).AddTicks(6045),
                             RouteId = 2,
                             UserId = 2
                         },
@@ -219,7 +219,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 8,
                             Content = "Mooie route!",
-                            DateCreated = new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(862),
+                            DateCreated = new DateTime(2024, 4, 5, 2, 37, 4, 760, DateTimeKind.Local).AddTicks(6047),
                             RouteId = 3,
                             UserId = 3
                         });
@@ -248,7 +248,6 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Race")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
@@ -264,7 +263,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            DateOfBirth = new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(752),
+                            DateOfBirth = new DateTime(2024, 4, 5, 2, 37, 4, 760, DateTimeKind.Local).AddTicks(5984),
                             Gender = "Male",
                             Name = "Inca",
                             Race = "Husky",
@@ -273,7 +272,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            DateOfBirth = new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(820),
+                            DateOfBirth = new DateTime(2024, 4, 5, 2, 37, 4, 760, DateTimeKind.Local).AddTicks(6024),
                             Gender = "Female",
                             Name = "Zara",
                             Race = "Border-collie",
@@ -282,7 +281,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         new
                         {
                             Id = 3,
-                            DateOfBirth = new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(825),
+                            DateOfBirth = new DateTime(2024, 4, 5, 2, 37, 4, 760, DateTimeKind.Local).AddTicks(6026),
                             Gender = "Male",
                             Name = "Sleepy",
                             Race = "Duitse-herder",
@@ -291,7 +290,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         new
                         {
                             Id = 4,
-                            DateOfBirth = new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(828),
+                            DateOfBirth = new DateTime(2024, 4, 5, 2, 37, 4, 760, DateTimeKind.Local).AddTicks(6028),
                             Gender = "Male",
                             Name = "Sleepy",
                             Race = "Duitse-herder",
@@ -300,7 +299,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         new
                         {
                             Id = 5,
-                            DateOfBirth = new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(832),
+                            DateOfBirth = new DateTime(2024, 4, 5, 2, 37, 4, 760, DateTimeKind.Local).AddTicks(6030),
                             Gender = "Female",
                             Name = "Tunder",
                             Race = "Dog",
@@ -309,7 +308,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         new
                         {
                             Id = 6,
-                            DateOfBirth = new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(835),
+                            DateOfBirth = new DateTime(2024, 4, 5, 2, 37, 4, 760, DateTimeKind.Local).AddTicks(6032),
                             Gender = "Male",
                             Name = "Zira",
                             Race = "Husky",
@@ -339,7 +338,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         .HasMaxLength(750)
                         .HasColumnType("nvarchar(750)");
 
-                    b.Property<int>("OrganizerId")
+                    b.Property<int?>("OrganizerId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
@@ -364,7 +363,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             Id = 1,
                             AddressId = 4,
                             Date = new DateTime(2024, 4, 1, 10, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateCreated = new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(903),
+                            DateCreated = new DateTime(2024, 4, 5, 2, 37, 4, 760, DateTimeKind.Local).AddTicks(6072),
                             Description = "Geniet van een ontspannen wandeling met je hond in het prachtige bosgebied. Neem je viervoeter mee voor een leuke tijd in de natuur.",
                             OrganizerId = 1,
                             Price = 0m,
@@ -375,7 +374,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             Id = 2,
                             AddressId = 5,
                             Date = new DateTime(2024, 4, 5, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateCreated = new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(911),
+                            DateCreated = new DateTime(2024, 4, 5, 2, 37, 4, 760, DateTimeKind.Local).AddTicks(6077),
                             Description = "Kom en bewonder verschillende hondenrassen tijdens de hondenshow in Brussel. Er zijn prijzen te winnen en veel plezier te beleven!",
                             OrganizerId = 2,
                             Price = 10.50m,
@@ -386,7 +385,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             Id = 3,
                             AddressId = 6,
                             Date = new DateTime(2024, 4, 10, 10, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateCreated = new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(915),
+                            DateCreated = new DateTime(2024, 4, 5, 2, 37, 4, 760, DateTimeKind.Local).AddTicks(6079),
                             Description = "Geniet van een ontspannen wandeling met je hond in het prachtige bosgebied. Neem je viervoeter mee voor een leuke tijd in de natuur.",
                             OrganizerId = 3,
                             Price = 0m,
@@ -396,10 +395,10 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
 
             modelBuilder.Entity("PRI.Project.Rosseel_Almanzo.Core.Entities.EventUser", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("EventId")
+                    b.Property<int?>("EventId")
                         .HasColumnType("int");
 
                     b.HasKey("UserId", "EventId");
@@ -458,16 +457,11 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                     b.Property<int?>("RouteId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("EventId");
 
                     b.HasIndex("RouteId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Images");
 
@@ -475,106 +469,88 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            EventId = 1,
-                            UserId = 1
+                            EventId = 1
                         },
                         new
                         {
                             Id = 2,
-                            EventId = 1,
-                            UserId = 1
+                            EventId = 1
                         },
                         new
                         {
                             Id = 3,
-                            RouteId = 1,
-                            UserId = 1
+                            RouteId = 1
                         },
                         new
                         {
-                            Id = 4,
-                            UserId = 1
+                            Id = 4
                         },
                         new
                         {
-                            Id = 5,
-                            UserId = 1
+                            Id = 5
                         },
                         new
                         {
                             Id = 6,
-                            EventId = 2,
-                            UserId = 2
+                            EventId = 2
                         },
                         new
                         {
                             Id = 7,
-                            RouteId = 2,
-                            UserId = 2
+                            RouteId = 2
                         },
                         new
                         {
                             Id = 8,
-                            RouteId = 2,
-                            UserId = 2
+                            RouteId = 2
                         },
                         new
                         {
                             Id = 9,
-                            EventId = 2,
-                            UserId = 3
+                            EventId = 2
                         },
                         new
                         {
                             Id = 10,
-                            RouteId = 2,
-                            UserId = 3
+                            RouteId = 2
                         },
                         new
                         {
-                            Id = 11,
-                            UserId = 3
+                            Id = 11
                         },
                         new
                         {
                             Id = 12,
-                            EventId = 3,
-                            UserId = 1
+                            EventId = 3
                         },
                         new
                         {
                             Id = 13,
-                            EventId = 2,
-                            UserId = 1
+                            EventId = 2
                         },
                         new
                         {
                             Id = 14,
-                            RouteId = 3,
-                            UserId = 2
+                            RouteId = 3
                         },
                         new
                         {
                             Id = 15,
-                            EventId = 1,
-                            UserId = 2
+                            EventId = 1
                         },
                         new
                         {
                             Id = 16,
-                            RouteId = 1,
-                            UserId = 2
+                            RouteId = 1
                         },
                         new
                         {
                             Id = 17,
-                            RouteId = 3,
-                            UserId = 3
+                            RouteId = 3
                         },
                         new
                         {
-                            Id = 18,
-                            UserId = 3
+                            Id = 18
                         });
                 });
 
@@ -602,7 +578,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -618,7 +594,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 1,
                             AddressId = 7,
-                            DateCreated = new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(880),
+                            DateCreated = new DateTime(2024, 4, 5, 2, 37, 4, 760, DateTimeKind.Local).AddTicks(6057),
                             Description = "Een mooie wandeling door het bos met je hond. Geniet van de natuur en de frisse lucht.",
                             Title = "Boswandeling",
                             UserId = 1
@@ -627,7 +603,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 2,
                             AddressId = 8,
-                            DateCreated = new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(883),
+                            DateCreated = new DateTime(2024, 4, 5, 2, 37, 4, 760, DateTimeKind.Local).AddTicks(6060),
                             Description = "Een ontspannen wandeling met je hond langs het strand. Laat je viervoeter lekker uitwaaien!",
                             Title = "Strandwandeling",
                             UserId = 2
@@ -636,7 +612,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 3,
                             AddressId = 9,
-                            DateCreated = new DateTime(2024, 3, 27, 10, 28, 30, 704, DateTimeKind.Local).AddTicks(887),
+                            DateCreated = new DateTime(2024, 4, 5, 2, 37, 4, 760, DateTimeKind.Local).AddTicks(6061),
                             Description = "Een leuke wandeling met je hond door het park. Laat je hond lekker rennen en spelen.",
                             Title = "Parkwandeling",
                             UserId = 3
@@ -666,6 +642,9 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Gender")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
@@ -761,8 +740,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                     b.HasOne("PRI.Project.Rosseel_Almanzo.Core.Entities.User", "Organizer")
                         .WithMany("OrganizedEvents")
                         .HasForeignKey("OrganizerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Address");
 
@@ -774,7 +752,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                     b.HasOne("PRI.Project.Rosseel_Almanzo.Core.Entities.Event", "Event")
                         .WithMany("AttendingUsers")
                         .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("PRI.Project.Rosseel_Almanzo.Core.Entities.User", "User")
@@ -798,15 +776,9 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         .WithMany("Images")
                         .HasForeignKey("RouteId");
 
-                    b.HasOne("PRI.Project.Rosseel_Almanzo.Core.Entities.User", "User")
-                        .WithMany("Images")
-                        .HasForeignKey("UserId");
-
                     b.Navigation("Event");
 
                     b.Navigation("Route");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("PRI.Project.Rosseel_Almanzo.Core.Entities.Route", b =>
@@ -820,8 +792,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                     b.HasOne("PRI.Project.Rosseel_Almanzo.Core.Entities.User", "User")
                         .WithMany("Routes")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Address");
 
@@ -862,8 +833,6 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("Dogs");
-
-                    b.Navigation("Images");
 
                     b.Navigation("OrganizedEvents");
 

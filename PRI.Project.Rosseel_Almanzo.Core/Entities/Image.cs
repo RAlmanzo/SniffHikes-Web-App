@@ -8,8 +8,8 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Entities
 {
     public class Image : BaseEntity
     {
-        public User User { get; set; }
-        public int? UserId { get; set; }
+        //public User User { get; set; }
+        //public int? UserId { get; set; }
         public string File { get; set; }
         public Route Route { get; set; }
         public int? RouteId { get; set; }

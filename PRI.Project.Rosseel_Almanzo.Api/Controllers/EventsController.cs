@@ -62,6 +62,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
                     Country = eventRequestDto.Address.Country,
                     OrganizerId = eventRequestDto.OrganizerId,
                     Date = eventRequestDto.Date,
+                    //TODO images
                 });
 
             if (result.Success)
@@ -122,9 +123,9 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
                         OrganizerId = eventUpdateRequestDto.OrganizerId,
                         Date = eventUpdateRequestDto.Date,
                         DateCreated = eventUpdateRequestDto.DateCreated,
-                        ImageIds = eventUpdateRequestDto.ImageIds,
-                        CommentIds = eventUpdateRequestDto.CommentIds,
-                        AttendingUserIds = eventUpdateRequestDto.AttendingUserIds,
+                        //ImageIds = eventUpdateRequestDto.ImageIds,
+                        //CommentIds = eventUpdateRequestDto.CommentIds,
+                        //AttendingUserIds = eventUpdateRequestDto.AttendingUserIds,
                     }
                 );
             if (result.Success)

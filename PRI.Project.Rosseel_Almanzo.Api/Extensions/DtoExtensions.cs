@@ -28,7 +28,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                 DateCreated = DateTime.Now,
                 Orginazer = new BaseDto
                 {
-                    Id = selectedEvent.OrganizerId,
+                    Id = (int)selectedEvent.OrganizerId,
                     Value = $"{selectedEvent.Organizer.FirstName} {selectedEvent.Organizer.LastName}",
                 },
                 Address = new BaseDto
@@ -76,40 +76,31 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                 Gender = user.Gender,
                 Email = user.Email,
                 Password = user.Password,
+                Image = user.Image,
                 Address = new BaseDto
                 {
                     Id = user.AddressId,
                     Value = $"{user.Address.Street} {user.Address.City} {user.Address.State} {user.Address.Country}",
                 },
-                Comments = user.Comments.Select(c => new BaseDto
-                {
-                    Id = c.Id,
-                    Value = c.Content,
-                }),
                 Dogs = user.Dogs.Select(d => new BaseDto
                 {
                     Id = d.Id,
                     Value = d.Name,
                 }),
-                Routes = user.Routes.Select(r => new BaseDto
-                {
-                    Id = r.Id,
-                    Value = r.Title,
-                }),
-                OrganizedEvents = user.OrganizedEvents.Select(u => new BaseDto
+                Comments = user.Comments.Select(u => new BaseDto
                 {
                     Id = u.Id,
-                    Value = u.Title,
+                    Value = u.Content,
                 }),
-                //AttendingEvents = user.AttendingEvents.Select(u => new BaseDto
-                //{
-                //    Id = u.Id,
-                //    Value = u.Title,
-                //}),
-                Images = user.Images.Select(i => new BaseDto
+                AttendingEvents = user.AttendingEvents.Select(e => new BaseDto
                 {
-                    Id = i.Id,
-                    Value = i.File,
+                    Id = (int)e.EventId,
+                    Value = e.Event.Title,
+                }),
+                OrganizedEvents = user.OrganizedEvents.Select(e => new BaseDto
+                {
+                    Id = (int)e.Id,
+                    Value = e.Title,
                 }),
             };
         }

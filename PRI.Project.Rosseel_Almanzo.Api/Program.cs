@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using PRI.Project.Rosseel_Almanzo.Api.Services;
+using PRI.Project.Rosseel_Almanzo.Api.Services.Interfaces;
 using PRI.Project.Rosseel_Almanzo.Core.Interfaces.Repositories;
 using PRI.Project.Rosseel_Almanzo.Core.Interfaces.Services;
 using PRI.Project.Rosseel_Almanzo.Core.Services;
@@ -22,7 +24,9 @@ namespace PRI.Project.Rosseel_Almanzo.Api
             builder.Services.AddScoped<IEventService, EventService>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IFileService, FileService>();
             builder.Services.AddScoped<IAddressRepository, AddressRepository>();
+            builder.Services.AddScoped<IEventUserRepository, EventUserRepository>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
