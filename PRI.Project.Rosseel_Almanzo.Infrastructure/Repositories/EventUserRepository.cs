@@ -34,6 +34,11 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
             return await _targetTable.Where(u => u.UserId == id).ToListAsync();
         }
 
+        public async Task<IEnumerable<EventUser>> GetAllByEventId(int id)
+        {
+            return await _targetTable.Where(u => u.EventId == id).ToListAsync();
+        }
+
         private async Task<bool> SaveChangesAsync()
         {
             try
