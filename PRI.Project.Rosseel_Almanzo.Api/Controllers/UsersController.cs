@@ -143,5 +143,70 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
             }
             return BadRequest(ModelState.Values);
         }
+
+        [HttpPut]
+        public async Task<IActionResult> Update([FromForm]UserUpdateRequestDto userUpdateRequestDto)
+        {
+            //check if user exists
+            if (!await _userService.CheckIfExistsAsync(userUpdateRequestDto.Id))
+            {
+                return NotFound("Event not found!");
+            }
+
+            //check if new user image
+            var filename = "";
+            if (userUpdateRequestDto.Image != null)
+            {
+                //get user current image
+                var user = await _userService.GetByIdAsync(userUpdateRequestDto.Id);
+                //delete current image
+                if (!string.IsNullOrWhiteSpace(user.Value.Image))
+                {
+                    if (!_fileService.DeleteFile<User>(user.Value.Image))
+                    {
+                        ModelState.AddModelError("", "Image not found");
+                    }
+                }
+                //save new image
+                filename = await _fileService.StoreFile<User>(userUpdateRequestDto.Image);
+            }
+
+            var result = await _userService.UpdateUserAsync(
+                new UserUpdateRequestModel
+                {
+                    Id = userUpdateRequestDto.Id,
+                    FirstName = userUpdateRequestDto.FirstName,
+                    LastName = userUpdateRequestDto.LastName,
+                    DateOfBirth = userUpdateRequestDto.DateOfBirth,
+                    Gender = userUpdateRequestDto.Gender,
+                    Email = userUpdateRequestDto.Email,
+                    Password = userUpdateRequestDto.Password,
+                    Image = filename,
+                    Address = new Address
+                    {
+                        Street = userUpdateRequestDto.Address.Street,
+                        City = userUpdateRequestDto.Address.City,
+                        State = userUpdateRequestDto.Address.State,
+                        Country = userUpdateRequestDto.Address.Country,
+                    },
+                    //Dogs = userRequestDto.Dogs.Select(d => new Dog
+                    //{
+                    //    Name = d.Value,
+                    //    Race = d.Race,
+                    //    Gender = d.Gender,
+                    //    DateOfBirth = d.DateOfBirth,
+                    //    Image = d.Image,
+                    //}),
+                });
+            if (result.Success)
+            {
+                return Ok();
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+            return BadRequest(ModelState.Values);
+        }
     }
 }
