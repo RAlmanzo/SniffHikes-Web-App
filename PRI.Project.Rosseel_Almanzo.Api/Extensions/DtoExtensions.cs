@@ -87,6 +87,21 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                     Id = d.Id,
                     Value = d.Name,
                 }),
+                Comments = user.Comments.Select(u => new BaseDto
+                {
+                    Id = u.Id,
+                    Value = u.Content,
+                }),
+                AttendingEvents = user.AttendingEvents.Select(e => new BaseDto
+                {
+                    Id = (int)e.EventId,
+                    Value = e.Event.Title,
+                }),
+                OrganizedEvents = user.OrganizedEvents.Select(e => new BaseDto
+                {
+                    Id = (int)e.Id,
+                    Value = e.Title,
+                }),
             };
         }
     }
