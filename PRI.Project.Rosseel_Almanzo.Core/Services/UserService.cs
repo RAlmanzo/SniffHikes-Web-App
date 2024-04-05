@@ -189,9 +189,43 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             return userResultModel;
         }
 
+        public async Task<ResultModel<User>> UpdateUserAsync(UserUpdateRequestModel userUpdateRequestModel)
+        {
+            //get the user
+            var user = await _userRepository.GetByIdAsync(userUpdateRequestModel.Id);
+
+            //update
+            user.Id = userUpdateRequestModel.Id;
+            user.FirstName = userUpdateRequestModel.FirstName;
+            user.LastName = userUpdateRequestModel.LastName;
+            user.Email = userUpdateRequestModel.Email;
+            user.Gender = userUpdateRequestModel.Gender;
+            user.Password = userUpdateRequestModel.Password;
+            user.Address.Street = userUpdateRequestModel.Address.Street;
+            user.Address.City = userUpdateRequestModel.Address.City;
+            user.Address.State = userUpdateRequestModel.Address.State;
+            user.Address.Country = userUpdateRequestModel.Address.Country;
+            user.DateOfBirth = userUpdateRequestModel.DateOfBirth;
+            user.Image = userUpdateRequestModel.Image;
+
+            if (await _userRepository.UpdateAsync(user))
+            {
+                return new ResultModel<User>
+                {
+                    Success = true,
+                    Value = user,
+                };
+            }
+            return new ResultModel<User>
+            {
+                Success = false,
+                Errors = new List<string> { "Record update failed!" }
+            };
+        }
+
         public async Task<bool> CheckIfExistsAsync(int id)
         {
             return await _userRepository.CheckIfExistsAsync(id);
-        }
+        }  
     }
 }
