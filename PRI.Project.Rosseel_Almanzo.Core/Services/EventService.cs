@@ -154,7 +154,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
         public async Task<ResultModel<Event>> UpdateEventAsync(EventUpdateRequestModel eventUpdateRequestModel)
         {
             //check if organizerid exists
-            if (_userRepository.GetAll().Any(g => g.Id == eventUpdateRequestModel.OrganizerId) == false) // waarom kan ik hier geen async gebruiken
+            if (_userRepository.GetAll().Any(g => g.Id == eventUpdateRequestModel.OrganizerId) == false)
             {
                 return new ResultModel<Event>
                 {
