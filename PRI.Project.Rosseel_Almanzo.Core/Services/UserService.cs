@@ -14,11 +14,13 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IAddressRepository _addressRepository;
+        private readonly IEventUserRepository _eventUserRepository;
 
-        public UserService(IUserRepository userRepository, IAddressRepository addressRepository)
+        public UserService(IUserRepository userRepository, IAddressRepository addressRepository, IEventUserRepository eventUserRepository)
         {
             _userRepository = userRepository;
             _addressRepository = addressRepository;
+            _eventUserRepository = eventUserRepository;
         }
 
         public async Task<ResultModel<User>> CreateUserAsync(UserCreateRequestModel userCreateRequestModel)
@@ -113,6 +115,15 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                     Success = false,
                     Errors = new List<string> { "User does not exist!" }
                 };
+            }
+
+            // get all EventUser records associated with the user
+            var userEventUsers = await _eventUserRepository.GetAllByUserId(id);
+
+            // delete all EventUser records associated with the user
+            foreach (var eventUser in userEventUsers)
+            {
+                await _eventUserRepository.DeleteAsync(eventUser);
             }
 
             //check if deleteAsync returns true
