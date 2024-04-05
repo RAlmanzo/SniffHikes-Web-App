@@ -16,11 +16,13 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
         private readonly IEventRepository _eventRepository;
         private readonly IUserRepository _userRepository;
         private readonly IAddressRepository _addressRepository;
+        private readonly IEventUserRepository _eventUserRepository;
 
-        public EventService(IEventRepository eventRepository, IUserRepository userRepository)
+        public EventService(IEventRepository eventRepository, IUserRepository userRepository, IEventUserRepository eventUserRepository)
         {
             _eventRepository = eventRepository;
             _userRepository = userRepository;
+            _eventUserRepository = eventUserRepository;
         }
 
         public async Task<ResultModel<Event>> CreateEventAsync(EventCreateRequestModel eventCreateRequestModel)
@@ -139,7 +141,13 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 eventResultModel.Errors = new List<string> { "No event found" };
                 return eventResultModel;
             }
-            //if yes
+            //get event attendingusers
+            foreach (var attendingUser in selectedEvent.AttendingUsers)
+            {
+                var result = await _userRepository.GetByIdAsync((int)attendingUser.UserId);
+                attendingUser.User = result;
+            }
+            //if event exists
             eventResultModel.Success = true;
             eventResultModel.Value = selectedEvent;
             return eventResultModel;
@@ -147,7 +155,6 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
 
         public async Task<bool> CheckIfExistsAsync(int id)
         {
-            //return await _recordRepository.GetAll().AnyAsync(t => t.Id == id);
             return await _eventRepository.CheckIfExistsAsync(id);
         }
 
@@ -195,22 +202,6 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 }
             }
 
-            //check if attendingusers are present
-            //if (eventUpdateRequestModel.ImageIds != null)
-            //{
-            //    //check if attendingusers exist in database
-            //    var images = _eventRepository.GetAllEventAttendingUsers(eventUpdateRequestModel.Id);
-
-            //    if (images.Where(p => eventUpdateRequestModel.AttendingUserIds.Contains(p.Id)).Count() != eventUpdateRequestModel.AttendingUserIds.Distinct().Count())
-            //    {
-            //        return new ResultModel<Event>
-            //        {
-            //            Success = false,
-            //            Errors = new List<string> { "Image does not exist!" }
-            //        };
-            //    }
-            //}
-
             //get the event
             var record = await _eventRepository.GetByIdAsync(eventUpdateRequestModel.Id);
 
@@ -227,9 +218,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             record.Date = eventUpdateRequestModel.Date;
             record.DateCreated = eventUpdateRequestModel.DateCreated;
             record.Images = _eventRepository.GetAllEventImages(eventUpdateRequestModel.Id).ToList();
-            record.Comments = _eventRepository.GetAllEventComments(eventUpdateRequestModel.Id).ToList();
-            //record.AttendingUsers = _eventRepository.GetAllEventAttendingUsers(eventUpdateRequestModel.Id).ToList();
-            
+            record.Comments = _eventRepository.GetAllEventComments(eventUpdateRequestModel.Id).ToList();            
 
             if (await _eventRepository.UpdateAsync(record))
             {
