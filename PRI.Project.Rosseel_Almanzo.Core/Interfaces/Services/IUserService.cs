@@ -13,9 +13,10 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Interfaces.Services
         Task<ResultModel<IEnumerable<User>>> GetAllAsync();
         Task<ResultModel<User>> GetByIdAsync(int id);
         Task<ResultModel<User>> CreateUserAsync(UserCreateRequestModel UserCreateRequestModel);
-        //Task<ResultModel<User>> UpdateRecordAsync(UserUpdateRequestModel UserUpdateRequestModel);
+        Task<ResultModel<User>> UpdateUserAsync(UserUpdateRequestModel UserUpdateRequestModel);
         Task<ResultModel<User>> DeleteUserAsync(int id);
         Task<bool> CheckIfExistsAsync(int id);
         //Task<bool> AddDogToUser(int id);
+        //Task<bool> DeleteDogFromUser(int userId, int dogId)
     }
 }
