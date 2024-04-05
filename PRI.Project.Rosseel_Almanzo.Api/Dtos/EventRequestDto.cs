@@ -18,6 +18,6 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Dtos
         [Required]
         public int OrganizerId { get; set; }
         [Required]
-        public Address Address { get; set; }
+        public AddressRequestDto Address { get; set; }
     }
 }
