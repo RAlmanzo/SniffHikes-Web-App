@@ -11,5 +11,8 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Dtos
         public BaseDto Address { get; set; }
         public IEnumerable<BaseDto> Dogs { get; set; }
         public string Image { get; set; }
+        public IEnumerable<BaseDto> Comments { get; set; }
+        public IEnumerable<BaseDto> OrganizedEvents { get; set; }
+        public IEnumerable<BaseDto> AttendingEvents { get; set; }
     }
 }
