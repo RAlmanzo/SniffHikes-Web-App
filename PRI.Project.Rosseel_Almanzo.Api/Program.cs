@@ -30,6 +30,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api
             builder.Services.AddScoped<IImageRepository, ImageRepository>();
             builder.Services.AddScoped<IRouteRepository, RouteRepository>();
             builder.Services.AddScoped<IRouteService, RouteService>();
+            builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
