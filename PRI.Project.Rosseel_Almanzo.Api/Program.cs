@@ -28,6 +28,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api
             builder.Services.AddScoped<IAddressRepository, AddressRepository>();
             builder.Services.AddScoped<IEventUserRepository, EventUserRepository>();
             builder.Services.AddScoped<IImageRepository, ImageRepository>();
+            builder.Services.AddScoped<IImageService, ImageService>();
             builder.Services.AddScoped<IRouteRepository, RouteRepository>();
             builder.Services.AddScoped<IRouteService, RouteService>();
             builder.Services.AddScoped<ICommentRepository, CommentRepository>();
