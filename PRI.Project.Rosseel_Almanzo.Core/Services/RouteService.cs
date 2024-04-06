@@ -237,5 +237,46 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
         {
             return await _routeRepository.CheckIfExistsAsync(id);
         }
+
+        public async Task<ResultModel<Route>> AddImage(int id, string imagePath)
+        {
+            //check if route exists
+            if (_routeRepository.GetAll().Any(g => g.Id == id) == false)
+            {
+                return new ResultModel<Route>
+                {
+                    Success = false,
+                    Errors = new List<string> { "Route does not exist!" }
+                };
+            }
+
+            //check if image is present
+            var result = false;
+            if (!string.IsNullOrWhiteSpace(imagePath))
+            {
+                var image = new Image { File = imagePath , RouteId = id};
+                result = await _imageRepository.AddAsync(image);
+            }
+
+            if (result)
+            {
+                var updatedRoute = await GetByIdAsync(id);
+                return new ResultModel<Route>
+                {
+                    Success = true,
+                    Value = updatedRoute.Value,
+                };
+            }
+            return new ResultModel<Route>
+            {
+                Success = false,
+                Errors = new List<string> { "Route not created!" }
+            };
+        }
+
+        public Task<ResultModel<Route>> DeleteImage(int id, int imageId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
