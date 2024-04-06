@@ -124,5 +124,63 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
             }
             return BadRequest(ModelState.Values);
         }
+
+        [HttpPut]
+        public async Task<IActionResult> Update([FromForm]RouteUpdateRequestDto routeUpdateRequestDto)
+        {
+            //check if route exists
+            if (!await _routeService.CheckIfExistsAsync(routeUpdateRequestDto.Id))
+            {
+                return NotFound("Event not found!");
+            }
+
+            ////check if new route images
+            //var filenames = new List<string>();
+            //if (routeUpdateRequestDto.Images.Count() > 0)
+            //{
+            //    //get route
+            //    var selectedEvent = await _eventService.GetByIdAsync(eventUpdateRequestDto.Id);
+            //    //delete current image
+            //    foreach (var image in selectedEvent.Value.Images)
+            //    {
+            //        if (!string.IsNullOrWhiteSpace(image.File))
+            //        {
+            //            if (!_fileService.DeleteFile<User>(image.File))
+            //            {
+            //                ModelState.AddModelError("", "Image not found");
+            //            }
+            //        }
+            //    }
+            //    //save new image
+            //    filename = await _fileService.StoreFile<User>(eventUpdateRequestDto.Image);
+            //}
+
+            var result = await _routeService.UpdateRouteAsync
+            (
+                new RouteUpdateRequestModel
+                {
+                    Id = routeUpdateRequestDto.Id,
+                    Title = routeUpdateRequestDto.Title,
+                    Description = routeUpdateRequestDto.Description,
+                    Street = routeUpdateRequestDto.Address.Street,
+                    City = routeUpdateRequestDto.Address.City,
+                    State = routeUpdateRequestDto.Address.State,
+                    Country = routeUpdateRequestDto.Address.Country,
+                    OrganizerId = routeUpdateRequestDto.OrganizerId,
+                }
+            );
+
+            if (result.Success)
+            {
+                return Ok();
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+
+            return BadRequest(ModelState.Values);
+        }
     }
 }
