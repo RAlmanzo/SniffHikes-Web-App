@@ -9,5 +9,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Interfaces.Repositories
 {
     public interface IRouteRepository : IBaseRepository<Route>
     {
+        IQueryable<Image> GetAllRouteImages(int id);
+        IQueryable<Comment> GetAllRouteComments(int id);
     }
 }
