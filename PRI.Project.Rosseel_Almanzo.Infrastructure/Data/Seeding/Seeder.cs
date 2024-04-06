@@ -16,11 +16,9 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
         {
             var images = new Image[]
             {
-                new Image{Id = 1, File = null, EventId = 1},
-                new Image{Id = 2, File = null, EventId = 1},
+                //new Image{Id = 1, File = null, EventId = 1},
+                //new Image{Id = 2, File = null, EventId = 1},
                 new Image{Id = 3, File = null, RouteId = 1},
-                new Image{Id = 4, File = null},
-                new Image{Id = 5, File = null},
 
                 new Image{Id = 6 , File = null, EventId = 2},
                 new Image{Id = 7, File = null, RouteId = 2},
@@ -28,16 +26,14 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
 
                 new Image{Id = 9, File = null, EventId = 2},
                 new Image{Id = 10, File = null, RouteId = 2},
-                new Image{Id = 11, File = null},
 
                 new Image{Id = 12, File = null, EventId = 3},
-                new Image{Id = 13, File = null, EventId = 2},
+                //new Image{Id = 13, File = null, EventId = 2},
 
                 new Image{Id = 14, File = null, RouteId = 3},
-                new Image{Id = 15, File = null, EventId = 1},
+                //new Image{Id = 15, File = null, EventId = 1},
                 new Image{Id = 16, File = null, RouteId = 1},
                 new Image{Id = 17, File = null, RouteId = 3},
-                new Image{Id = 18, File = null},
             };
 
             var dogs = new Dog[]
@@ -185,12 +181,6 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                     AddressId = 1,
                     Email = "",
                     Password = "",
-                    //Comments = comments.Where(c => c.UserId == 1).ToList(),
-                    //Dogs = dogs.Where(d => d.UserId == 1).ToList(),
-                    //Routes = routes.Where(r => r.UserId == 1).ToList(),
-                    //OrganizedEvents = events.Where(e => e.OrganizerId == 1).ToList(),
-                    //AttendingEvents = events.Where(e => e.AttendingUsers.All(u => u.Id == 1)).ToList(),
-                    //Images = images.Where(i => i.UserId == 1).ToList()
                 },
                 new User
                 {
@@ -202,12 +192,6 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                     AddressId = 2,
                     Email = "",
                     Password = "",
-                    //Comments = comments.Where(c => c.UserId == 2).ToList(),
-                    //Dogs = dogs.Where(d => d.UserId == 2).ToList(),
-                    //Routes = routes.Where(r => r.UserId == 2).ToList(),
-                    //OrganizedEvents = events.Where(e => e.OrganizerId == 2).ToList(),
-                    //AttendingEvents = events.Where(e => e.AttendingUsers.Any(u => u.Id == 2)).ToList(),
-                    //Images = images.Where(i => i.UserId == 2).ToList()
                 },
                 new User
                 {
@@ -219,12 +203,6 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                     AddressId = 3,
                     Email = "",
                     Password = "",
-                    //Comments = comments.Where(c => c.UserId == 3).ToList(),
-                    //Dogs = dogs.Where(d => d.UserId == 3).ToList(),
-                    //Routes = routes.Where(r => r.UserId == 3).ToList(),
-                    //OrganizedEvents = events.Where(e => e.OrganizerId == 3).ToList(),
-                    //AttendingEvents = events.Where(e => e.AttendingUsers.Any(u => u.Id == 3)).ToList(),
-                    //Images = images.Where(i => i.UserId == 3).ToList()
                 },
                 //new User
                 //{
@@ -236,12 +214,6 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                 //    Address = new Address { Id= 4, Street = "Steenstraat 28", City = "Brugge", State = "West-Vlaanderen" ,Country = "Belgie"},
                 //    Email = "",
                 //    Password = "",
-                //    Comments = comments.Where(c => c.UserId == 4).ToList(),
-                //    Dogs = dogs.Where(d => d.UserId == 4).ToList(),
-                //    Routes = routes.Where(r => r.UserId == 4).ToList(),
-                //    OrganizedEvents = events.Where(e => e.OrganizerId == 4).ToList(),
-                //    AttendingEvents = events.Where(e => e.AttendingUsers.All(u => u.Id == 4)).ToList(),
-                //    Images = images.Where(i => i.UserId == 4).ToList()
                 //},
                 //new User
                 //{
@@ -253,12 +225,6 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                 //    Address = new Address {Id = 5, Street = "Ooststraat 10", City = "Veurne", State = "West-Vlaanderen", Country = "Belgie"},
                 //    Email = "",
                 //    Password = "",
-                //    Comments = comments.Where(c => c.UserId == 5).ToList(),
-                //    Dogs = dogs.Where(d => d.UserId == 5).ToList(),
-                //    Routes = routes.Where(r => r.UserId == 5).ToList(),
-                //    OrganizedEvents = events.Where(e => e.OrganizerId == 5).ToList(),
-                //    AttendingEvents = events.Where(e => e.AttendingUsers.All(u => u.Id == 5)).ToList(),
-                //    Images = images.Where(i => i.UserId == 5).ToList()
                 //},               
             };
 
@@ -274,9 +240,6 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                     AddressId = 4,
                     Date = new DateTime(2024, 4, 1, 10, 0, 0),
                     DateCreated = DateTime.Now,
-                    //Images = images.Where(i => i.EventId == 1).ToList(),
-                    //Comments = comments.Where(c => c.EventId == 1).ToList(),
-                    //AttendingUsers = new List<User> { users[1], users[2] }
                 },
                 new Event
                 {
@@ -288,9 +251,6 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                     AddressId = 5,
                     Date = new DateTime(2024, 4, 5, 12, 0, 0),
                     DateCreated = DateTime.Now,
-                    //Images = images.Where(i => i.EventId == 2).ToList(),
-                    //Comments = comments.Where(c => c.EventId == 2).ToList(),
-                    //AttendingUsers = new List<User> { users[0], users[2] }
                 },
                 new Event
                 {
@@ -302,9 +262,6 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                     AddressId = 6,
                     Date = new DateTime(2024, 4, 10, 10, 0, 0),
                     DateCreated = DateTime.Now,
-                    //Images = images.Where(i => i.EventId == 3).ToList(),
-                    //Comments = comments.Where(c => c.EventId == 3).ToList(),
-                    //AttendingUsers = new List<User> { users[0], users[1] }
                 },
             };
 

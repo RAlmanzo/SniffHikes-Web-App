@@ -10,6 +10,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Interfaces.Repositories
     public interface IEventUserRepository
     {
         Task<IEnumerable<EventUser>> GetAllByUserId(int id);
+        Task<IEnumerable<EventUser>> GetAllByEventId(int id);
         Task<bool> DeleteAsync(EventUser toDelete);
     }
 }

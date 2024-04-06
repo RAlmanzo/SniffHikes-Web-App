@@ -26,11 +26,12 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                 Price = selectedEvent.Price,
                 Date = selectedEvent.Date,
                 DateCreated = DateTime.Now,
-                Orginazer = new BaseDto
+                Orginazer = selectedEvent.OrganizerId.HasValue ? new BaseDto
                 {
-                    Id = (int)selectedEvent.OrganizerId,
+                    Id = selectedEvent.OrganizerId.Value,
                     Value = $"{selectedEvent.Organizer.FirstName} {selectedEvent.Organizer.LastName}",
-                },
+                }
+                : null,
                 Address = new BaseDto
                 {
                     Id = selectedEvent.AddressId,
@@ -46,11 +47,11 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                     Id = c.Id,
                     Value = c.Content,
                 }),
-                //Users = selectedEvent.AttendingUsers.Select(u => new BaseDto
-                //{
-                //    Id = u.Id,
-                //    Value = $"{u.FirstName} {u.LastName}",
-                //}),
+                Users = selectedEvent.AttendingUsers.Select(u => new BaseDto
+                {
+                    Id = (int)u.UserId,
+                    Value = $"{u.User.FirstName} {u.User.LastName}",
+                }),
             };
         }
 

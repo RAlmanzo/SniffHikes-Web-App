@@ -6,7 +6,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Dtos
     {
         [Required(ErrorMessage = "Dog name is required")]
         [StringLength(50, ErrorMessage = "Dog name is too long")]
-        public string Value { get; set; }
+        public string Name { get; set; }
         public string Gender { get; set; }
         public string Race { get; set; }
         public DateTime DateOfBirth { get; set; }

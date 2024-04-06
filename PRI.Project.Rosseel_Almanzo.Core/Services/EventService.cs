@@ -15,12 +15,17 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
     {
         private readonly IEventRepository _eventRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IEventUserRepository _eventUserRepository;
+        private readonly IImageRepository _imageRepository;
         private readonly IAddressRepository _addressRepository;
 
-        public EventService(IEventRepository eventRepository, IUserRepository userRepository)
+        public EventService(IEventRepository eventRepository, IUserRepository userRepository, IEventUserRepository eventUserRepository, IAddressRepository addressRepository, IImageRepository imageRepository)
         {
             _eventRepository = eventRepository;
             _userRepository = userRepository;
+            _eventUserRepository = eventUserRepository;
+            _addressRepository = addressRepository;
+            _imageRepository = imageRepository;
         }
 
         public async Task<ResultModel<Event>> CreateEventAsync(EventCreateRequestModel eventCreateRequestModel)
@@ -35,12 +40,26 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 };
             }
 
+            //Hier moet ik new list maken zodat ik de icollection images in mijn database/entity event niet hoef aan te passen!!!!!
+            //fill imageslist with added image
+            var imageList = new List<Image>();
+            if (!string.IsNullOrWhiteSpace(eventCreateRequestModel.Image))
+            {
+                var image = new Image
+                {
+                    File = eventCreateRequestModel.Image,
+                };
+                imageList.Add(image);
+            }
+            
+            
             //create new event (with address)
             var newEvent = new Event
             {
                 Title = eventCreateRequestModel.Title,
                 Description = eventCreateRequestModel.Description,
                 Price = eventCreateRequestModel.Price,
+                DateCreated = DateTime.Now,
                 Address = new Address
                 {
                     Street = eventCreateRequestModel.Street,
@@ -50,19 +69,11 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 },
                 Date = eventCreateRequestModel.Date,
                 OrganizerId = eventCreateRequestModel.OrganizerId,
+                Images = imageList,
             };
-            //call the eventsrepo addAsync method for the event  and addres (images,...)
-            var result = await _eventRepository.AddAsync(newEvent);
-            //if (newEvent.Address == null)
-            //{
-            //    return new ResultModel<Event>
-            //    {
-            //        Success = false,
-            //        Errors = new List<string> { "Address is null!" }
-            //    };
-            //}
-            //var addressResult = await _addressRepository.AddAsync(newEvent.Address);
-            //check  result
+
+            //call the eventsrepo addAsync method for the event
+            var result = await _eventRepository.AddAsync(newEvent);           
             if (result)
             {
                 var createdRecord = await GetByIdAsync(newEvent.Id);
@@ -83,8 +94,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
         {
             //get the event
             var selectedEvent = await _eventRepository.GetByIdAsync(id);
-
-            //check iff event exists
+            //check if event exists
             if (selectedEvent == null)
             {
                 return new ResultModel<Event>
@@ -94,10 +104,25 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 };
             }
 
-            //check if deleteAsync returns true
-            if(await _eventRepository.DeleteAsync(selectedEvent))
+            //get event address
+            var userAddress = await _addressRepository.GetByIdAsync(selectedEvent.AddressId);
+
+            // get all EventUser records associated with the event
+            var eventUsers = await _eventUserRepository.GetAllByEventId(id);
+
+            // delete all EventUser records associated with the user before deleting event
+            foreach (var eventUser in eventUsers)
             {
-                return new ResultModel<Event> { Success = true, };
+                await _eventUserRepository.DeleteAsync(eventUser);
+            }
+
+            //check if deleteAsync returns true
+            if (await _eventRepository.DeleteAsync(selectedEvent))
+            {
+                if (await _addressRepository.DeleteAsync(userAddress))
+                {
+                    return new ResultModel<Event> { Success = true, };
+                }
             }
 
             //if not
@@ -139,7 +164,13 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 eventResultModel.Errors = new List<string> { "No event found" };
                 return eventResultModel;
             }
-            //if yes
+            //get event attendingusers
+            foreach (var attendingUser in selectedEvent.AttendingUsers)
+            {
+                var result = await _userRepository.GetByIdAsync((int)attendingUser.UserId);
+                attendingUser.User = result;
+            }
+            //if event exists
             eventResultModel.Success = true;
             eventResultModel.Value = selectedEvent;
             return eventResultModel;
@@ -147,7 +178,6 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
 
         public async Task<bool> CheckIfExistsAsync(int id)
         {
-            //return await _recordRepository.GetAll().AnyAsync(t => t.Id == id);
             return await _eventRepository.CheckIfExistsAsync(id);
         }
 
@@ -164,79 +194,52 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             }
 
             //check if imagas are present
-            if (eventUpdateRequestModel.ImageIds != null)
+            if (!string.IsNullOrWhiteSpace(eventUpdateRequestModel.Image))
             {
-                //check if images exist in database
+                //check if images exist in database(Deze code wordt aangepast wnr ik meerdre images kan meegeven)
                 var images = _eventRepository.GetAllEventImages(eventUpdateRequestModel.Id);
-
-                if (images.Where(p => eventUpdateRequestModel.ImageIds.Contains(p.Id)).Count() != eventUpdateRequestModel.ImageIds.Distinct().Count())
+                var imageToDelete = images.FirstOrDefault();
+                if (imageToDelete != null)
                 {
-                    return new ResultModel<Event>
+                    if (!await _imageRepository.DeleteAsync(imageToDelete))
                     {
-                        Success = false,
-                        Errors = new List<string> { "Image does not exist!" }
-                    };
-                }
+                        return new ResultModel<Event>
+                        {
+                            Success = false,
+                            Errors = new List<string> { "Image does not exist!" }
+                        };
+                    }
+                }             
             }
-
-            //check if comments are present
-            if (eventUpdateRequestModel.ImageIds != null)
-            {
-                //check if comments exist in database
-                var images = _eventRepository.GetAllEventComments(eventUpdateRequestModel.Id);
-
-                if (images.Where(p => eventUpdateRequestModel.CommentIds.Contains(p.Id)).Count() != eventUpdateRequestModel.CommentIds.Distinct().Count())
-                {
-                    return new ResultModel<Event>
-                    {
-                        Success = false,
-                        Errors = new List<string> { "Image does not exist!" }
-                    };
-                }
-            }
-
-            //check if attendingusers are present
-            //if (eventUpdateRequestModel.ImageIds != null)
-            //{
-            //    //check if attendingusers exist in database
-            //    var images = _eventRepository.GetAllEventAttendingUsers(eventUpdateRequestModel.Id);
-
-            //    if (images.Where(p => eventUpdateRequestModel.AttendingUserIds.Contains(p.Id)).Count() != eventUpdateRequestModel.AttendingUserIds.Distinct().Count())
-            //    {
-            //        return new ResultModel<Event>
-            //        {
-            //            Success = false,
-            //            Errors = new List<string> { "Image does not exist!" }
-            //        };
-            //    }
-            //}
 
             //get the event
-            var record = await _eventRepository.GetByIdAsync(eventUpdateRequestModel.Id);
-
-            //update
-            record.Id = eventUpdateRequestModel.Id;
-            record.Title = eventUpdateRequestModel.Title;
-            record.Description = eventUpdateRequestModel.Description;
-            record.Price = eventUpdateRequestModel.Price;
-            record.Address.Street = eventUpdateRequestModel.Street;
-            record.Address.City = eventUpdateRequestModel.City;
-            record.Address.State = eventUpdateRequestModel.State;
-            record.Address.Country = eventUpdateRequestModel.Country;
-            record.OrganizerId = eventUpdateRequestModel.OrganizerId;
-            record.Date = eventUpdateRequestModel.Date;
-            record.DateCreated = eventUpdateRequestModel.DateCreated;
-            record.Images = _eventRepository.GetAllEventImages(eventUpdateRequestModel.Id).ToList();
-            record.Comments = _eventRepository.GetAllEventComments(eventUpdateRequestModel.Id).ToList();
-            //record.AttendingUsers = _eventRepository.GetAllEventAttendingUsers(eventUpdateRequestModel.Id).ToList();
+            var selectedEvent = await _eventRepository.GetByIdAsync(eventUpdateRequestModel.Id);
             
+            //update event
+            selectedEvent.Id = eventUpdateRequestModel.Id;
+            selectedEvent.Title = eventUpdateRequestModel.Title;
+            selectedEvent.Description = eventUpdateRequestModel.Description;
+            selectedEvent.Price = eventUpdateRequestModel.Price;
+            selectedEvent.Address.Street = eventUpdateRequestModel.Street;
+            selectedEvent.Address.City = eventUpdateRequestModel.City;
+            selectedEvent.Address.State = eventUpdateRequestModel.State;
+            selectedEvent.Address.Country = eventUpdateRequestModel.Country;
+            selectedEvent.OrganizerId = eventUpdateRequestModel.OrganizerId;
+            selectedEvent.Date = eventUpdateRequestModel.Date;
+            selectedEvent.DateCreated = eventUpdateRequestModel.DateCreated;       
 
-            if (await _eventRepository.UpdateAsync(record))
+            if (!string.IsNullOrWhiteSpace(eventUpdateRequestModel.Image))
+            {
+                var image = new Image { File = eventUpdateRequestModel.Image };
+                selectedEvent.Images.Add(image);
+            }
+
+            if (await _eventRepository.UpdateAsync(selectedEvent))
             {
                 return new ResultModel<Event>
                 {
                     Success = true,
-                    Value = record,
+                    Value = selectedEvent,
                 };
             }
             return new ResultModel<Event>

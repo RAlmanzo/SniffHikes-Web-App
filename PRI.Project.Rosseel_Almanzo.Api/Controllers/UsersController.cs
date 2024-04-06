@@ -119,10 +119,6 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
                 return NotFound("User not found!");
             }
 
-            //if (!await _userService.CheckIfExistsAsync(id))
-            //{
-            //    return NotFound("User not found!");
-            //}
             if(!string.IsNullOrWhiteSpace(userResult.Value.Image))
             {
                 if (!_fileService.DeleteFile<User>(userResult.Value.Image))
