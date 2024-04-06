@@ -180,25 +180,6 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 };
             }
 
-            ////check if imagas are present
-            //if (!string.IsNullOrWhiteSpace(eventUpdateRequestModel.Image))
-            //{
-            //    //check if images exist in database(Deze code wordt aangepast wnr ik meerdre images kan meegeven)
-            //    var images = _eventRepository.GetAllEventImages(eventUpdateRequestModel.Id);
-            //    var imageToDelete = images.FirstOrDefault();
-            //    if (imageToDelete != null)
-            //    {
-            //        if (!await _imageRepository.DeleteAsync(imageToDelete))
-            //        {
-            //            return new ResultModel<Event>
-            //            {
-            //                Success = false,
-            //                Errors = new List<string> { "Image does not exist!" }
-            //            };
-            //        }
-            //    }
-            //}
-
             //get the route
             var route = await _routeRepository.GetByIdAsync(routeUpdateRequestModel.Id);
 
@@ -211,12 +192,6 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             route.Address.State = routeUpdateRequestModel.State;
             route.Address.Country = routeUpdateRequestModel.Country;
             route.UserId = routeUpdateRequestModel.OrganizerId;
-
-            //if (!string.IsNullOrWhiteSpace(eventUpdateRequestModel.Image))
-            //{
-            //    var image = new Image { File = eventUpdateRequestModel.Image };
-            //    selectedEvent.Images.Add(image);
-            //}
 
             if (await _routeRepository.UpdateAsync(route))
             {
@@ -238,7 +213,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             return await _routeRepository.CheckIfExistsAsync(id);
         }
 
-        public async Task<ResultModel<Route>> AddImage(int id, string imagePath)
+        public async Task<ResultModel<Route>> AddImageAsync(int id, string imagePath)
         {
             //check if route exists
             if (_routeRepository.GetAll().Any(g => g.Id == id) == false)
@@ -272,11 +247,6 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 Success = false,
                 Errors = new List<string> { "Route not created!" }
             };
-        }
-
-        public Task<ResultModel<Route>> DeleteImage(int id, int imageId)
-        {
-            throw new NotImplementedException();
         }
     }
 }
