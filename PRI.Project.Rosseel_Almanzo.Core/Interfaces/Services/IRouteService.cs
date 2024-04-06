@@ -11,9 +11,11 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Interfaces.Services
     public interface IRouteService
     {
         Task<ResultModel<IEnumerable<Route>>> GetAllAsync();
-        Task<ResultModel<Route>> GetByIdAsync(Guid id);
-        //Task<ResultModel<Route>> CreateRecordAsync(RouteCreateRequestModel routeCreateRequestModel);
-        //Task<ResultModel<Route>> UpdateRecordAsync(RouteUpdateRequestModel routeUpdateRequestModel);
+        Task<ResultModel<Route>> GetByIdAsync(int id);
+        Task<ResultModel<Route>> CreateRouteAsync(RouteCreateRequestModel routeCreateRequestModel);
+        Task<ResultModel<Route>> UpdateRouteAsync(RouteUpdateRequestModel routeUpdateRequestModel);
         Task<ResultModel<Route>> DeleteRouteAsync(int id);
+        Task<bool> CheckIfExistsAsync(int id);
+        Task<ResultModel<Route>> AddImageAsync(int id, string imagePath);
     }
 }

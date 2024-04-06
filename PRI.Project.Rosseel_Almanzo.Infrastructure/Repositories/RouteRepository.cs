@@ -46,5 +46,19 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
                 .Include(e => e.User)
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
+
+        public IQueryable<Comment> GetAllRouteComments(int id)
+        {
+            var route = GetByIdAsync(id);
+
+            return route.Result.Comments.AsQueryable();
+        }
+
+        public IQueryable<Image> GetAllRouteImages(int id)
+        {
+            var route = GetByIdAsync(id);
+
+            return route.Result.Images.AsQueryable();
+        }
     }
 }
