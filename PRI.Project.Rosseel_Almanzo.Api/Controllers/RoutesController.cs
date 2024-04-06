@@ -89,5 +89,40 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
             }
             return BadRequest(ModelState.Values);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            //get the route
+            var route = await _routeService.GetByIdAsync(id);
+            if (!route.Success)
+            {
+                return NotFound("User not found!");
+            }
+
+            //delete images from wwwroot
+            foreach (var image in route.Value.Images)
+            {
+                if (!string.IsNullOrWhiteSpace(image.File))
+                {
+                    if (!_fileService.DeleteFile<User>(image.File))
+                    {
+                        ModelState.AddModelError("", "Image not found");
+                    }
+                }
+            }
+
+            var result = await _routeService.DeleteRouteAsync(id);
+            if (result.Success)
+            {
+                return Ok();
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+            return BadRequest(ModelState.Values);
+        }
     }
 }
