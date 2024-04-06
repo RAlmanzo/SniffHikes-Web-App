@@ -167,5 +167,75 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 Errors = new List<string> { "Route not created!" }
             };
         }
+
+        public async Task<ResultModel<Route>> UpdateRouteAsync(RouteUpdateRequestModel routeUpdateRequestModel)
+        {
+            //check if organizerid exists
+            if (_userRepository.GetAll().Any(g => g.Id == routeUpdateRequestModel.OrganizerId) == false)
+            {
+                return new ResultModel<Route>
+                {
+                    Success = false,
+                    Errors = new List<string> { "Orginazer does not exist!" }
+                };
+            }
+
+            ////check if imagas are present
+            //if (!string.IsNullOrWhiteSpace(eventUpdateRequestModel.Image))
+            //{
+            //    //check if images exist in database(Deze code wordt aangepast wnr ik meerdre images kan meegeven)
+            //    var images = _eventRepository.GetAllEventImages(eventUpdateRequestModel.Id);
+            //    var imageToDelete = images.FirstOrDefault();
+            //    if (imageToDelete != null)
+            //    {
+            //        if (!await _imageRepository.DeleteAsync(imageToDelete))
+            //        {
+            //            return new ResultModel<Event>
+            //            {
+            //                Success = false,
+            //                Errors = new List<string> { "Image does not exist!" }
+            //            };
+            //        }
+            //    }
+            //}
+
+            //get the route
+            var route = await _routeRepository.GetByIdAsync(routeUpdateRequestModel.Id);
+
+            //update event
+            route.Id = routeUpdateRequestModel.Id;
+            route.Title = routeUpdateRequestModel.Title;
+            route.Description = routeUpdateRequestModel.Description;
+            route.Address.Street = routeUpdateRequestModel.Street;
+            route.Address.City = routeUpdateRequestModel.City;
+            route.Address.State = routeUpdateRequestModel.State;
+            route.Address.Country = routeUpdateRequestModel.Country;
+            route.UserId = routeUpdateRequestModel.OrganizerId;
+
+            //if (!string.IsNullOrWhiteSpace(eventUpdateRequestModel.Image))
+            //{
+            //    var image = new Image { File = eventUpdateRequestModel.Image };
+            //    selectedEvent.Images.Add(image);
+            //}
+
+            if (await _routeRepository.UpdateAsync(route))
+            {
+                return new ResultModel<Route>
+                {
+                    Success = true,
+                    Value = route,
+                };
+            }
+            return new ResultModel<Route>
+            {
+                Success = false,
+                Errors = new List<string> { "Route update failed!" }
+            };
+        }
+
+        public async Task<bool> CheckIfExistsAsync(int id)
+        {
+            return await _routeRepository.CheckIfExistsAsync(id);
+        }
     }
 }
