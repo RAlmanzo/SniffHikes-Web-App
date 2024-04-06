@@ -11,7 +11,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Interfaces.Services
     public interface IRouteService
     {
         Task<ResultModel<IEnumerable<Route>>> GetAllAsync();
-        Task<ResultModel<Route>> GetByIdAsync(Guid id);
+        Task<ResultModel<Route>> GetByIdAsync(int id);
         //Task<ResultModel<Route>> CreateRecordAsync(RouteCreateRequestModel routeCreateRequestModel);
         //Task<ResultModel<Route>> UpdateRecordAsync(RouteUpdateRequestModel routeUpdateRequestModel);
         Task<ResultModel<Route>> DeleteRouteAsync(int id);

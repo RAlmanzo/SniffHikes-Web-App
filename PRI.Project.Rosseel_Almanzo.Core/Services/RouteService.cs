@@ -42,9 +42,24 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             return eventResultModel;
         }
 
-        public Task<ResultModel<Route>> GetByIdAsync(Guid id)
+        public async Task<ResultModel<Route>> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            //get the route
+            var route = await _routeRepository.GetByIdAsync(id);
+            //create new resultmodel
+            var routeResultModel = new ResultModel<Route>();
+            //check if exists
+            if (route == null)
+            {
+                routeResultModel.Success = false;
+                routeResultModel.Errors = new List<string> { "No event found" };
+                return routeResultModel;
+            }
+            
+            //if event exists
+            routeResultModel.Success = true;
+            routeResultModel.Value = route;
+            return routeResultModel;
         }
     }
 }
