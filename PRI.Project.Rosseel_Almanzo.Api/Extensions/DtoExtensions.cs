@@ -122,5 +122,37 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                 })
             };
         }
+
+        public static RoutesGetResponseDto MapToDto(this Route route)
+        {
+            return new RoutesGetResponseDto
+            {
+                Id = route.Id,
+                Value = route.Title,
+                Description = route.Description,
+                DateCreated = DateTime.Now,
+                Orginazer = route.UserId.HasValue ? new BaseDto
+                {
+                    Id = route.UserId.Value,
+                    Value = $"{route.User.FirstName} {route.User.LastName}",
+                }
+                : null,
+                Address = new BaseDto
+                {
+                    Id = route.AddressId,
+                    Value = $"{route.Address.Street} {route.Address.City} {route.Address.State} {route.Address.Country}",
+                },
+                Images = route.Images.Select(i => new BaseDto
+                {
+                    Id = i.Id,
+                    Value = i.File,
+                }),
+                Comments = route.Comments.Select(c => new BaseDto
+                {
+                    Id = c.Id,
+                    Value = c.Content,
+                }),
+            };
+        }
     }
 }
