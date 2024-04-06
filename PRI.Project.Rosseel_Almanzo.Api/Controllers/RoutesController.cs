@@ -17,6 +17,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
     {
         private readonly IRouteService _routeService;
         private readonly IFileService _fileService;
+       
 
         public RoutesController(IRouteService routeService, IFileService fileService)
         {
@@ -173,6 +174,34 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
             if (result.Success)
             {
                 return Ok();
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+
+            return BadRequest(ModelState.Values);
+        }
+
+        [HttpPut("{id}/images")]
+        public async Task<IActionResult> AddImageToRoute(int id, [FromForm]ImageRequestDto imageRequestDto)
+        {
+            // Check if route exists
+            if (!await _routeService.CheckIfExistsAsync(id))
+            {
+                return NotFound("Route not found!");
+            }
+
+            // Store the uploaded image
+            var imagePath = await _fileService.StoreFile<Route>(imageRequestDto.Image);
+
+            // Update the route to add the new image
+            var result = await _routeService.AddImage(id, imagePath);
+
+            if (result.Success)
+            {
+                return Ok(result.Value.MapToDto());
             }
 
             foreach (var error in result.Errors)
