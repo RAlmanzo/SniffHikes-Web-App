@@ -4,6 +4,7 @@ using PRI.Project.Rosseel_Almanzo.Api.Dtos;
 using PRI.Project.Rosseel_Almanzo.Api.Extensions;
 using PRI.Project.Rosseel_Almanzo.Api.Services.Interfaces;
 using PRI.Project.Rosseel_Almanzo.Core.Entities;
+using PRI.Project.Rosseel_Almanzo.Core.Interfaces.Repositories;
 using PRI.Project.Rosseel_Almanzo.Core.Interfaces.Services;
 using PRI.Project.Rosseel_Almanzo.Core.Services;
 using PRI.Project.Rosseel_Almanzo.Core.Services.Models;
@@ -17,12 +18,13 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
     {
         private readonly IRouteService _routeService;
         private readonly IFileService _fileService;
-       
+        private readonly IImageService _imageService;
 
-        public RoutesController(IRouteService routeService, IFileService fileService)
+        public RoutesController(IRouteService routeService, IFileService fileService, IImageService imageService)
         {
             _routeService = routeService;
             _fileService = fileService;
+            _imageService = imageService;
         }
 
         [HttpGet]
@@ -135,27 +137,6 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
                 return NotFound("Event not found!");
             }
 
-            ////check if new route images
-            //var filenames = new List<string>();
-            //if (routeUpdateRequestDto.Images.Count() > 0)
-            //{
-            //    //get route
-            //    var selectedEvent = await _eventService.GetByIdAsync(eventUpdateRequestDto.Id);
-            //    //delete current image
-            //    foreach (var image in selectedEvent.Value.Images)
-            //    {
-            //        if (!string.IsNullOrWhiteSpace(image.File))
-            //        {
-            //            if (!_fileService.DeleteFile<User>(image.File))
-            //            {
-            //                ModelState.AddModelError("", "Image not found");
-            //            }
-            //        }
-            //    }
-            //    //save new image
-            //    filename = await _fileService.StoreFile<User>(eventUpdateRequestDto.Image);
-            //}
-
             var result = await _routeService.UpdateRouteAsync
             (
                 new RouteUpdateRequestModel
@@ -184,7 +165,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
             return BadRequest(ModelState.Values);
         }
 
-        [HttpPut("{id}/images")]
+        [HttpPut("{id}/image")]
         public async Task<IActionResult> AddImageToRoute(int id, [FromForm]ImageRequestDto imageRequestDto)
         {
             // Check if route exists
@@ -197,7 +178,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
             var imagePath = await _fileService.StoreFile<Route>(imageRequestDto.Image);
 
             // Update the route to add the new image
-            var result = await _routeService.AddImage(id, imagePath);
+            var result = await _routeService.AddImageAsync(id, imagePath);
 
             if (result.Success)
             {
@@ -209,6 +190,33 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
                 ModelState.AddModelError("", error);
             }
 
+            return BadRequest(ModelState.Values);
+        }
+
+        [HttpDelete("{id}/image")]
+        public async Task<IActionResult> DeleteImage(int id)
+        {
+            //delete image from wwwroot
+            var image = await _imageService.GetByIdAsync(id);
+            if (image.Success)
+            {
+                if (!_fileService.DeleteFile<User>(image.Value.File))
+                {
+                    ModelState.AddModelError("", "Image not found");
+                }
+            }
+
+            //delete the image from db
+            var result = await _imageService.DeleteImageAsync(id);
+            if (result.Success)
+            {
+                return Ok();
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
             return BadRequest(ModelState.Values);
         }
     }
