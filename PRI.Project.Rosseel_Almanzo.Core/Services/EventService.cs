@@ -40,16 +40,6 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 };
             }
 
-            //check dateofbirth
-            if (eventCreateRequestModel.Date < DateTime.Now)
-            {
-                return new ResultModel<Event>
-                {
-                    Success = false,
-                    Errors = new List<string> { "DateOfBirth cant be in the past!" }
-                };
-            }
-
             //Hier moet ik new list maken zodat ik de icollection images in mijn database/entity event niet hoef aan te passen!!!!!
             //fill imageslist with added image
             var imageList = new List<Image>();
@@ -204,9 +194,9 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             }
 
             //check if imagas are present
-            if (eventUpdateRequestModel.Image != null)
+            if (!string.IsNullOrWhiteSpace(eventUpdateRequestModel.Image))
             {
-                //check if images exist in database
+                //check if images exist in database(Deze code wordt aangepast wnr ik meerdre images kan meegeven)
                 var images = _eventRepository.GetAllEventImages(eventUpdateRequestModel.Id);
                 var imageToDelete = images.FirstOrDefault();
                 if (imageToDelete != null)
@@ -224,9 +214,8 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
 
             //get the event
             var selectedEvent = await _eventRepository.GetByIdAsync(eventUpdateRequestModel.Id);
-            //TODO delet old images before adding new image to selectedEvent
-            var image = new Image {File = eventUpdateRequestModel.Image};
-            //update
+            
+            //update event
             selectedEvent.Id = eventUpdateRequestModel.Id;
             selectedEvent.Title = eventUpdateRequestModel.Title;
             selectedEvent.Description = eventUpdateRequestModel.Description;
@@ -237,9 +226,13 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             selectedEvent.Address.Country = eventUpdateRequestModel.Country;
             selectedEvent.OrganizerId = eventUpdateRequestModel.OrganizerId;
             selectedEvent.Date = eventUpdateRequestModel.Date;
-            selectedEvent.DateCreated = eventUpdateRequestModel.DateCreated;
-            selectedEvent.Images.Add(image);
-            selectedEvent.Comments = _eventRepository.GetAllEventComments(eventUpdateRequestModel.Id).ToList();            
+            selectedEvent.DateCreated = eventUpdateRequestModel.DateCreated;       
+
+            if (!string.IsNullOrWhiteSpace(eventUpdateRequestModel.Image))
+            {
+                var image = new Image { File = eventUpdateRequestModel.Image };
+                selectedEvent.Images.Add(image);
+            }
 
             if (await _eventRepository.UpdateAsync(selectedEvent))
             {
