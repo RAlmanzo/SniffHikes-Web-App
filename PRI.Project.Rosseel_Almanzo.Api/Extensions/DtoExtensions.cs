@@ -1,10 +1,12 @@
 ﻿using PRI.Project.Rosseel_Almanzo.Api.Dtos;
 using PRI.Project.Rosseel_Almanzo.Core.Entities;
+using Route = PRI.Project.Rosseel_Almanzo.Core.Entities.Route;
 
 namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
 {
     public static class DtoExtensions
     {
+        // DtoExtensions for event
         public static EventsGetAllResponseDto MapToDto(this IEnumerable<Event> events)
         {
             return new EventsGetAllResponseDto
@@ -16,6 +18,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                 })
             };
         }
+
         public static EventsGetResponseDto MapToDto(this Event selectedEvent)
         {
             return new EventsGetResponseDto
@@ -55,6 +58,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
             };
         }
 
+        // DtoExtensions for user
         public static UsersGetAllResponseDto MapToDto(this IEnumerable<User> users)
         {
             return new UsersGetAllResponseDto
@@ -103,6 +107,19 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                     Id = (int)e.Id,
                     Value = e.Title,
                 }),
+            };
+        }
+
+        // DtoExtensions for route
+        public static RoutesGetAllResponseDto MapToDto(this IEnumerable<Route> routes)
+        {
+            return new RoutesGetAllResponseDto
+            {
+                Routes = routes.Select(e => new BaseDto
+                {
+                    Id = e.Id,
+                    Value = e.Title,
+                })
             };
         }
     }
