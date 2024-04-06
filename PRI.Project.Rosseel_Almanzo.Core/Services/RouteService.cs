@@ -14,16 +14,62 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
     {
         private readonly IRouteRepository _routeRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IAddressRepository _addressRepository;
+        private readonly IImageRepository _imageRepository;
+        private readonly ICommentRepository _commentRepository;
 
-        public RouteService(IRouteRepository routeRepository, IUserRepository userRepository)
+        public RouteService(IRouteRepository routeRepository, IUserRepository userRepository, IAddressRepository addressRepository, IImageRepository imageRepository, ICommentRepository commentRepository)
         {
             _routeRepository = routeRepository;
             _userRepository = userRepository;
+            _addressRepository = addressRepository;
+            _imageRepository = imageRepository;
+            _commentRepository = commentRepository;
         }
 
-        public Task<ResultModel<Route>> DeleteRouteAsync(int id)
+        public async Task<ResultModel<Route>> DeleteRouteAsync(int id)
         {
-            throw new NotImplementedException();
+            //get the route
+            var route = await _routeRepository.GetByIdAsync(id);
+            //check if route exists
+            if (route == null)
+            {
+                return new ResultModel<Route>
+                {
+                    Success = false,
+                    Errors = new List<string> { "Route does not exist!" }
+                };
+            }
+
+            //get route address
+            var routeAddress = await _addressRepository.GetByIdAsync(route.AddressId);
+            //get route comments
+            var routeComments = _routeRepository.GetAllRouteComments(route.Id);
+            //get route images
+            var routeImages = _routeRepository.GetAllRouteImages(route.Id);
+            //check if deleteAsync returns true
+            if (await _routeRepository.DeleteAsync(route))
+            {
+                if (await _addressRepository.DeleteAsync(routeAddress))
+                {
+                    foreach (var image in routeImages)
+                    {
+                        await _imageRepository.DeleteAsync(image);
+                    }
+                    foreach (var comment in routeComments)
+                    {
+                        await _commentRepository.DeleteAsync(comment);
+                    }
+                    return new ResultModel<Route> { Success = true, };
+                }             
+            }
+
+            //if not
+            return new ResultModel<Route>
+            {
+                Success = false,
+                Errors = new List<string> { "Some error occured!" }
+            };
         }
 
         public async Task<ResultModel<IEnumerable<Route>>> GetAllAsync()
@@ -40,7 +86,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 return eventResultModel;
             }
             //if not
-            eventResultModel.Errors = new List<string> { "No events found" };
+            eventResultModel.Errors = new List<string> { "No routes found" };
             return eventResultModel;
         }
 
@@ -54,7 +100,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             if (route == null)
             {
                 routeResultModel.Success = false;
-                routeResultModel.Errors = new List<string> { "No event found" };
+                routeResultModel.Errors = new List<string> { "No route found" };
                 return routeResultModel;
             }
             
@@ -104,7 +150,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 Images = imageList,
             };
 
-            //call the eventsrepo addAsync method for the event
+            //call the routesrepo addAsync method
             var result = await _routeRepository.AddAsync(newRoute);
             if (result)
             {
@@ -118,7 +164,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             return new ResultModel<Route>
             {
                 Success = false,
-                Errors = new List<string> { "Event not created!" }
+                Errors = new List<string> { "Route not created!" }
             };
         }
     }
