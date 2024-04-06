@@ -20,10 +20,24 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Dtos
         [Required(ErrorMessage = "Date of event is required")]
         [DataType(DataType.Date, ErrorMessage = "Please enter a valid date")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [FutureDate(ErrorMessage = "Date must be in de future")]
         public DateTime Date { get; set; }
         public int OrganizerId { get; set; }
         public AddressRequestDto Address { get; set; }
         //public IEnumerable<FormFile> ImageUrls { get; set; }
         public IFormFile Image { get; set; }
+    }
+}
+
+public class FutureDateAttribute : ValidationAttribute
+{
+    public override bool IsValid(object value)
+    {
+        if (value is DateTime date)
+        {
+            return date >= DateTime.Now;
+        }
+
+        return false;
     }
 }
