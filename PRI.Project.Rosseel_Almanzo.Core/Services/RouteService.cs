@@ -13,10 +13,12 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
     public class RouteService : IRouteService
     {
         private readonly IRouteRepository _routeRepository;
+        private readonly IUserRepository _userRepository;
 
-        public RouteService(IRouteRepository routeRepository)
+        public RouteService(IRouteRepository routeRepository, IUserRepository userRepository)
         {
             _routeRepository = routeRepository;
+            _userRepository = userRepository;
         }
 
         public Task<ResultModel<Route>> DeleteRouteAsync(int id)
@@ -60,6 +62,64 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             routeResultModel.Success = true;
             routeResultModel.Value = route;
             return routeResultModel;
+        }
+
+        public async Task<ResultModel<Route>> CreateRouteAsync(RouteCreateRequestModel routeCreateRequestModel)
+        {
+            //check if orginazerid exists
+            if (_userRepository.GetAll().Any(g => g.Id == routeCreateRequestModel.OrganizerId) == false)
+            {
+                return new ResultModel<Route>
+                {
+                    Success = false,
+                    Errors = new List<string> { "Orginazer does not exist!" }
+                };
+            }
+
+            //fill imageslist with added image
+            var imageList = new List<Image>();
+            if (routeCreateRequestModel.Images.Count() > 0)
+            {
+                foreach (var image in routeCreateRequestModel.Images)
+                {
+                    var currentImage = new Image { File = image };
+                    imageList.Add(currentImage);
+                }
+            }
+
+            //create new route
+            var newRoute = new Route
+            {
+                Title = routeCreateRequestModel.Title,
+                Description = routeCreateRequestModel.Description,
+                DateCreated = DateTime.Now,
+                Address = new Address
+                {
+                    Street = routeCreateRequestModel.Street,
+                    City = routeCreateRequestModel.City,
+                    State = routeCreateRequestModel.State,
+                    Country = routeCreateRequestModel.Country,
+                },
+                UserId = routeCreateRequestModel.OrganizerId,
+                Images = imageList,
+            };
+
+            //call the eventsrepo addAsync method for the event
+            var result = await _routeRepository.AddAsync(newRoute);
+            if (result)
+            {
+                var createdRoute = await GetByIdAsync(newRoute.Id);
+                return new ResultModel<Route>
+                {
+                    Success = true,
+                    Value = createdRoute.Value,
+                };
+            }
+            return new ResultModel<Route>
+            {
+                Success = false,
+                Errors = new List<string> { "Event not created!" }
+            };
         }
     }
 }
