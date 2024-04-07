@@ -154,5 +154,18 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                 }),
             };
         }
+
+        // DtoExtensions for dog
+        public static DogsGetAllResponseDto MapToDto(this IEnumerable<Dog> dogs)
+        {
+            return new DogsGetAllResponseDto
+            {
+                Dogs = dogs.Select(e => new BaseDto
+                {
+                    Id = e.Id,
+                    Value = e.Name,
+                })
+            };
+        }
     }
 }
