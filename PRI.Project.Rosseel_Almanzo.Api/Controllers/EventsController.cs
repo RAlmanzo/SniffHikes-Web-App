@@ -56,23 +56,16 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Add([FromForm]EventRequestDto eventRequestDto)
         {
-            //check if image is present
-            var filename = "";
-            if (eventRequestDto.Image != null)
+            //check if images are present and store on wwwroot
+            var filenames = new List<string>();
+            if (eventRequestDto.Images.Count() > 0)
             {
-                filename = await _fileService.StoreFile<Event>(eventRequestDto.Image);
+                foreach (var image in eventRequestDto.Images)
+                {
+                    var imagePath = await _fileService.StoreFile<Event>(image);
+                    filenames.Add(imagePath);
+                }
             }
-
-            ////Dit is de code die ik zou gebruiken als ik een list van images kan meegeven in swagger!!!
-            ////check if images are given
-            //var filenames = "";
-            //if (eventRequestDto.ImageUrls != null)
-            //{
-            //    foreach (var url in eventRequestDto.ImageUrls)
-            //    {
-            //        filename += await _fileService.StoreFile<Event>(url);
-            //    }
-            //}
 
             var result = await _eventService.CreateEventAsync(
                 new EventCreateRequestModel
@@ -86,7 +79,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
                     Country = eventRequestDto.Address.Country,
                     OrganizerId = eventRequestDto.OrganizerId,
                     Date = eventRequestDto.Date,
-                    Image = filename
+                    Images = filenames
                 });
 
             if (result.Success)
@@ -105,13 +98,14 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
+            //get the event
             var eventResult = await _eventService.GetByIdAsync(id);
-
             if (!eventResult.Success)
             {
                 return NotFound("User not found!");
             }
 
+            //delete images from wwwroot
             foreach(var image in eventResult.Value.Images)
             {
                 if (!string.IsNullOrWhiteSpace(image.File))
@@ -144,27 +138,6 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
             {
                 return NotFound("Event not found!");
             }
-            
-            //check if new user image
-            var filename = "";
-            if (eventUpdateRequestDto.Image != null)
-            {
-                //get event
-                var selectedEvent = await _eventService.GetByIdAsync(eventUpdateRequestDto.Id);
-                //delete current image
-                foreach (var image in selectedEvent.Value.Images)
-                {
-                    if (!string.IsNullOrWhiteSpace(image.File))
-                    {
-                        if (!_fileService.DeleteFile<User>(image.File))
-                        {
-                            ModelState.AddModelError("", "Image not found");
-                        }
-                    }
-                }             
-                //save new image
-                filename = await _fileService.StoreFile<User>(eventUpdateRequestDto.Image);
-            }
 
             var result = await _eventService.UpdateEventAsync
             (
@@ -180,8 +153,6 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
                     Country = eventUpdateRequestDto.Address.Country,
                     OrganizerId = eventUpdateRequestDto.OrganizerId,
                     Date = eventUpdateRequestDto.Date,
-                    //ImageIds = eventUpdateRequestDto.ImageIds,
-                    Image = filename,
                 }
             );
 
