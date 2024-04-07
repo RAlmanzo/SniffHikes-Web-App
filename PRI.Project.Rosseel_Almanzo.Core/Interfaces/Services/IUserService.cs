@@ -16,5 +16,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Interfaces.Services
         Task<ResultModel<User>> UpdateUserAsync(UserUpdateRequestModel UserUpdateRequestModel);
         Task<ResultModel<User>> DeleteUserAsync(int id);
         Task<bool> CheckIfExistsAsync(int id);
+        Task<ResultModel<IEnumerable<User>>> SearchByFirstNameAsync(string firstName);
+        Task<ResultModel<IEnumerable<User>>> SearchByLastNameAsync(string lastName);
     }
 }

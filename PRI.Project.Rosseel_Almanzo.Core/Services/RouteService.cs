@@ -248,5 +248,26 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 Errors = new List<string> { "Route not created!" }
             };
         }
+
+        public async Task<ResultModel<IEnumerable<Route>>> SearchByTitleAsync(string title)
+        {
+            var routes = await _routeRepository.GetAllAsync();
+
+            var selectedRoute = routes.Where(r => r.Title.ToUpper().Contains(title.ToUpper())).ToList();
+            if (selectedRoute.Count() > 0)
+            {
+                return new ResultModel<IEnumerable<Route>>
+                {
+                    Value = selectedRoute,
+                    Success = true
+                };
+            }
+
+            return new ResultModel<IEnumerable<Route>>
+            {
+                Success = false,
+                Errors = new List<string> { "No routes found" }
+            };
+        }
     }
 }

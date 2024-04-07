@@ -325,5 +325,35 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
             }
             return BadRequest(ModelState.Values);
         }
+
+        [HttpGet("Search/ByFirstName/{firstName}")]
+        public async Task<IActionResult> SearchByFirstName(string firstName)
+        {
+            if (string.IsNullOrWhiteSpace(firstName))
+            {
+                return BadRequest("character not allowed!");
+            }
+            var result = await _userService.SearchByFirstNameAsync(firstName);
+            if (result.Success)
+            {
+                return Ok(result.Value.MapToDto());
+            }
+            return Ok(result.Errors);
+        }
+
+        [HttpGet("Search/ByLastName/{lastName}")]
+        public async Task<IActionResult> SearchByLastName(string lastName)
+        {
+            if (string.IsNullOrWhiteSpace(lastName))
+            {
+                return BadRequest("character not allowed!");
+            }
+            var result = await _userService.SearchByLastNameAsync(lastName);
+            if (result.Success)
+            {
+                return Ok(result.Value.MapToDto());
+            }
+            return Ok(result.Errors);
+        }
     }
 }
