@@ -13,5 +13,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Interfaces.Services
         Task<ResultModel<Dog>> GetByIdAsync(int id);
         Task<ResultModel<User>> AddDogAsync(DogCreateRequestModel dogCreateRequestModel);
         Task<ResultModel<Dog>> DeleteDogAsync(int dogId);
+        Task<ResultModel<Dog>> UpdateDogAsync(DogUpdateRequestModel dogUpdateRequestModel);
+        Task<bool> CheckIfExistsAsync(int id);
     }
 }
