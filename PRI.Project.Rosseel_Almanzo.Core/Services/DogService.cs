@@ -181,7 +181,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
 
         public async Task<bool> CheckIfExistsAsync(int id)
         {
-            return await _userRepository.CheckIfExistsAsync(id);
+            return await _dogRepository.CheckIfExistsAsync(id);
         }
     }
 }
