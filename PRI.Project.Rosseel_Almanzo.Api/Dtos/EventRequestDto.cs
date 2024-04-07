@@ -24,8 +24,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Dtos
         public DateTime Date { get; set; }
         public int OrganizerId { get; set; }
         public AddressRequestDto Address { get; set; }
-        //public IEnumerable<FormFile> ImageUrls { get; set; }
-        public IFormFile Image { get; set; }
+        public IEnumerable<IFormFile> Images { get; set; }
     }
 }
 
