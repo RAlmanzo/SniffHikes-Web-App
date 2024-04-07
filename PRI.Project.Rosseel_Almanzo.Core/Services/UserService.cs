@@ -38,16 +38,6 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 };
             }
 
-            //check dateofbirth
-            if (userCreateRequestModel.DateOfBirth > DateTime.Now)
-            {
-                return new ResultModel<User>
-                {
-                    Success = false,
-                    Errors = new List<string> { "DateOfBirth cant be in the future!" }
-                };
-            }
-
             //create new user
             var newUser = new User
             {
@@ -67,24 +57,8 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 },
             };
 
-            ////check if dog(s) are added
-            //if (userCreateRequestModel.Dogs.Count() != 0)
-            //{
-            //    newUser.Dogs = userCreateRequestModel.Dogs.Select(d => new Dog
-            //    {
-            //        Name = d.Name,
-            //        Race = d.Race,
-            //        Gender = d.Gender,
-            //        DateOfBirth = d.DateOfBirth,
-            //        Image = d.Image,
-            //        UserId = newUser.Id,
-            //    }).ToList();
-            //}
-
-            //call the eventsrepo addAsync method for the event  and addres (images,...)
+            //call the usersrepo addAsync method
             var result = await _userRepository.AddAsync(newUser);        
-            //var addressResult = await _addressRepository.AddAsync(newEvent.Address);
-
             //check  result
             if (result)
             {

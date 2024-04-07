@@ -63,12 +63,6 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
                 filename = await _fileService.StoreFile<User>(userRequestDto.Image);
             }
 
-            ////check if dogs is null
-            //if (userRequestDto.Dogs == null)
-            //{
-            //    userRequestDto.Dogs = new List<BaseDogRequestDto>();
-            //}
-
             var result = await _userService.CreateUserAsync(
                 new UserCreateRequestModel
                 {
@@ -86,14 +80,6 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
                         State = userRequestDto.Address.State,
                         Country = userRequestDto.Address.Country,
                     },
-                    //Dogs = userRequestDto.Dogs.Select(d => new Dog
-                    //{
-                    //    Name = d.Value,
-                    //    Race = d.Race,
-                    //    Gender = d.Gender,
-                    //    DateOfBirth = d.DateOfBirth,
-                    //    Image = d.Image,
-                    //}),
                 });
 
             if (result.Success)
@@ -185,14 +171,6 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
                         State = userUpdateRequestDto.Address.State,
                         Country = userUpdateRequestDto.Address.Country,
                     },
-                    //Dogs = userRequestDto.Dogs.Select(d => new Dog
-                    //{
-                    //    Name = d.Value,
-                    //    Race = d.Race,
-                    //    Gender = d.Gender,
-                    //    DateOfBirth = d.DateOfBirth,
-                    //    Image = d.Image,
-                    //}),
                 });
             if (result.Success)
             {
