@@ -4,6 +4,7 @@ using PRI.Project.Rosseel_Almanzo.Core.Interfaces.Services;
 using PRI.Project.Rosseel_Almanzo.Core.Services.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
@@ -18,14 +19,16 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
         private readonly IEventUserRepository _eventUserRepository;
         private readonly IImageRepository _imageRepository;
         private readonly IAddressRepository _addressRepository;
+        private readonly ICommentRepository _commentRepository;
 
-        public EventService(IEventRepository eventRepository, IUserRepository userRepository, IEventUserRepository eventUserRepository, IAddressRepository addressRepository, IImageRepository imageRepository)
+        public EventService(IEventRepository eventRepository, IUserRepository userRepository, IEventUserRepository eventUserRepository, IAddressRepository addressRepository, IImageRepository imageRepository, ICommentRepository commentRepository)
         {
             _eventRepository = eventRepository;
             _userRepository = userRepository;
             _eventUserRepository = eventUserRepository;
             _addressRepository = addressRepository;
             _imageRepository = imageRepository;
+            _commentRepository = commentRepository;
         }
 
         public async Task<ResultModel<Event>> CreateEventAsync(EventCreateRequestModel eventCreateRequestModel)
@@ -40,19 +43,17 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 };
             }
 
-            //Hier moet ik new list maken zodat ik de icollection images in mijn database/entity event niet hoef aan te passen!!!!!
             //fill imageslist with added image
             var imageList = new List<Image>();
-            if (!string.IsNullOrWhiteSpace(eventCreateRequestModel.Image))
+            if (eventCreateRequestModel.Images.Count() > 0)
             {
-                var image = new Image
+                foreach(var image in  eventCreateRequestModel.Images)
                 {
-                    File = eventCreateRequestModel.Image,
+                    var currentImage = new Image { File = image };
+                    imageList.Add(currentImage);
                 };
-                imageList.Add(image);
             }
-            
-            
+                    
             //create new event (with address)
             var newEvent = new Event
             {
@@ -105,8 +106,11 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             }
 
             //get event address
-            var userAddress = await _addressRepository.GetByIdAsync(selectedEvent.AddressId);
-
+            var eventAddress = await _addressRepository.GetByIdAsync(selectedEvent.AddressId);
+            //get route comments
+            var eventComments = _eventRepository.GetAllEventComments(selectedEvent.Id);
+            //get route images
+            var eventImages = _eventRepository.GetAllEventImages(selectedEvent.Id);
             // get all EventUser records associated with the event
             var eventUsers = await _eventUserRepository.GetAllByEventId(id);
 
@@ -119,8 +123,16 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             //check if deleteAsync returns true
             if (await _eventRepository.DeleteAsync(selectedEvent))
             {
-                if (await _addressRepository.DeleteAsync(userAddress))
+                if (await _addressRepository.DeleteAsync(eventAddress))
                 {
+                    foreach (var image in eventImages)
+                    {
+                        await _imageRepository.DeleteAsync(image);
+                    }
+                    foreach (var comment in eventComments)
+                    {
+                        await _commentRepository.DeleteAsync(comment);
+                    }
                     return new ResultModel<Event> { Success = true, };
                 }
             }
@@ -193,25 +205,6 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 };
             }
 
-            //check if imagas are present
-            if (!string.IsNullOrWhiteSpace(eventUpdateRequestModel.Image))
-            {
-                //check if images exist in database(Deze code wordt aangepast wnr ik meerdre images kan meegeven)
-                var images = _eventRepository.GetAllEventImages(eventUpdateRequestModel.Id);
-                var imageToDelete = images.FirstOrDefault();
-                if (imageToDelete != null)
-                {
-                    if (!await _imageRepository.DeleteAsync(imageToDelete))
-                    {
-                        return new ResultModel<Event>
-                        {
-                            Success = false,
-                            Errors = new List<string> { "Image does not exist!" }
-                        };
-                    }
-                }             
-            }
-
             //get the event
             var selectedEvent = await _eventRepository.GetByIdAsync(eventUpdateRequestModel.Id);
             
@@ -228,12 +221,6 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             selectedEvent.Date = eventUpdateRequestModel.Date;
             selectedEvent.DateCreated = eventUpdateRequestModel.DateCreated;       
 
-            if (!string.IsNullOrWhiteSpace(eventUpdateRequestModel.Image))
-            {
-                var image = new Image { File = eventUpdateRequestModel.Image };
-                selectedEvent.Images.Add(image);
-            }
-
             if (await _eventRepository.UpdateAsync(selectedEvent))
             {
                 return new ResultModel<Event>
@@ -245,7 +232,43 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             return new ResultModel<Event>
             {
                 Success = false,
-                Errors = new List<string> { "Record update failed!" }
+                Errors = new List<string> { "Event update failed!" }
+            };
+        }
+
+        public async Task<ResultModel<Event>> AddImageAsync(int id, string imagePath)
+        {
+            //check if event exists
+            if (_eventRepository.GetAll().Any(g => g.Id == id) == false)
+            {
+                return new ResultModel<Event>
+                {
+                    Success = false,
+                    Errors = new List<string> { "Event does not exist!" }
+                };
+            }
+
+            //check if image is present
+            var result = false;
+            if (!string.IsNullOrWhiteSpace(imagePath))
+            {
+                var image = new Image { File = imagePath, EventId = id };
+                result = await _imageRepository.AddAsync(image);
+            }
+
+            if (result)
+            {
+                var updatedEvent = await GetByIdAsync(id);
+                return new ResultModel<Event>
+                {
+                    Success = true,
+                    Value = updatedEvent.Value,
+                };
+            }
+            return new ResultModel<Event>
+            {
+                Success = false,
+                Errors = new List<string> { "Event not created!" }
             };
         }
     }

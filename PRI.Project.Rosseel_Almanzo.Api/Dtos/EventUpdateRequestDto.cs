@@ -2,10 +2,30 @@
 
 namespace PRI.Project.Rosseel_Almanzo.Api.Dtos
 {
-    public class EventUpdateRequestDto : EventRequestDto
+    public class EventUpdateRequestDto
     {
         [Required(ErrorMessage = "Id required")]
         [Range(1, int.MaxValue)]
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "Title missing")]
+        [StringLength(50, ErrorMessage = "Title is too long")]
+        public string Title { get; set; }
+
+        [Required(ErrorMessage = "Description is required")]
+        [StringLength(500, ErrorMessage = "Description is too long")]
+        public string Description { get; set; }
+
+        [Required(ErrorMessage = "Price is required,can be 0")]
+        [Range(0.0, int.MaxValue)]
+        public decimal Price { get; set; }
+
+        [Required(ErrorMessage = "Date of event is required")]
+        [DataType(DataType.Date, ErrorMessage = "Please enter a valid date")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [FutureDate(ErrorMessage = "Date must be in de future")]
+        public DateTime Date { get; set; }
+        public int OrganizerId { get; set; }
+        public AddressRequestDto Address { get; set; }
     }
 }
