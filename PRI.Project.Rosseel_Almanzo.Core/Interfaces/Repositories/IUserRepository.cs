@@ -9,5 +9,6 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Interfaces.Repositories
 {
     public interface IUserRepository : IBaseRepository<User>
     {
+        IQueryable<Dog> GetAllUserDogs(int id);
     }
 }
