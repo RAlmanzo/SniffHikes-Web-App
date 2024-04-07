@@ -118,6 +118,54 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             Country = "België",
                             State = "Vlaams-Brabant",
                             Street = "Grote Markt 1"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            City = "Mechelen",
+                            Country = "België",
+                            State = "Antwerpen",
+                            Street = "Groenplaats 21"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            City = "Brugge",
+                            Country = "België",
+                            State = "West-Vlaanderen",
+                            Street = "Oude Burg 12"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            City = "Gent",
+                            Country = "België",
+                            State = "Oost-Vlaanderen",
+                            Street = "Veldstraat 9"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            City = "Brugge",
+                            Country = "België",
+                            State = "West-Vlaanderen",
+                            Street = "Steenstraat 21"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            City = "Anderlecht",
+                            Country = "Belgie",
+                            State = "Brussel",
+                            Street = "Rue Wayez 3"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            City = "Anderlecht",
+                            Country = "Belgie",
+                            State = "Brussel",
+                            Street = "Rue Wayez 3"
                         });
                 });
 
@@ -161,7 +209,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 1,
                             Content = "Gezellige avond!",
-                            DateCreated = new DateTime(2024, 4, 6, 14, 43, 58, 716, DateTimeKind.Local).AddTicks(5821),
+                            DateCreated = new DateTime(2024, 4, 7, 21, 13, 38, 24, DateTimeKind.Local).AddTicks(1992),
                             EventId = 1,
                             UserId = 1
                         },
@@ -169,7 +217,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 2,
                             Content = "Leuke wandeling!",
-                            DateCreated = new DateTime(2024, 4, 6, 14, 43, 58, 716, DateTimeKind.Local).AddTicks(5823),
+                            DateCreated = new DateTime(2024, 4, 7, 21, 13, 38, 24, DateTimeKind.Local).AddTicks(1996),
                             EventId = 2,
                             UserId = 1
                         },
@@ -177,7 +225,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 3,
                             Content = "Gezellige avond!",
-                            DateCreated = new DateTime(2024, 4, 6, 14, 43, 58, 716, DateTimeKind.Local).AddTicks(5825),
+                            DateCreated = new DateTime(2024, 4, 7, 21, 13, 38, 24, DateTimeKind.Local).AddTicks(1998),
                             EventId = 2,
                             UserId = 2
                         },
@@ -185,7 +233,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 4,
                             Content = "Gezellige avond!",
-                            DateCreated = new DateTime(2024, 4, 6, 14, 43, 58, 716, DateTimeKind.Local).AddTicks(5827),
+                            DateCreated = new DateTime(2024, 4, 7, 21, 13, 38, 24, DateTimeKind.Local).AddTicks(2001),
                             EventId = 3,
                             UserId = 3
                         },
@@ -193,7 +241,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 5,
                             Content = "Mooie route!",
-                            DateCreated = new DateTime(2024, 4, 6, 14, 43, 58, 716, DateTimeKind.Local).AddTicks(5828),
+                            DateCreated = new DateTime(2024, 4, 7, 21, 13, 38, 24, DateTimeKind.Local).AddTicks(2003),
                             RouteId = 1,
                             UserId = 1
                         },
@@ -201,7 +249,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 6,
                             Content = "Leuke wandeling!",
-                            DateCreated = new DateTime(2024, 4, 6, 14, 43, 58, 716, DateTimeKind.Local).AddTicks(5830),
+                            DateCreated = new DateTime(2024, 4, 7, 21, 13, 38, 24, DateTimeKind.Local).AddTicks(2005),
                             RouteId = 2,
                             UserId = 2
                         },
@@ -209,7 +257,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 7,
                             Content = "Mooie route!",
-                            DateCreated = new DateTime(2024, 4, 6, 14, 43, 58, 716, DateTimeKind.Local).AddTicks(5831),
+                            DateCreated = new DateTime(2024, 4, 7, 21, 13, 38, 24, DateTimeKind.Local).AddTicks(2008),
                             RouteId = 2,
                             UserId = 2
                         },
@@ -217,7 +265,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 8,
                             Content = "Mooie route!",
-                            DateCreated = new DateTime(2024, 4, 6, 14, 43, 58, 716, DateTimeKind.Local).AddTicks(5833),
+                            DateCreated = new DateTime(2024, 4, 7, 21, 13, 38, 24, DateTimeKind.Local).AddTicks(2010),
                             RouteId = 3,
                             UserId = 3
                         });
@@ -261,7 +309,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            DateOfBirth = new DateTime(2024, 4, 6, 14, 43, 58, 716, DateTimeKind.Local).AddTicks(5771),
+                            DateOfBirth = new DateTime(2024, 4, 7, 21, 13, 38, 24, DateTimeKind.Local).AddTicks(1916),
                             Gender = "Male",
                             Name = "Inca",
                             Race = "Husky",
@@ -270,7 +318,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            DateOfBirth = new DateTime(2024, 4, 6, 14, 43, 58, 716, DateTimeKind.Local).AddTicks(5810),
+                            DateOfBirth = new DateTime(2024, 4, 7, 21, 13, 38, 24, DateTimeKind.Local).AddTicks(1963),
                             Gender = "Female",
                             Name = "Zara",
                             Race = "Border-collie",
@@ -279,7 +327,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         new
                         {
                             Id = 3,
-                            DateOfBirth = new DateTime(2024, 4, 6, 14, 43, 58, 716, DateTimeKind.Local).AddTicks(5812),
+                            DateOfBirth = new DateTime(2024, 4, 7, 21, 13, 38, 24, DateTimeKind.Local).AddTicks(1966),
                             Gender = "Male",
                             Name = "Sleepy",
                             Race = "Duitse-herder",
@@ -288,7 +336,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         new
                         {
                             Id = 4,
-                            DateOfBirth = new DateTime(2024, 4, 6, 14, 43, 58, 716, DateTimeKind.Local).AddTicks(5814),
+                            DateOfBirth = new DateTime(2024, 4, 7, 21, 13, 38, 24, DateTimeKind.Local).AddTicks(1969),
                             Gender = "Male",
                             Name = "Sleepy",
                             Race = "Duitse-herder",
@@ -297,7 +345,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         new
                         {
                             Id = 5,
-                            DateOfBirth = new DateTime(2024, 4, 6, 14, 43, 58, 716, DateTimeKind.Local).AddTicks(5816),
+                            DateOfBirth = new DateTime(2024, 4, 7, 21, 13, 38, 24, DateTimeKind.Local).AddTicks(1971),
                             Gender = "Female",
                             Name = "Tunder",
                             Race = "Dog",
@@ -306,11 +354,47 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         new
                         {
                             Id = 6,
-                            DateOfBirth = new DateTime(2024, 4, 6, 14, 43, 58, 716, DateTimeKind.Local).AddTicks(5817),
+                            DateOfBirth = new DateTime(2024, 4, 7, 21, 13, 38, 24, DateTimeKind.Local).AddTicks(1974),
                             Gender = "Male",
                             Name = "Zira",
                             Race = "Husky",
                             UserId = 2
+                        },
+                        new
+                        {
+                            Id = 7,
+                            DateOfBirth = new DateTime(2019, 5, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Gender = "Female",
+                            Name = "Bella",
+                            Race = "Labrador Retriever",
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 8,
+                            DateOfBirth = new DateTime(2018, 10, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Gender = "Male",
+                            Name = "Rocky",
+                            Race = "German Shepherd",
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 9,
+                            DateOfBirth = new DateTime(2020, 3, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Gender = "Female",
+                            Name = "Luna",
+                            Race = "Golden Retriever",
+                            UserId = 5
+                        },
+                        new
+                        {
+                            Id = 10,
+                            DateOfBirth = new DateTime(2017, 12, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Gender = "Male",
+                            Name = "Max",
+                            Race = "Poodle",
+                            UserId = 5
                         });
                 });
 
@@ -361,7 +445,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             Id = 1,
                             AddressId = 4,
                             Date = new DateTime(2024, 4, 1, 10, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateCreated = new DateTime(2024, 4, 6, 14, 43, 58, 716, DateTimeKind.Local).AddTicks(5886),
+                            DateCreated = new DateTime(2024, 4, 7, 21, 13, 38, 24, DateTimeKind.Local).AddTicks(2060),
                             Description = "Geniet van een ontspannen wandeling met je hond in het prachtige bosgebied. Neem je viervoeter mee voor een leuke tijd in de natuur.",
                             OrganizerId = 1,
                             Price = 0m,
@@ -372,7 +456,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             Id = 2,
                             AddressId = 5,
                             Date = new DateTime(2024, 4, 5, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateCreated = new DateTime(2024, 4, 6, 14, 43, 58, 716, DateTimeKind.Local).AddTicks(5890),
+                            DateCreated = new DateTime(2024, 4, 7, 21, 13, 38, 24, DateTimeKind.Local).AddTicks(2066),
                             Description = "Kom en bewonder verschillende hondenrassen tijdens de hondenshow in Brussel. Er zijn prijzen te winnen en veel plezier te beleven!",
                             OrganizerId = 2,
                             Price = 10.50m,
@@ -383,11 +467,33 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             Id = 3,
                             AddressId = 6,
                             Date = new DateTime(2024, 4, 10, 10, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateCreated = new DateTime(2024, 4, 6, 14, 43, 58, 716, DateTimeKind.Local).AddTicks(5892),
+                            DateCreated = new DateTime(2024, 4, 7, 21, 13, 38, 24, DateTimeKind.Local).AddTicks(2068),
                             Description = "Geniet van een ontspannen wandeling met je hond in het prachtige bosgebied. Neem je viervoeter mee voor een leuke tijd in de natuur.",
                             OrganizerId = 3,
                             Price = 0m,
                             Title = "Hondenwandeling aan zee"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AddressId = 12,
+                            Date = new DateTime(2024, 4, 5, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateCreated = new DateTime(2024, 4, 7, 21, 13, 38, 24, DateTimeKind.Local).AddTicks(2071),
+                            Description = "Kom en bewonder verschillende hondenrassen tijdens de hondenshow in Brussel. Er zijn prijzen te winnen en veel plezier te beleven!",
+                            OrganizerId = 4,
+                            Price = 10.50m,
+                            Title = "Hondenshow West-Vlaanderen"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            AddressId = 13,
+                            Date = new DateTime(2024, 4, 10, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateCreated = new DateTime(2024, 4, 7, 21, 13, 38, 24, DateTimeKind.Local).AddTicks(2074),
+                            Description = "Geniet van een ontspannen wandeling met je hond in het prachtige bosgebied. Neem je viervoeter mee voor een leuke tijd in de natuur.",
+                            OrganizerId = 4,
+                            Price = 0m,
+                            Title = "Hondenwandeling Heuvelland"
                         });
                 });
 
@@ -435,6 +541,21 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             UserId = 3,
                             EventId = 3
+                        },
+                        new
+                        {
+                            UserId = 4,
+                            EventId = 5
+                        },
+                        new
+                        {
+                            UserId = 4,
+                            EventId = 4
+                        },
+                        new
+                        {
+                            UserId = 5,
+                            EventId = 5
                         });
                 });
 
@@ -464,6 +585,16 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                     b.ToTable("Images");
 
                     b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            EventId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            EventId = 1
+                        },
                         new
                         {
                             Id = 3,
@@ -501,8 +632,18 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         },
                         new
                         {
+                            Id = 13,
+                            EventId = 2
+                        },
+                        new
+                        {
                             Id = 14,
                             RouteId = 3
+                        },
+                        new
+                        {
+                            Id = 15,
+                            EventId = 1
                         },
                         new
                         {
@@ -556,7 +697,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 1,
                             AddressId = 7,
-                            DateCreated = new DateTime(2024, 4, 6, 14, 43, 58, 716, DateTimeKind.Local).AddTicks(5843),
+                            DateCreated = new DateTime(2024, 4, 7, 21, 13, 38, 24, DateTimeKind.Local).AddTicks(2030),
                             Description = "Een mooie wandeling door het bos met je hond. Geniet van de natuur en de frisse lucht.",
                             Title = "Boswandeling",
                             UserId = 1
@@ -565,7 +706,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 2,
                             AddressId = 8,
-                            DateCreated = new DateTime(2024, 4, 6, 14, 43, 58, 716, DateTimeKind.Local).AddTicks(5875),
+                            DateCreated = new DateTime(2024, 4, 7, 21, 13, 38, 24, DateTimeKind.Local).AddTicks(2033),
                             Description = "Een ontspannen wandeling met je hond langs het strand. Laat je viervoeter lekker uitwaaien!",
                             Title = "Strandwandeling",
                             UserId = 2
@@ -574,10 +715,28 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 3,
                             AddressId = 9,
-                            DateCreated = new DateTime(2024, 4, 6, 14, 43, 58, 716, DateTimeKind.Local).AddTicks(5877),
+                            DateCreated = new DateTime(2024, 4, 7, 21, 13, 38, 24, DateTimeKind.Local).AddTicks(2036),
                             Description = "Een leuke wandeling met je hond door het park. Laat je hond lekker rennen en spelen.",
                             Title = "Parkwandeling",
                             UserId = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AddressId = 14,
+                            DateCreated = new DateTime(2024, 4, 7, 21, 13, 38, 24, DateTimeKind.Local).AddTicks(2038),
+                            Description = "Een ontspannen wandeling met je hond langs het strand. Laat je viervoeter lekker uitwaaien!",
+                            Title = "Strandwandeling",
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 5,
+                            AddressId = 15,
+                            DateCreated = new DateTime(2024, 4, 7, 21, 13, 38, 24, DateTimeKind.Local).AddTicks(2040),
+                            Description = "Een leuke wandeling met je hond door het park. Laat je hond lekker rennen en spelen.",
+                            Title = "Parkwandeling",
+                            UserId = 5
                         });
                 });
 
@@ -655,6 +814,28 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             FirstName = "Jack",
                             Gender = "male",
                             LastName = "DeVos",
+                            Password = ""
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AddressId = 10,
+                            DateOfBirth = new DateTime(1995, 11, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "",
+                            FirstName = "Jill",
+                            Gender = "female",
+                            LastName = "Vogels",
+                            Password = ""
+                        },
+                        new
+                        {
+                            Id = 5,
+                            AddressId = 11,
+                            DateOfBirth = new DateTime(2000, 1, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "",
+                            FirstName = "Jim",
+                            Gender = "male",
+                            LastName = "Schoonaert",
                             Password = ""
                         });
                 });

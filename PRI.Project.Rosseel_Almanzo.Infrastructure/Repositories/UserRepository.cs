@@ -30,6 +30,13 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
             return data;
         }
 
+        public IQueryable<Dog> GetAllUserDogs(int id)
+        {
+            var user = GetByIdAsync(id);
+
+            return user.Result.Dogs.AsQueryable();
+        }
+
         public override async Task<User> GetByIdAsync(int id)
         {
             return await _targetTable

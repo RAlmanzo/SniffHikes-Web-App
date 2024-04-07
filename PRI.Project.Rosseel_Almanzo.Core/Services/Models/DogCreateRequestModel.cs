@@ -7,15 +7,13 @@ using System.Threading.Tasks;
 
 namespace PRI.Project.Rosseel_Almanzo.Core.Services.Models
 {
-    public class UserCreateRequestModel
+    public class DogCreateRequestModel
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        public string Name { get; set; }
+        public string Race { get; set; }
         public string Gender { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public Address Address { get; set; }
+        public DateTime DateOfBirth { get; set; }
         public string Image { get; set; }
+        public int UserId { get; set; }
     }
 }

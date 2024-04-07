@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace PRI.Project.Rosseel_Almanzo.Core.Interfaces.Repositories
 {
-    public interface IUserRepository : IBaseRepository<User>
+    public interface IDogRepository : IBaseRepository<Dog>
     {
-        IQueryable<Dog> GetAllUserDogs(int id);
     }
 }

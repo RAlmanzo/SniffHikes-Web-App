@@ -16,13 +16,15 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
         private readonly IAddressRepository _addressRepository;
         private readonly IEventUserRepository _eventUserRepository;
         private readonly IEventRepository _eventRepository;
+        private readonly IDogRepository _dogRepository;
 
-        public UserService(IUserRepository userRepository, IAddressRepository addressRepository, IEventUserRepository eventUserRepository, IEventRepository eventRepository)
+        public UserService(IUserRepository userRepository, IAddressRepository addressRepository, IEventUserRepository eventUserRepository, IEventRepository eventRepository, IDogRepository dogRepository)
         {
             _userRepository = userRepository;
             _addressRepository = addressRepository;
             _eventUserRepository = eventUserRepository;
             _eventRepository = eventRepository;
+            _dogRepository = dogRepository;
         }
 
         public async Task<ResultModel<User>> CreateUserAsync(UserCreateRequestModel userCreateRequestModel)
@@ -35,16 +37,6 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 {
                     Success = false,
                     Errors = new List<string> { "User allready exists!" }
-                };
-            }
-
-            //check dateofbirth
-            if (userCreateRequestModel.DateOfBirth > DateTime.Now)
-            {
-                return new ResultModel<User>
-                {
-                    Success = false,
-                    Errors = new List<string> { "DateOfBirth cant be in the future!" }
                 };
             }
 
@@ -67,24 +59,8 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 },
             };
 
-            ////check if dog(s) are added
-            //if (userCreateRequestModel.Dogs.Count() != 0)
-            //{
-            //    newUser.Dogs = userCreateRequestModel.Dogs.Select(d => new Dog
-            //    {
-            //        Name = d.Name,
-            //        Race = d.Race,
-            //        Gender = d.Gender,
-            //        DateOfBirth = d.DateOfBirth,
-            //        Image = d.Image,
-            //        UserId = newUser.Id,
-            //    }).ToList();
-            //}
-
-            //call the eventsrepo addAsync method for the event  and addres (images,...)
+            //call the usersrepo addAsync method
             var result = await _userRepository.AddAsync(newUser);        
-            //var addressResult = await _addressRepository.AddAsync(newEvent.Address);
-
             //check  result
             if (result)
             {
@@ -206,7 +182,12 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             user.Address.State = userUpdateRequestModel.Address.State;
             user.Address.Country = userUpdateRequestModel.Address.Country;
             user.DateOfBirth = userUpdateRequestModel.DateOfBirth;
-            user.Image = userUpdateRequestModel.Image;
+            
+
+            if (!string.IsNullOrWhiteSpace(userUpdateRequestModel.Image))
+            {
+                user.Image = userUpdateRequestModel.Image;
+            }
 
             if (await _userRepository.UpdateAsync(user))
             {
@@ -226,6 +207,6 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
         public async Task<bool> CheckIfExistsAsync(int id)
         {
             return await _userRepository.CheckIfExistsAsync(id);
-        }  
+        }
     }
 }
