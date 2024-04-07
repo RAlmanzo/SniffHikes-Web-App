@@ -187,7 +187,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
             return BadRequest(ModelState.Values);
         }
 
-        [HttpPut("{id}/dog")]
+        [HttpPost("{id}/dog")]
         public async Task<IActionResult> AddDog(int id, [FromForm]DogRequestDto dogRequestDto)
         {
             //check if user exists
@@ -225,7 +225,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
             return BadRequest(ModelState.Values);
         }
 
-        [HttpDelete("{id}/image")]
+        [HttpDelete("{id}/dog")]
         public async Task<IActionResult> DeleteDog(int id)
         {
             //get the dog
@@ -250,6 +250,62 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
                 return Ok();
             }
 
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+            return BadRequest(ModelState.Values);
+        }
+
+        [HttpPut("{id}/dog")]
+        public async Task<IActionResult> UpdateUserDog(int id, [FromForm]DogUpdateRequestDto dogUpdateRequestDto)
+        {
+            //check if user exists
+            if (!await _userService.CheckIfExistsAsync(id))
+            {
+                return NotFound("User not found!");
+            }
+
+            //check if userdog exists
+            if(!await _dogService.CheckIfExistsAsync(dogUpdateRequestDto.Id))
+            {
+                return NotFound("Dog not found!");
+            }
+
+            //check if new user image
+            var filename = "";
+            if (dogUpdateRequestDto.Image != null)
+            {
+                //get dog current image
+                var dog = await _dogService.GetByIdAsync(dogUpdateRequestDto.Id);
+                //delete current image
+                if (!string.IsNullOrWhiteSpace(dog.Value.Image))
+                {
+                    if (!_fileService.DeleteFile<User>(dog.Value.Image))
+                    {
+                        ModelState.AddModelError("", "Image not found");
+                    }
+                }
+                //save new image
+                filename = await _fileService.StoreFile<User>(dogUpdateRequestDto.Image);
+            }
+
+            var result = await _dogService.UpdateDogAsync(
+                new DogUpdateRequestModel
+                {
+                    Id = dogUpdateRequestDto.Id,
+                    Name = dogUpdateRequestDto.Name,
+                    Race = dogUpdateRequestDto.Race,
+                    DateOfBirth = dogUpdateRequestDto.DateOfBirth,
+                    Gender = dogUpdateRequestDto.Gender,
+                    UserId = id,
+                    Image = filename,
+                });
+
+            if (result.Success)
+            {
+                return Ok();
+            }
             foreach (var error in result.Errors)
             {
                 ModelState.AddModelError("", error);
