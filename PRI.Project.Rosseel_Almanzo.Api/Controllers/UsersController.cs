@@ -112,11 +112,24 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
                 if (!_fileService.DeleteFile<User>(userResult.Value.Image))
                 {
                     ModelState.AddModelError("", "Image not found");
-                }
+                }              
             }
 
+            if (userResult.Value.Dogs.Count() > 0)
+            {
+                foreach (var dog in userResult.Value.Dogs)
+                {
+                    if (!string.IsNullOrWhiteSpace(dog.Image))
+                    {
+                        if (!_fileService.DeleteFile<User>(dog.Image))
+                        {
+                            ModelState.AddModelError("", "Image not found");
+                        }
+                    }
+                }
+            }
             //TODO Delete dog images
-   
+
             var result = await _userService.DeleteUserAsync(id);
             if (result.Success)
             {
