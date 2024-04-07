@@ -232,7 +232,43 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             return new ResultModel<Event>
             {
                 Success = false,
-                Errors = new List<string> { "Record update failed!" }
+                Errors = new List<string> { "Event update failed!" }
+            };
+        }
+
+        public async Task<ResultModel<Event>> AddImageAsync(int id, string imagePath)
+        {
+            //check if event exists
+            if (_eventRepository.GetAll().Any(g => g.Id == id) == false)
+            {
+                return new ResultModel<Event>
+                {
+                    Success = false,
+                    Errors = new List<string> { "Event does not exist!" }
+                };
+            }
+
+            //check if image is present
+            var result = false;
+            if (!string.IsNullOrWhiteSpace(imagePath))
+            {
+                var image = new Image { File = imagePath, EventId = id };
+                result = await _imageRepository.AddAsync(image);
+            }
+
+            if (result)
+            {
+                var updatedEvent = await GetByIdAsync(id);
+                return new ResultModel<Event>
+                {
+                    Success = true,
+                    Value = updatedEvent.Value,
+                };
+            }
+            return new ResultModel<Event>
+            {
+                Success = false,
+                Errors = new List<string> { "Event not created!" }
             };
         }
     }

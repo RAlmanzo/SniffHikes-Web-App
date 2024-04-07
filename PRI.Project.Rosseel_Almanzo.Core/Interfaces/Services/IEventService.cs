@@ -17,5 +17,6 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Interfaces.Services
         Task<ResultModel<Event>> UpdateEventAsync(EventUpdateRequestModel eventUpdateRequestModel);
         Task<ResultModel<Event>> DeleteEventAsync(int id);
         Task<bool> CheckIfExistsAsync(int id);
+        Task<ResultModel<Event>> AddImageAsync(int id, string imagePath);
     }
 }
