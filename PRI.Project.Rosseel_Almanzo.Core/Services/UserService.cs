@@ -208,5 +208,47 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
         {
             return await _userRepository.CheckIfExistsAsync(id);
         }
+
+        public async Task<ResultModel<IEnumerable<User>>> SearchByFirstNameAsync(string firstName)
+        {
+            var users = await _userRepository.GetAllAsync();
+
+            var selectedUsers = users.Where(r => r.FirstName.ToUpper().Contains(firstName.ToUpper())).ToList();
+            if (selectedUsers.Count() > 0)
+            {
+                return new ResultModel<IEnumerable<User>>
+                {
+                    Value = selectedUsers,
+                    Success = true
+                };
+            }
+
+            return new ResultModel<IEnumerable<User>>
+            {
+                Success = false,
+                Errors = new List<string> { "No users found" }
+            };
+        }
+
+        public async Task<ResultModel<IEnumerable<User>>> SearchByLastNameAsync(string lastName)
+        {
+            var users = await _userRepository.GetAllAsync();
+
+            var selectedUsers = users.Where(r => r.LastName.ToUpper().Contains(lastName.ToUpper())).ToList();
+            if (selectedUsers.Count() > 0)
+            {
+                return new ResultModel<IEnumerable<User>>
+                {
+                    Value = selectedUsers,
+                    Success = true
+                };
+            }
+
+            return new ResultModel<IEnumerable<User>>
+            {
+                Success = false,
+                Errors = new List<string> { "No users found" }
+            };
+        }
     }
 }
