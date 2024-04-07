@@ -1,8 +1,7 @@
 ﻿namespace PRI.Project.Rosseel_Almanzo.Core.Entities
 {
-    public class Dog
+    public class Dog : BaseEntity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Race { get; set; }
         public string Gender { get; set; }
