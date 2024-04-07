@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using PRI.Project.Rosseel_Almanzo.Api.Validators;
+using System.ComponentModel.DataAnnotations;
 
 namespace PRI.Project.Rosseel_Almanzo.Api.Dtos
 {
@@ -23,7 +24,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Dtos
         [Required(ErrorMessage = "Date of event is required")]
         [DataType(DataType.Date, ErrorMessage = "Please enter a valid date")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [FutureDate(ErrorMessage = "Date must be in de future")]
+        [EventDateValidator(ErrorMessage = "Date must be in de future")]
         public DateTime Date { get; set; }
         public int OrganizerId { get; set; }
         public AddressRequestDto Address { get; set; }
