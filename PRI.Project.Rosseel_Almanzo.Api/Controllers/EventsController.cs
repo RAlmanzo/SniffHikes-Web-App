@@ -18,13 +18,15 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly ILogger<EventsController> _logger;
         private readonly IFileService _fileService;
+        private readonly IImageService _imageService;
 
-        public EventsController(IEventService eventService, IWebHostEnvironment webHostEnvironment, ILogger<EventsController> logger, IFileService fileService)
+        public EventsController(IEventService eventService, IWebHostEnvironment webHostEnvironment, ILogger<EventsController> logger, IFileService fileService, IImageService imageService)
         {
             _eventService = eventService;
             _webHostEnvironment = webHostEnvironment;
             _logger = logger;
             _fileService = fileService;
+            _imageService = imageService;
         }
 
         [HttpGet]
@@ -166,6 +168,61 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
                 ModelState.AddModelError("", error);
             }
 
+            return BadRequest(ModelState.Values);
+        }
+
+        [HttpPut("{id}/image")]
+        public async Task<IActionResult> AddImageToEvent(int id, [FromForm] ImageRequestDto imageRequestDto)
+        {
+            // Check if event exists
+            if (!await _eventService.CheckIfExistsAsync(id))
+            {
+                return NotFound("Route not found!");
+            }
+
+            // Store the uploaded image
+            var imagePath = await _fileService.StoreFile<Event>(imageRequestDto.Image);
+
+            // Update the event to add the new image
+            var result = await _eventService.AddImageAsync(id, imagePath);
+
+            if (result.Success)
+            {
+                return Ok(result.Value.MapToDto());
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+
+            return BadRequest(ModelState.Values);
+        }
+
+        [HttpDelete("{id}/image")]
+        public async Task<IActionResult> DeleteImage(int id)
+        {
+            //delete image from wwwroot
+            var image = await _imageService.GetByIdAsync(id);
+            if (image.Success)
+            {
+                if (!_fileService.DeleteFile<Event>(image.Value.File))
+                {
+                    ModelState.AddModelError("", "Image not found");
+                }
+            }
+
+            //delete the image from db
+            var result = await _imageService.DeleteImageAsync(id);
+            if (result.Success)
+            {
+                return Ok();
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
             return BadRequest(ModelState.Values);
         }
     }
