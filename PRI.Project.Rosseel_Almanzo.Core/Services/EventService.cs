@@ -271,5 +271,26 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 Errors = new List<string> { "Event not created!" }
             };
         }
+
+        public async Task<ResultModel<IEnumerable<Event>>> SearchByTitleAsync(string title)
+        {
+            var events = await _eventRepository.GetAllAsync();
+
+            var selectedEvent =  events.Where(r => r.Title.ToUpper().Contains(title.ToUpper())).ToList();
+            if (selectedEvent.Count() > 0)
+            {
+                return new ResultModel<IEnumerable<Event>>
+                {
+                    Value = selectedEvent,
+                    Success = true
+                };
+            }
+
+            return new ResultModel<IEnumerable<Event>>
+            {
+                Success = false,
+                Errors = new List<string> { "No events found" }
+            };
+        }
     }
 }
