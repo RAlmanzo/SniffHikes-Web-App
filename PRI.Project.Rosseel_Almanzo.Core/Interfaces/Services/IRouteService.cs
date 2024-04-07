@@ -17,5 +17,6 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Interfaces.Services
         Task<ResultModel<Route>> DeleteRouteAsync(int id);
         Task<bool> CheckIfExistsAsync(int id);
         Task<ResultModel<Route>> AddImageAsync(int id, string imagePath);
+        Task<ResultModel<IEnumerable<Route>>> SearchByTitleAsync(string title);
     }
 }

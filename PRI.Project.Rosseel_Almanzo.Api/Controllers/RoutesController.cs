@@ -219,5 +219,20 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
             }
             return BadRequest(ModelState.Values);
         }
+
+        [HttpGet("Search/ByTitle/{title}")]
+        public async Task<IActionResult> SearchByTitle(string title)
+        {
+            if (string.IsNullOrWhiteSpace(title))
+            {
+                return BadRequest("character not allowed!");
+            }
+            var result = await _routeService.SearchByTitleAsync(title);
+            if (result.Success)
+            {
+                return Ok(result.Value.MapToDto());
+            }
+            return Ok(result.Errors);
+        }
     }
 }
