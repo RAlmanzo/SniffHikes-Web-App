@@ -127,5 +127,61 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             dogResultModel.Value = dog;
             return dogResultModel;
         }
+
+        public async Task<ResultModel<Dog>> UpdateDogAsync(DogUpdateRequestModel dogUpdateRequestModel)
+        {
+            //check if user exists
+            if (_userRepository.GetAll().Any(g => g.Id == dogUpdateRequestModel.UserId) == false)
+            {
+                return new ResultModel<Dog>
+                {
+                    Success = false,
+                    Errors = new List<string> { "User does not exist!" }
+                };
+            }
+
+            //check if userdog exists
+            if (_userRepository.GetAllUserDogs(dogUpdateRequestModel.UserId).Any(d => d.Id == dogUpdateRequestModel.Id) == false)
+            {
+                return new ResultModel<Dog>
+                {
+                    Success = false,
+                    Errors = new List<string> { "User does not own this dog" }
+                };
+            }
+            //get the dog
+            var dog = await _dogRepository.GetByIdAsync(dogUpdateRequestModel.Id);
+            //update
+            dog.Id = dogUpdateRequestModel.Id;
+            dog.Name = dogUpdateRequestModel.Name;
+            dog.Race = dogUpdateRequestModel.Race;
+            dog.Gender = dogUpdateRequestModel.Gender;
+            dog.DateOfBirth = dogUpdateRequestModel.DateOfBirth;
+            dog.UserId = dogUpdateRequestModel.UserId;
+
+            if (!string.IsNullOrWhiteSpace(dogUpdateRequestModel.Image))
+            {
+                dog.Image = dogUpdateRequestModel.Image;
+            }
+
+            if (await _dogRepository.UpdateAsync(dog))
+            {
+                return new ResultModel<Dog>
+                {
+                    Success = true,
+                    Value = dog,
+                };
+            }
+            return new ResultModel<Dog>
+            {
+                Success = false,
+                Errors = new List<string> { "Dog update failed!" }
+            };
+        }
+
+        public async Task<bool> CheckIfExistsAsync(int id)
+        {
+            return await _userRepository.CheckIfExistsAsync(id);
+        }
     }
 }
