@@ -183,7 +183,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             //get the route
             var route = await _routeRepository.GetByIdAsync(routeUpdateRequestModel.Id);
 
-            //update event
+            //update route
             route.Id = routeUpdateRequestModel.Id;
             route.Title = routeUpdateRequestModel.Title;
             route.Description = routeUpdateRequestModel.Description;

@@ -19,7 +19,6 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services.Models
         public int OrganizerId { get; set; }
         public DateTime Date { get; set; }
         public DateTime DateCreated { get; set; }
-        //public IEnumerable<string> ImageUrls { get; set; }
-        public string Image {  get; set; }
+        public IEnumerable<string> Images { get; set; }
     }
 }
