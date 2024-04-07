@@ -16,8 +16,8 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
         {
             var images = new Image[]
             {
-                //new Image{Id = 1, File = null, EventId = 1},
-                //new Image{Id = 2, File = null, EventId = 1},
+                new Image{Id = 1, File = null, EventId = 1},
+                new Image{Id = 2, File = null, EventId = 1},
                 new Image{Id = 3, File = null, RouteId = 1},
 
                 new Image{Id = 6 , File = null, EventId = 2},
@@ -28,10 +28,10 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                 new Image{Id = 10, File = null, RouteId = 2},
 
                 new Image{Id = 12, File = null, EventId = 3},
-                //new Image{Id = 13, File = null, EventId = 2},
+                new Image{Id = 13, File = null, EventId = 2},
 
                 new Image{Id = 14, File = null, RouteId = 3},
-                //new Image{Id = 15, File = null, EventId = 1},
+                new Image{Id = 15, File = null, EventId = 1},
                 new Image{Id = 16, File = null, RouteId = 1},
                 new Image{Id = 17, File = null, RouteId = 3},
             };
@@ -44,6 +44,10 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                 new Dog{Id = 4, Name = "Sleepy", Race = "Duitse-herder", Gender ="Male", DateOfBirth = DateTime.Now, Image = null, UserId = 3},
                 new Dog{Id = 5, Name = "Tunder", Race = "Dog", Gender ="Female", DateOfBirth = DateTime.Now, Image = null, UserId = 1},
                 new Dog{Id = 6, Name = "Zira", Race = "Husky", Gender ="Male", DateOfBirth = DateTime.Now, Image = null, UserId = 2},
+                new Dog{Id = 7, Name = "Bella", Race = "Labrador Retriever", Gender = "Female", DateOfBirth = new DateTime(2019, 5, 12), Image = null, UserId = 4},
+                new Dog{Id = 8, Name = "Rocky", Race = "German Shepherd", Gender = "Male", DateOfBirth = new DateTime(2018, 10, 8), Image = null, UserId = 4},
+                new Dog{Id = 9, Name = "Luna", Race = "Golden Retriever", Gender = "Female", DateOfBirth = new DateTime(2020, 3, 21), Image = null, UserId = 5},
+                new Dog{Id = 10, Name = "Max", Race = "Poodle", Gender = "Male", DateOfBirth = new DateTime(2017, 12, 3), Image = null, UserId = 5},
             };
 
             var comments = new Comment[]
@@ -126,8 +130,12 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                 new Address { Id = 7, Street = "Steenstraat 21", City = "Brugge", State = "West-Vlaanderen", Country = "België"},
                 new Address { Id = 8, Street = "Meir 12", City = "Antwerpen", State = "Antwerpen", Country = "België"},
                 new Address { Id = 9, Street = "Grote Markt 1", City = "Leuven", State = "Vlaams-Brabant", Country = "België"},
-                //new Address { Id = 10, Street = "Groenplaats 21", City = "Mechelen", State = "Antwerpen", Country = "België"},
-                //new Address { Id =11, Street = "Oude Burg 12", City = "Brugge", State = "West-Vlaanderen", Country = "België"},
+                new Address { Id = 10, Street = "Groenplaats 21", City = "Mechelen", State = "Antwerpen", Country = "België"},
+                new Address { Id =11, Street = "Oude Burg 12", City = "Brugge", State = "West-Vlaanderen", Country = "België"},
+                new Address { Id = 12, Street = "Veldstraat 9", City = "Gent", State = "Oost-Vlaanderen", Country = "België"},
+                new Address { Id = 13, Street = "Steenstraat 21", City = "Brugge", State = "West-Vlaanderen", Country = "België"},
+                new Address { Id = 14, Street = "Rue Wayez 3", City = "Anderlecht", State = "Brussel", Country = "Belgie"},
+                new Address { Id = 15, Street = "Rue Wayez 3", City = "Anderlecht", State = "Brussel", Country = "Belgie"},
             };
 
             var routes = new Route[]
@@ -140,8 +148,6 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                     Description = "Een mooie wandeling door het bos met je hond. Geniet van de natuur en de frisse lucht.",
                     AddressId = 7,
                     DateCreated = DateTime.Now,
-                    //Images = images.Where(i => i.RouteId == 1).ToList(),
-                    //Comments = comments.Where(c => c.RouteId == 1).ToList(),
                 },
                 new Route
                 {
@@ -151,8 +157,6 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                     Description = "Een ontspannen wandeling met je hond langs het strand. Laat je viervoeter lekker uitwaaien!",
                     AddressId = 8,
                     DateCreated = DateTime.Now,
-                    //Images = images.Where(i => i.RouteId == 2).ToList(),
-                    //Comments = comments.Where(c => c.RouteId == 2).ToList(),
                 },
                 new Route
                 {
@@ -162,8 +166,24 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                     Description = "Een leuke wandeling met je hond door het park. Laat je hond lekker rennen en spelen.",
                     AddressId = 9,
                     DateCreated = DateTime.Now,
-                    //Images = images.Where(i => i.RouteId == 3).ToList(),
-                    //Comments = comments.Where(c => c.RouteId == 3).ToList(),
+                },
+                new Route
+                {
+                    Id = 4,
+                    UserId = 4,
+                    Title = "Strandwandeling",
+                    Description = "Een ontspannen wandeling met je hond langs het strand. Laat je viervoeter lekker uitwaaien!",
+                    AddressId = 14,
+                    DateCreated = DateTime.Now,
+                },
+                new Route
+                {
+                    Id = 5,
+                    UserId = 5,
+                    Title = "Parkwandeling",
+                    Description = "Een leuke wandeling met je hond door het park. Laat je hond lekker rennen en spelen.",
+                    AddressId = 15,
+                    DateCreated = DateTime.Now,
                 },
             };
 
@@ -204,28 +224,28 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                     Email = "",
                     Password = "",
                 },
-                //new User
-                //{
-                //    Id = 4,
-                //    FirstName = "Jill",
-                //    LastName = "Vogels",
-                //    DateOfBirth = new DateTime(1995, 11, 25),
-                //    Gender ="female",
-                //    Address = new Address { Id= 4, Street = "Steenstraat 28", City = "Brugge", State = "West-Vlaanderen" ,Country = "Belgie"},
-                //    Email = "",
-                //    Password = "",
-                //},
-                //new User
-                //{
-                //    Id = 5,
-                //    FirstName = "Jim",
-                //    LastName = "Schoonaert",
-                //    DateOfBirth = new DateTime(2000, 1, 30),
-                //    Gender = "male",
-                //    Address = new Address {Id = 5, Street = "Ooststraat 10", City = "Veurne", State = "West-Vlaanderen", Country = "Belgie"},
-                //    Email = "",
-                //    Password = "",
-                //},               
+                new User
+                {
+                    Id = 4,
+                    FirstName = "Jill",
+                    LastName = "Vogels",
+                    DateOfBirth = new DateTime(1995, 11, 25),
+                    Gender ="female",
+                    AddressId = 10,
+                    Email = "",
+                    Password = "",
+                },
+                new User
+                {
+                    Id = 5,
+                    FirstName = "Jim",
+                    LastName = "Schoonaert",
+                    DateOfBirth = new DateTime(2000, 1, 30),
+                    Gender = "male",
+                    AddressId = 11,
+                    Email = "",
+                    Password = "",
+                },
             };
 
             var events = new Event[]
@@ -263,6 +283,28 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                     Date = new DateTime(2024, 4, 10, 10, 0, 0),
                     DateCreated = DateTime.Now,
                 },
+                new Event
+                {
+                    Id = 4,
+                    OrganizerId = 4,
+                    Title = "Hondenshow West-Vlaanderen",
+                    Description = "Kom en bewonder verschillende hondenrassen tijdens de hondenshow in Brussel. Er zijn prijzen te winnen en veel plezier te beleven!",
+                    Price = 10.50m,
+                    AddressId = 12,
+                    Date = new DateTime(2024, 4, 5, 12, 0, 0),
+                    DateCreated = DateTime.Now,
+                },
+                new Event
+                {
+                    Id = 5,
+                    OrganizerId = 4,
+                    Title = "Hondenwandeling Heuvelland",
+                    Description = "Geniet van een ontspannen wandeling met je hond in het prachtige bosgebied. Neem je viervoeter mee voor een leuke tijd in de natuur.",
+                    Price = 0,
+                    AddressId = 13,
+                    Date = new DateTime(2024, 4, 10, 10, 0, 0),
+                    DateCreated = DateTime.Now,
+                },
             };
 
             var eventUsers = new EventUser[]
@@ -273,6 +315,9 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                 new EventUser { UserId = 3, EventId = 2 },
                 new EventUser { UserId = 1, EventId = 3 },
                 new EventUser { UserId = 3, EventId = 3 },
+                new EventUser { UserId = 4, EventId = 5 },
+                new EventUser { UserId = 4, EventId = 4 },
+                new EventUser { UserId = 5, EventId = 5 },
             };
 
 
