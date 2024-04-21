@@ -9,10 +9,11 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
 using System.Xml.Linq;
+using Microsoft.AspNetCore.Identity;
 
 namespace PRI.Project.Rosseel_Almanzo.Core.Entities
 {
-    public class User : BaseEntity
+    public class User : IdentityUser
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -20,7 +21,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Entities
         public string Gender { get; set; }
         public Address Address { get; set; }
         public int AddressId { get; set; }
-        public string Email { get; set; }
+        //public string Email { get; set; }
         public string Password { get; set; }
         public ICollection<Comment> Comments { get; set; }
         public ICollection<Dog> Dogs { get; set; }
