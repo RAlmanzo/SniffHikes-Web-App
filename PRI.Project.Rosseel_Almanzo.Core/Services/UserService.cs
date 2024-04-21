@@ -1,10 +1,12 @@
-﻿using PRI.Project.Rosseel_Almanzo.Core.Entities;
+﻿using Microsoft.AspNetCore.Identity;
+using PRI.Project.Rosseel_Almanzo.Core.Entities;
 using PRI.Project.Rosseel_Almanzo.Core.Interfaces.Repositories;
 using PRI.Project.Rosseel_Almanzo.Core.Interfaces.Services;
 using PRI.Project.Rosseel_Almanzo.Core.Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,21 +19,23 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
         private readonly IEventUserRepository _eventUserRepository;
         private readonly IEventRepository _eventRepository;
         private readonly IDogRepository _dogRepository;
+        private readonly UserManager<User> _userManager;
 
-        public UserService(IUserRepository userRepository, IAddressRepository addressRepository, IEventUserRepository eventUserRepository, IEventRepository eventRepository, IDogRepository dogRepository)
+        public UserService(IUserRepository userRepository, IAddressRepository addressRepository, IEventUserRepository eventUserRepository, IEventRepository eventRepository, IDogRepository dogRepository, UserManager<User> userManager)
         {
             _userRepository = userRepository;
             _addressRepository = addressRepository;
             _eventUserRepository = eventUserRepository;
             _eventRepository = eventRepository;
             _dogRepository = dogRepository;
+            _userManager = userManager;
         }
 
         public async Task<ResultModel<User>> CreateUserAsync(UserCreateRequestModel userCreateRequestModel)
         {
             //check if user excist
-            var users = await _userRepository.GetAllAsync();            
-            if(users.Any(u => u.Email.ToUpper().Equals(userCreateRequestModel.Email.ToUpper())))
+            var userResult = await _userManager.FindByEmailAsync(userCreateRequestModel.Email);
+            if(userResult != null)
             {
                 return new ResultModel<User>
                 {
@@ -39,16 +43,40 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                     Errors = new List<string> { "User allready exists!" }
                 };
             }
+            //var users = await _userRepository.GetAllAsync();            
+            //if(users.Any(u => u.Email.ToUpper().Equals(userCreateRequestModel.Email.ToUpper())))
+            //{
+            //    return new ResultModel<User>
+            //    {
+            //        Success = false,
+            //        Errors = new List<string> { "User allready exists!" }
+            //    };
+            //}
 
             //create new user
             var newUser = new User
             {
+                //FirstName = userCreateRequestModel.FirstName,
+                //LastName = userCreateRequestModel.LastName,
+                //DateOfBirth = userCreateRequestModel.DateOfBirth,
+                //Gender = userCreateRequestModel.Gender,
+                //Email = userCreateRequestModel.Email,
+                //Password = userCreateRequestModel.Password,
+                //Image = userCreateRequestModel.Image,
+                //Address = new Address
+                //{
+                //    Street = userCreateRequestModel.Address.Street,
+                //    City = userCreateRequestModel.Address.City,
+                //    State = userCreateRequestModel.Address.State,
+                //    Country = userCreateRequestModel.Address.Country,
+                //},
+                UserName = userCreateRequestModel.Email,
                 FirstName = userCreateRequestModel.FirstName,
                 LastName = userCreateRequestModel.LastName,
                 DateOfBirth = userCreateRequestModel.DateOfBirth,
                 Gender = userCreateRequestModel.Gender,
                 Email = userCreateRequestModel.Email,
-                Password = userCreateRequestModel.Password,
+                EmailConfirmed = true,//ONLY FOR TESTING/DEVELOPMENT PURPOSE
                 Image = userCreateRequestModel.Image,
                 Address = new Address
                 {
@@ -57,24 +85,63 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                     State = userCreateRequestModel.Address.State,
                     Country = userCreateRequestModel.Address.Country,
                 },
+                Password = userCreateRequestModel.Password,
             };
 
             //call the usersrepo addAsync method
-            var result = await _userRepository.AddAsync(newUser);        
+            //var result = await _userRepository.AddAsync(newUser);
+            //var result = await _userManager.CreateAsync(newUser, userCreateRequestModel.Password);
+            var result = await _userRepository.AddAsync(newUser);
             //check  result
-            if (result)
+            if (!result.Succeeded)
             {
-                var createdRecord = await GetByIdAsync(newUser.Id);
+                //var createdRecord = await GetByIdAsync(newUser.Id);
+                //return new ResultModel<User>
+                //{
+                //    Success = true,
+                //    Value = createdRecord.Value,
+                //};
                 return new ResultModel<User>
                 {
-                    Success = true,
-                    Value = createdRecord.Value,
+                    Success = false,
+                    Errors = new List<string> { "User not created!" }
                 };
             }
+
+            //add the claims
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Role,"User"),
+                new Claim(ClaimTypes.DateOfBirth,newUser.DateOfBirth.ToString()),
+                new Claim(ClaimTypes.Name,newUser.UserName),
+                new Claim(ClaimTypes.NameIdentifier,newUser.Id),
+            };
+            //add claims to user
+            result = await _userManager.AddClaimsAsync(newUser, claims);
+            if (!result.Succeeded)
+            {
+                ////add to the modelstate
+                //foreach (var error in result.Errors)
+                //{
+                //    ModelState.AddModelError("", error.Description);
+                //}
+                //return BadRequest(ModelState.Values);
+                return new ResultModel<User>
+                {
+                    Success = false,
+                    Errors = new List<string> { "User not created!" }
+                };
+            }
+            //return new ResultModel<User>
+            //{
+            //    Success = false,
+            //    Errors = new List<string> { "User not created!" }
+            //};
+            var createdRecord = await GetByIdAsync(newUser.Id);
             return new ResultModel<User>
             {
-                Success = false,
-                Errors = new List<string> { "User not created!" }
+                Success = true,
+                Value = createdRecord.Value,
             };
         }
 
@@ -105,7 +172,8 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             }
 
             //check if deleteAsync returns true
-            if (await _userRepository.DeleteAsync(selectedUser))
+            var result = await _userRepository.DeleteAsync(selectedUser);
+            if (result.Succeeded)
             {
                 if (await _addressRepository.DeleteAsync(userAddress))
                 {
