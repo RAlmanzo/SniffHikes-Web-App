@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PRI.Project.Rosseel_Almanzo.Api.Services;
 using PRI.Project.Rosseel_Almanzo.Api.Services.Interfaces;
+using PRI.Project.Rosseel_Almanzo.Core.Entities;
 using PRI.Project.Rosseel_Almanzo.Core.Interfaces.Repositories;
 using PRI.Project.Rosseel_Almanzo.Core.Interfaces.Services;
 using PRI.Project.Rosseel_Almanzo.Core.Services;
@@ -19,6 +21,20 @@ namespace PRI.Project.Rosseel_Almanzo.Api
             builder.Services.AddDbContext<SniffHikesDbContext>
                 (options => options
                 .UseSqlServer(builder.Configuration.GetConnectionString("SniffHikestDb")));
+            //register identity
+            builder.Services.AddIdentity<User, IdentityRole>(options =>
+            {
+                //ONLY FOR TESTING PURPOSES!!!!
+                options.SignIn.RequireConfirmedEmail = true;
+                options.User.RequireUniqueEmail = true;
+                options.Password.RequiredUniqueChars = 0;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 3;
+            }).AddEntityFrameworkStores<SniffHikesDbContext>()
+            .AddDefaultTokenProviders();
 
             builder.Services.AddScoped<IEventRepository, EventRepository>();
             builder.Services.AddScoped<IEventService, EventService>();
