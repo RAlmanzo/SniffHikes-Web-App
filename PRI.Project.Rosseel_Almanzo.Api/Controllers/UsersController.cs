@@ -43,7 +43,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Get(string id)
         {
             //get the record
             var result = await _userService.GetByIdAsync(id);
@@ -98,7 +98,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(string id)
         {
             var userResult = await _userService.GetByIdAsync(id);
 
@@ -201,7 +201,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
         }
 
         [HttpPost("{id}/dog")]
-        public async Task<IActionResult> AddDog(int id, [FromForm]DogRequestDto dogRequestDto)
+        public async Task<IActionResult> AddDog(string id, [FromForm]DogRequestDto dogRequestDto)
         {
             //check if user exists
             if (!await _userService.CheckIfExistsAsync(id))
@@ -271,7 +271,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
         }
 
         [HttpPut("{id}/dog")]
-        public async Task<IActionResult> UpdateUserDog(int id, [FromForm]DogUpdateRequestDto dogUpdateRequestDto)
+        public async Task<IActionResult> UpdateUserDog(string id, [FromForm]DogUpdateRequestDto dogUpdateRequestDto)
         {
             //check if user exists
             if (!await _userService.CheckIfExistsAsync(id))

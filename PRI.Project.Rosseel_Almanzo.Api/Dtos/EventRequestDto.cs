@@ -23,7 +23,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Dtos
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [EventDateValidator(ErrorMessage = "Date must be in de future")]
         public DateTime Date { get; set; }
-        public int OrganizerId { get; set; }
+        public string OrganizerId { get; set; }
         public AddressRequestDto Address { get; set; }
         public IEnumerable<IFormFile> Images { get; set; }
     }

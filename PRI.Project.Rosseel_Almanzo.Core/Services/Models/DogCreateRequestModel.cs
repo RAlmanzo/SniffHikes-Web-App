@@ -14,6 +14,6 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services.Models
         public string Gender { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string Image { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
     }
 }

@@ -11,11 +11,11 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Interfaces.Services
     public interface IUserService
     {
         Task<ResultModel<IEnumerable<User>>> GetAllAsync();
-        Task<ResultModel<User>> GetByIdAsync(int id);
+        Task<ResultModel<User>> GetByIdAsync(string id);
         Task<ResultModel<User>> CreateUserAsync(UserCreateRequestModel UserCreateRequestModel);
         Task<ResultModel<User>> UpdateUserAsync(UserUpdateRequestModel UserUpdateRequestModel);
-        Task<ResultModel<User>> DeleteUserAsync(int id);
-        Task<bool> CheckIfExistsAsync(int id);
+        Task<ResultModel<User>> DeleteUserAsync(string id);
+        Task<bool> CheckIfExistsAsync(string id);
         Task<ResultModel<IEnumerable<User>>> SearchByFirstNameAsync(string firstName);
         Task<ResultModel<IEnumerable<User>>> SearchByLastNameAsync(string lastName);
     }

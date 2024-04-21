@@ -78,7 +78,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             };
         }
 
-        public async Task<ResultModel<User>> DeleteUserAsync(int id)
+        public async Task<ResultModel<User>> DeleteUserAsync(string id)
         {
             //get the user
             var selectedUser = await _userRepository.GetByIdAsync(id);
@@ -139,7 +139,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             return userResultModel;
         }
 
-        public async Task<ResultModel<User>> GetByIdAsync(int id)
+        public async Task<ResultModel<User>> GetByIdAsync(string id)
         {
             //get the user
             var user = await _userRepository.GetByIdAsync(id);
@@ -204,7 +204,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             };
         }
 
-        public async Task<bool> CheckIfExistsAsync(int id)
+        public async Task<bool> CheckIfExistsAsync(string id)
         {
             return await _userRepository.CheckIfExistsAsync(id);
         }

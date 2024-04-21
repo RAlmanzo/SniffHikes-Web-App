@@ -7,8 +7,15 @@ using System.Threading.Tasks;
 
 namespace PRI.Project.Rosseel_Almanzo.Core.Interfaces.Repositories
 {
-    public interface IUserRepository : IBaseRepository<User>
+    public interface IUserRepository
     {
-        IQueryable<Dog> GetAllUserDogs(int id);
+        Task<User> GetByIdAsync(string id);
+        IQueryable<User> GetAll();
+        Task<IEnumerable<User>> GetAllAsync();
+        Task<bool> DeleteAsync(User toDelete);
+        Task<bool> AddAsync(User toAdd);
+        Task<bool> UpdateAsync(User toUpdate);
+        Task<bool> CheckIfExistsAsync(string id);
+        IQueryable<Dog> GetAllUserDogs(string id);
     }
 }

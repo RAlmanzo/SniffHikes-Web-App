@@ -179,7 +179,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             //get event attendingusers
             foreach (var attendingUser in selectedEvent.AttendingUsers)
             {
-                var result = await _userRepository.GetByIdAsync((int)attendingUser.UserId);
+                var result = await _userRepository.GetByIdAsync(attendingUser.UserId);
                 attendingUser.User = result;
             }
             //if event exists

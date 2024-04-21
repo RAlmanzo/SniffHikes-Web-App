@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using PRI.Project.Rosseel_Almanzo.Core.Entities;
@@ -11,14 +12,14 @@ using System.Threading.Tasks;
 
 namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data
 {
-    public class SniffHikesDbContext : DbContext
+    public class SniffHikesDbContext : IdentityDbContext<User>
     {
         public DbSet<Image> Images { get; set; }
         public DbSet<Dog> Dogs { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Route> Routes { get; set; }
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<User> Users { get; set; }
+        //public DbSet<User> Users { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<EventUser> EventsUser { get; set; }
 
