@@ -2,7 +2,7 @@
 
 namespace PRI.Project.Rosseel_Almanzo.Api.Dtos
 {
-    public class UsersGetResponseDto : BaseDto
+    public class UsersGetResponseDto : BaseUserDto
     {
         public DateTime DateOfBirth { get; set; }
         public string Gender { get; set; }
