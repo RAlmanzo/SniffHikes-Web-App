@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using PRI.Project.Rosseel_Almanzo.Api.Services;
 using PRI.Project.Rosseel_Almanzo.Api.Services.Interfaces;
 using PRI.Project.Rosseel_Almanzo.Core.Entities;
@@ -9,6 +11,7 @@ using PRI.Project.Rosseel_Almanzo.Core.Services;
 using PRI.Project.Rosseel_Almanzo.Infrastructure.Data;
 using PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories;
 using System.Security.Claims;
+using System.Text;
 
 namespace PRI.Project.Rosseel_Almanzo.Api
 {
@@ -36,6 +39,22 @@ namespace PRI.Project.Rosseel_Almanzo.Api
                 options.Password.RequiredLength = 3;
             }).AddEntityFrameworkStores<SniffHikesDbContext>()
             .AddDefaultTokenProviders();
+
+            //configure jwt bearer token
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidAudience = builder.Configuration["JWTConfiguration:Audience"],
+                ValidIssuer = builder.Configuration["JWTConfiguration:Issuer"],
+                IssuerSigningKey =
+                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWTConfiguration:SecretKey"]))
+            });
 
             //Add authorisation policies          
             builder.Services.AddAuthorization(options =>
@@ -116,7 +135,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();
