@@ -28,6 +28,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Dtos
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Address is required")]
