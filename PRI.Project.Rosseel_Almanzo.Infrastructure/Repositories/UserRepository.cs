@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PRI.Project.Rosseel_Almanzo.Core.Entities;
 using PRI.Project.Rosseel_Almanzo.Core.Interfaces.Repositories;
+using PRI.Project.Rosseel_Almanzo.Core.Services.Models;
 using PRI.Project.Rosseel_Almanzo.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
@@ -16,24 +18,28 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
         private readonly SniffHikesDbContext _dbContext;
         protected readonly DbSet<User> _targetTable;
         private readonly ILogger<IUserRepository> _logger;
+        private readonly UserManager<User> _userManager;
 
-        public UserRepository(SniffHikesDbContext dbContext, ILogger<IUserRepository> logger)
+        public UserRepository(SniffHikesDbContext dbContext, ILogger<IUserRepository> logger, UserManager<User> userManager)
         {
             _dbContext = dbContext;
             _targetTable = _dbContext.Set<User>();
             _logger = logger;
+            _userManager = userManager;
         }
 
-        public async Task<bool> AddAsync(User toAdd)
+        public async Task<IdentityResult> AddAsync(User toAdd)
         {
-            _targetTable.Add(toAdd);
-            return await SaveChangesAsync();
+            //_targetTable.Add(toAdd);
+            //return await SaveChangesAsync();
+            return await _userManager.CreateAsync(toAdd, toAdd.Password);
         }
 
-        public async Task<bool> DeleteAsync(User toDelete)
+        public async Task<IdentityResult> DeleteAsync(User toDelete)
         {
-            _targetTable.Remove(toDelete);
-            return await SaveChangesAsync();
+            //_targetTable.Remove(toDelete);
+            //return await SaveChangesAsync();
+            return await _userManager.DeleteAsync(toDelete);
         }
 
         public IQueryable<User> GetAll()
