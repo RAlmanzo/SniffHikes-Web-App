@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using PRI.Project.Rosseel_Almanzo.Core.Entities;
 using System.Runtime.CompilerServices;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
 {
@@ -187,32 +189,79 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                 },
             };
 
-            
+            //seed users with roles
+            var admin = new User
+            {
+                Id = "1",
+                UserName = "admin@testing.com",
+                NormalizedUserName = "ADMIN@TESTING.COM",
+                FirstName = "John",
+                LastName = "DeWachter",
+                DateOfBirth = new DateTime(1980, 5, 10),
+                Gender = "male",
+                AddressId = 1,
+                Email = "admin@testing.com",
+                NormalizedEmail = "ADMIN@TESTING.COM",
+                ConcurrencyStamp = Guid.NewGuid().ToString(),
+                SecurityStamp = Guid.NewGuid().ToString(),
+                EmailConfirmed = true,
+            };
+            var user = new User
+            {
+                Id = "2",
+                UserName = "user@testing.com",
+                NormalizedUserName = "USER@TESTING.COM",
+                FirstName = "Jane",
+                LastName = "DeWachter",
+                DateOfBirth = new DateTime(1985, 7, 15),
+                Gender = "female",
+                AddressId = 2,             
+                Email = "user@testing.com",
+                NormalizedEmail = "USER@TESTING.COM",
+                ConcurrencyStamp = Guid.NewGuid().ToString(),
+                SecurityStamp = Guid.NewGuid().ToString(),
+                EmailConfirmed = true,
+            };
+            IPasswordHasher<User> passwordHasher = new PasswordHasher<User>();
+            //TODO password aanpassen na testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            admin.PasswordHash = passwordHasher.HashPassword(admin, "Test123");
+            user.PasswordHash = passwordHasher.HashPassword(user, "Test123");
+            //claims
+            //role claims
+            var userClaims = new IdentityUserClaim<string>[]
+            {
+                new IdentityUserClaim<string>
+                {
+                    Id = 1,
+                    UserId = "1",
+                    ClaimType = ClaimTypes.Role,
+                    ClaimValue = "Admin"
+                },
+                new IdentityUserClaim<string>
+                {
+                    Id = 2,
+                    UserId = "2",
+                    ClaimType = ClaimTypes.Role,
+                    ClaimValue = "User"
+                },
+                //new IdentityUserClaim<string>
+                //{
+                //    Id = 3,
+                //    UserId = "1",
+                //    ClaimType = ClaimTypes.DateOfBirth,
+                //    ClaimValue = admin.DateOfBirth.ToString(),
+                //},
+                //new IdentityUserClaim<string>
+                //{
+                //    Id = 4,
+                //    UserId = "2",
+                //    ClaimType = ClaimTypes.DateOfBirth,
+                //    ClaimValue = user.DateOfBirth.ToString(),
+                //},
+            };
 
             var users = new User[]
             {
-                new User
-                {
-                    Id = "1",
-                    FirstName = "John",
-                    LastName = "DeWachter",
-                    DateOfBirth = new DateTime(1980, 5, 10),
-                    Gender = "male",
-                    AddressId = 1,
-                    Email = "",
-                    Password = "",
-                },
-                new User
-                {
-                    Id = "2",
-                    FirstName = "Jane",
-                    LastName = "DeWachter",
-                    DateOfBirth = new DateTime(1985, 7, 15),
-                    Gender = "female",
-                    AddressId = 2,
-                    Email = "",
-                    Password = "",
-                },
                 new User
                 {
                     Id = "3",
@@ -328,6 +377,8 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
             modelBuilder.Entity<Route>().HasData(routes);
             modelBuilder.Entity<Event>().HasData(events);
             modelBuilder.Entity<User>().HasData(users);
+            modelBuilder.Entity<User>().HasData(admin, user);
+            modelBuilder.Entity<IdentityUserClaim<string>>().HasData(userClaims);
             modelBuilder.Entity<EventUser>().HasData(eventUsers);
         }
     }
