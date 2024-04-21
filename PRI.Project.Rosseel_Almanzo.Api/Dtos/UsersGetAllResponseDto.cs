@@ -2,6 +2,6 @@
 {
     public class UsersGetAllResponseDto
     {
-        public IEnumerable<BaseDto> Users { get; set; }
+        public IEnumerable<BaseUserDto> Users { get; set; }
     }
 }
