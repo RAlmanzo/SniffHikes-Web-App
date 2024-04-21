@@ -12,8 +12,8 @@ using PRI.Project.Rosseel_Almanzo.Infrastructure.Data;
 namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
 {
     [DbContext(typeof(SniffHikesDbContext))]
-    [Migration("20240407213327_seedData")]
-    partial class seedData
+    [Migration("20240421101105_initIdentityUser")]
+    partial class initIdentityUser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,139 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
 
             modelBuilder.Entity("PRI.Project.Rosseel_Almanzo.Core.Entities.Address", b =>
                 {
@@ -193,8 +326,8 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                     b.Property<int?>("RouteId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -211,65 +344,65 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 1,
                             Content = "Gezellige avond!",
-                            DateCreated = new DateTime(2024, 4, 7, 23, 33, 27, 468, DateTimeKind.Local).AddTicks(379),
+                            DateCreated = new DateTime(2024, 4, 21, 12, 11, 5, 134, DateTimeKind.Local).AddTicks(4118),
                             EventId = 1,
-                            UserId = 1
+                            UserId = "1"
                         },
                         new
                         {
                             Id = 2,
                             Content = "Leuke wandeling!",
-                            DateCreated = new DateTime(2024, 4, 7, 23, 33, 27, 468, DateTimeKind.Local).AddTicks(382),
+                            DateCreated = new DateTime(2024, 4, 21, 12, 11, 5, 134, DateTimeKind.Local).AddTicks(4121),
                             EventId = 2,
-                            UserId = 1
+                            UserId = "1"
                         },
                         new
                         {
                             Id = 3,
                             Content = "Gezellige avond!",
-                            DateCreated = new DateTime(2024, 4, 7, 23, 33, 27, 468, DateTimeKind.Local).AddTicks(383),
+                            DateCreated = new DateTime(2024, 4, 21, 12, 11, 5, 134, DateTimeKind.Local).AddTicks(4122),
                             EventId = 2,
-                            UserId = 2
+                            UserId = "2"
                         },
                         new
                         {
                             Id = 4,
                             Content = "Gezellige avond!",
-                            DateCreated = new DateTime(2024, 4, 7, 23, 33, 27, 468, DateTimeKind.Local).AddTicks(385),
+                            DateCreated = new DateTime(2024, 4, 21, 12, 11, 5, 134, DateTimeKind.Local).AddTicks(4124),
                             EventId = 3,
-                            UserId = 3
+                            UserId = "3"
                         },
                         new
                         {
                             Id = 5,
                             Content = "Mooie route!",
-                            DateCreated = new DateTime(2024, 4, 7, 23, 33, 27, 468, DateTimeKind.Local).AddTicks(387),
+                            DateCreated = new DateTime(2024, 4, 21, 12, 11, 5, 134, DateTimeKind.Local).AddTicks(4126),
                             RouteId = 1,
-                            UserId = 1
+                            UserId = "1"
                         },
                         new
                         {
                             Id = 6,
                             Content = "Leuke wandeling!",
-                            DateCreated = new DateTime(2024, 4, 7, 23, 33, 27, 468, DateTimeKind.Local).AddTicks(389),
+                            DateCreated = new DateTime(2024, 4, 21, 12, 11, 5, 134, DateTimeKind.Local).AddTicks(4127),
                             RouteId = 2,
-                            UserId = 2
+                            UserId = "2"
                         },
                         new
                         {
                             Id = 7,
                             Content = "Mooie route!",
-                            DateCreated = new DateTime(2024, 4, 7, 23, 33, 27, 468, DateTimeKind.Local).AddTicks(390),
+                            DateCreated = new DateTime(2024, 4, 21, 12, 11, 5, 134, DateTimeKind.Local).AddTicks(4129),
                             RouteId = 2,
-                            UserId = 2
+                            UserId = "2"
                         },
                         new
                         {
                             Id = 8,
                             Content = "Mooie route!",
-                            DateCreated = new DateTime(2024, 4, 7, 23, 33, 27, 468, DateTimeKind.Local).AddTicks(392),
+                            DateCreated = new DateTime(2024, 4, 21, 12, 11, 5, 134, DateTimeKind.Local).AddTicks(4130),
                             RouteId = 3,
-                            UserId = 3
+                            UserId = "4"
                         });
                 });
 
@@ -298,8 +431,8 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                     b.Property<string>("Race")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -311,56 +444,56 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            DateOfBirth = new DateTime(2024, 4, 7, 23, 33, 27, 468, DateTimeKind.Local).AddTicks(324),
+                            DateOfBirth = new DateTime(2024, 4, 21, 12, 11, 5, 134, DateTimeKind.Local).AddTicks(4063),
                             Gender = "Male",
                             Name = "Inca",
                             Race = "Husky",
-                            UserId = 1
+                            UserId = "1"
                         },
                         new
                         {
                             Id = 2,
-                            DateOfBirth = new DateTime(2024, 4, 7, 23, 33, 27, 468, DateTimeKind.Local).AddTicks(363),
+                            DateOfBirth = new DateTime(2024, 4, 21, 12, 11, 5, 134, DateTimeKind.Local).AddTicks(4102),
                             Gender = "Female",
                             Name = "Zara",
                             Race = "Border-collie",
-                            UserId = 1
+                            UserId = "1"
                         },
                         new
                         {
                             Id = 3,
-                            DateOfBirth = new DateTime(2024, 4, 7, 23, 33, 27, 468, DateTimeKind.Local).AddTicks(365),
+                            DateOfBirth = new DateTime(2024, 4, 21, 12, 11, 5, 134, DateTimeKind.Local).AddTicks(4104),
                             Gender = "Male",
                             Name = "Sleepy",
                             Race = "Duitse-herder",
-                            UserId = 2
+                            UserId = "2"
                         },
                         new
                         {
                             Id = 4,
-                            DateOfBirth = new DateTime(2024, 4, 7, 23, 33, 27, 468, DateTimeKind.Local).AddTicks(367),
+                            DateOfBirth = new DateTime(2024, 4, 21, 12, 11, 5, 134, DateTimeKind.Local).AddTicks(4106),
                             Gender = "Male",
                             Name = "Sleepy",
                             Race = "Duitse-herder",
-                            UserId = 3
+                            UserId = "3"
                         },
                         new
                         {
                             Id = 5,
-                            DateOfBirth = new DateTime(2024, 4, 7, 23, 33, 27, 468, DateTimeKind.Local).AddTicks(369),
+                            DateOfBirth = new DateTime(2024, 4, 21, 12, 11, 5, 134, DateTimeKind.Local).AddTicks(4109),
                             Gender = "Female",
                             Name = "Tunder",
                             Race = "Dog",
-                            UserId = 1
+                            UserId = "1"
                         },
                         new
                         {
                             Id = 6,
-                            DateOfBirth = new DateTime(2024, 4, 7, 23, 33, 27, 468, DateTimeKind.Local).AddTicks(372),
+                            DateOfBirth = new DateTime(2024, 4, 21, 12, 11, 5, 134, DateTimeKind.Local).AddTicks(4110),
                             Gender = "Male",
                             Name = "Zira",
                             Race = "Husky",
-                            UserId = 2
+                            UserId = "2"
                         },
                         new
                         {
@@ -369,7 +502,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             Gender = "Female",
                             Name = "Bella",
                             Race = "Labrador Retriever",
-                            UserId = 4
+                            UserId = "4"
                         },
                         new
                         {
@@ -378,7 +511,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             Gender = "Male",
                             Name = "Rocky",
                             Race = "German Shepherd",
-                            UserId = 4
+                            UserId = "4"
                         },
                         new
                         {
@@ -387,7 +520,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             Gender = "Female",
                             Name = "Luna",
                             Race = "Golden Retriever",
-                            UserId = 5
+                            UserId = "5"
                         },
                         new
                         {
@@ -396,7 +529,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             Gender = "Male",
                             Name = "Max",
                             Race = "Poodle",
-                            UserId = 5
+                            UserId = "5"
                         });
                 });
 
@@ -422,8 +555,8 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         .HasMaxLength(750)
                         .HasColumnType("nvarchar(750)");
 
-                    b.Property<int?>("OrganizerId")
-                        .HasColumnType("int");
+                    b.Property<string>("OrganizerId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("money");
@@ -447,9 +580,9 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             Id = 1,
                             AddressId = 4,
                             Date = new DateTime(2024, 4, 1, 10, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateCreated = new DateTime(2024, 4, 7, 23, 33, 27, 468, DateTimeKind.Local).AddTicks(448),
+                            DateCreated = new DateTime(2024, 4, 21, 12, 11, 5, 134, DateTimeKind.Local).AddTicks(4236),
                             Description = "Geniet van een ontspannen wandeling met je hond in het prachtige bosgebied. Neem je viervoeter mee voor een leuke tijd in de natuur.",
-                            OrganizerId = 1,
+                            OrganizerId = "1",
                             Price = 0m,
                             Title = "Hondenwandeling in het bos"
                         },
@@ -458,9 +591,9 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             Id = 2,
                             AddressId = 5,
                             Date = new DateTime(2024, 4, 5, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateCreated = new DateTime(2024, 4, 7, 23, 33, 27, 468, DateTimeKind.Local).AddTicks(453),
+                            DateCreated = new DateTime(2024, 4, 21, 12, 11, 5, 134, DateTimeKind.Local).AddTicks(4240),
                             Description = "Kom en bewonder verschillende hondenrassen tijdens de hondenshow in Brussel. Er zijn prijzen te winnen en veel plezier te beleven!",
-                            OrganizerId = 2,
+                            OrganizerId = "2",
                             Price = 10.50m,
                             Title = "Hondenshow Brussel"
                         },
@@ -469,9 +602,9 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             Id = 3,
                             AddressId = 6,
                             Date = new DateTime(2024, 4, 10, 10, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateCreated = new DateTime(2024, 4, 7, 23, 33, 27, 468, DateTimeKind.Local).AddTicks(455),
+                            DateCreated = new DateTime(2024, 4, 21, 12, 11, 5, 134, DateTimeKind.Local).AddTicks(4242),
                             Description = "Geniet van een ontspannen wandeling met je hond in het prachtige bosgebied. Neem je viervoeter mee voor een leuke tijd in de natuur.",
-                            OrganizerId = 3,
+                            OrganizerId = "3",
                             Price = 0m,
                             Title = "Hondenwandeling aan zee"
                         },
@@ -480,9 +613,9 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             Id = 4,
                             AddressId = 12,
                             Date = new DateTime(2024, 4, 5, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateCreated = new DateTime(2024, 4, 7, 23, 33, 27, 468, DateTimeKind.Local).AddTicks(457),
+                            DateCreated = new DateTime(2024, 4, 21, 12, 11, 5, 134, DateTimeKind.Local).AddTicks(4244),
                             Description = "Kom en bewonder verschillende hondenrassen tijdens de hondenshow in Brussel. Er zijn prijzen te winnen en veel plezier te beleven!",
-                            OrganizerId = 4,
+                            OrganizerId = "4",
                             Price = 10.50m,
                             Title = "Hondenshow West-Vlaanderen"
                         },
@@ -491,9 +624,9 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             Id = 5,
                             AddressId = 13,
                             Date = new DateTime(2024, 4, 10, 10, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateCreated = new DateTime(2024, 4, 7, 23, 33, 27, 468, DateTimeKind.Local).AddTicks(459),
+                            DateCreated = new DateTime(2024, 4, 21, 12, 11, 5, 134, DateTimeKind.Local).AddTicks(4246),
                             Description = "Geniet van een ontspannen wandeling met je hond in het prachtige bosgebied. Neem je viervoeter mee voor een leuke tijd in de natuur.",
-                            OrganizerId = 4,
+                            OrganizerId = "5",
                             Price = 0m,
                             Title = "Hondenwandeling Heuvelland"
                         });
@@ -501,8 +634,8 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
 
             modelBuilder.Entity("PRI.Project.Rosseel_Almanzo.Core.Entities.EventUser", b =>
                 {
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("EventId")
                         .HasColumnType("int");
@@ -516,47 +649,47 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = 1,
+                            UserId = "1",
                             EventId = 1
                         },
                         new
                         {
-                            UserId = 2,
+                            UserId = "2",
                             EventId = 1
                         },
                         new
                         {
-                            UserId = 2,
+                            UserId = "2",
                             EventId = 2
                         },
                         new
                         {
-                            UserId = 3,
+                            UserId = "3",
                             EventId = 2
                         },
                         new
                         {
-                            UserId = 1,
+                            UserId = "1",
                             EventId = 3
                         },
                         new
                         {
-                            UserId = 3,
+                            UserId = "3",
                             EventId = 3
                         },
                         new
                         {
-                            UserId = 4,
+                            UserId = "4",
                             EventId = 5
                         },
                         new
                         {
-                            UserId = 4,
+                            UserId = "4",
                             EventId = 4
                         },
                         new
                         {
-                            UserId = 5,
+                            UserId = "5",
                             EventId = 5
                         });
                 });
@@ -683,8 +816,8 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -699,65 +832,73 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 1,
                             AddressId = 7,
-                            DateCreated = new DateTime(2024, 4, 7, 23, 33, 27, 468, DateTimeKind.Local).AddTicks(405),
+                            DateCreated = new DateTime(2024, 4, 21, 12, 11, 5, 134, DateTimeKind.Local).AddTicks(4146),
                             Description = "Een mooie wandeling door het bos met je hond. Geniet van de natuur en de frisse lucht.",
                             Title = "Boswandeling",
-                            UserId = 1
+                            UserId = "1"
                         },
                         new
                         {
                             Id = 2,
                             AddressId = 8,
-                            DateCreated = new DateTime(2024, 4, 7, 23, 33, 27, 468, DateTimeKind.Local).AddTicks(408),
+                            DateCreated = new DateTime(2024, 4, 21, 12, 11, 5, 134, DateTimeKind.Local).AddTicks(4148),
                             Description = "Een ontspannen wandeling met je hond langs het strand. Laat je viervoeter lekker uitwaaien!",
                             Title = "Strandwandeling",
-                            UserId = 2
+                            UserId = "2"
                         },
                         new
                         {
                             Id = 3,
                             AddressId = 9,
-                            DateCreated = new DateTime(2024, 4, 7, 23, 33, 27, 468, DateTimeKind.Local).AddTicks(409),
+                            DateCreated = new DateTime(2024, 4, 21, 12, 11, 5, 134, DateTimeKind.Local).AddTicks(4150),
                             Description = "Een leuke wandeling met je hond door het park. Laat je hond lekker rennen en spelen.",
                             Title = "Parkwandeling",
-                            UserId = 3
+                            UserId = "3"
                         },
                         new
                         {
                             Id = 4,
                             AddressId = 14,
-                            DateCreated = new DateTime(2024, 4, 7, 23, 33, 27, 468, DateTimeKind.Local).AddTicks(411),
+                            DateCreated = new DateTime(2024, 4, 21, 12, 11, 5, 134, DateTimeKind.Local).AddTicks(4151),
                             Description = "Een ontspannen wandeling met je hond langs het strand. Laat je viervoeter lekker uitwaaien!",
                             Title = "Strandwandeling",
-                            UserId = 4
+                            UserId = "4"
                         },
                         new
                         {
                             Id = 5,
                             AddressId = 15,
-                            DateCreated = new DateTime(2024, 4, 7, 23, 33, 27, 468, DateTimeKind.Local).AddTicks(413),
+                            DateCreated = new DateTime(2024, 4, 21, 12, 11, 5, 134, DateTimeKind.Local).AddTicks(4153),
                             Description = "Een leuke wandeling met je hond door het park. Laat je hond lekker rennen en spelen.",
                             Title = "Parkwandeling",
-                            UserId = 5
+                            UserId = "5"
                         });
                 });
 
             modelBuilder.Entity("PRI.Project.Rosseel_Almanzo.Core.Entities.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
 
                     b.Property<int>("AddressId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -775,71 +916,198 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
 
-                    b.ToTable("Users");
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = "1",
+                            AccessFailedCount = 0,
                             AddressId = 1,
+                            ConcurrencyStamp = "b2810627-c15f-45d7-874a-7177139afec9",
                             DateOfBirth = new DateTime(1980, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "",
+                            EmailConfirmed = false,
                             FirstName = "John",
                             Gender = "male",
                             LastName = "DeWachter",
-                            Password = ""
+                            LockoutEnabled = false,
+                            Password = "",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "901e468e-05ac-46c7-970d-ef3e07583ca0",
+                            TwoFactorEnabled = false
                         },
                         new
                         {
-                            Id = 2,
+                            Id = "2",
+                            AccessFailedCount = 0,
                             AddressId = 2,
+                            ConcurrencyStamp = "01ab2734-10a3-4c5d-988f-5838f1278e0b",
                             DateOfBirth = new DateTime(1985, 7, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "",
+                            EmailConfirmed = false,
                             FirstName = "Jane",
                             Gender = "female",
                             LastName = "DeWachter",
-                            Password = ""
+                            LockoutEnabled = false,
+                            Password = "",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "d1435d43-0ccf-48a4-bbe5-194314e80df6",
+                            TwoFactorEnabled = false
                         },
                         new
                         {
-                            Id = 3,
+                            Id = "3",
+                            AccessFailedCount = 0,
                             AddressId = 3,
+                            ConcurrencyStamp = "11eaf164-5212-4e02-bb71-52b673563e4d",
                             DateOfBirth = new DateTime(1990, 9, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "",
+                            EmailConfirmed = false,
                             FirstName = "Jack",
                             Gender = "male",
                             LastName = "DeVos",
-                            Password = ""
+                            LockoutEnabled = false,
+                            Password = "",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "43473fe7-3d5b-4515-8c86-8886537f5ffa",
+                            TwoFactorEnabled = false
                         },
                         new
                         {
-                            Id = 4,
+                            Id = "4",
+                            AccessFailedCount = 0,
                             AddressId = 10,
+                            ConcurrencyStamp = "d9bbbf71-7091-4738-87e0-b0193c2a6c4f",
                             DateOfBirth = new DateTime(1995, 11, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "",
+                            EmailConfirmed = false,
                             FirstName = "Jill",
                             Gender = "female",
                             LastName = "Vogels",
-                            Password = ""
+                            LockoutEnabled = false,
+                            Password = "",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "cf50066a-633a-48d6-9d22-91da7c117f27",
+                            TwoFactorEnabled = false
                         },
                         new
                         {
-                            Id = 5,
+                            Id = "5",
+                            AccessFailedCount = 0,
                             AddressId = 11,
+                            ConcurrencyStamp = "c94aaf63-a9bc-49b8-8a6d-afcb4c04aa2d",
                             DateOfBirth = new DateTime(2000, 1, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "",
+                            EmailConfirmed = false,
                             FirstName = "Jim",
                             Gender = "male",
                             LastName = "Schoonaert",
-                            Password = ""
+                            LockoutEnabled = false,
+                            Password = "",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "d26f9f3e-04b5-4d89-9540-04b294e134fd",
+                            TwoFactorEnabled = false
                         });
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("PRI.Project.Rosseel_Almanzo.Core.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("PRI.Project.Rosseel_Almanzo.Core.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PRI.Project.Rosseel_Almanzo.Core.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("PRI.Project.Rosseel_Almanzo.Core.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PRI.Project.Rosseel_Almanzo.Core.Entities.Comment", b =>
@@ -867,9 +1135,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                 {
                     b.HasOne("PRI.Project.Rosseel_Almanzo.Core.Entities.User", "User")
                         .WithMany("Dogs")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });
