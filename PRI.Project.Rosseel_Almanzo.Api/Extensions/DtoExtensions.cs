@@ -29,12 +29,11 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                 Price = selectedEvent.Price,
                 Date = selectedEvent.Date,
                 DateCreated = DateTime.Now,
-                Orginazer = selectedEvent.OrganizerId.HasValue ? new BaseDto
+                Orginazer = new BaseUserDto
                 {
-                    Id = selectedEvent.OrganizerId.Value,
+                    Id = selectedEvent.OrganizerId,
                     Value = $"{selectedEvent.Organizer.FirstName} {selectedEvent.Organizer.LastName}",
-                }
-                : null,
+                },
                 Address = new BaseDto
                 {
                     Id = selectedEvent.AddressId,
@@ -50,9 +49,9 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                     Id = c.Id,
                     Value = c.Content,
                 }),
-                Users = selectedEvent.AttendingUsers.Select(u => new BaseDto
+                Users = selectedEvent.AttendingUsers.Select(u => new BaseUserDto
                 {
-                    Id = (int)u.UserId,
+                    Id = u.UserId,
                     Value = $"{u.User.FirstName} {u.User.LastName}",
                 }),
             };
@@ -63,7 +62,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
         {
             return new UsersGetAllResponseDto
             {
-                Users = users.Select(e => new BaseDto
+                Users = users.Select(e => new BaseUserDto
                 {
                     Id = e.Id,
                     Value = $"{e.LastName} {e.FirstName}",
@@ -131,12 +130,11 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                 Value = route.Title,
                 Description = route.Description,
                 DateCreated = DateTime.Now,
-                Orginazer = route.UserId.HasValue ? new BaseDto
+                Orginazer = new BaseUserDto
                 {
-                    Id = route.UserId.Value,
+                    Id = route.UserId,
                     Value = $"{route.User.FirstName} {route.User.LastName}",
-                }
-                : null,
+                },
                 Address = new BaseDto
                 {
                     Id = route.AddressId,
