@@ -8,6 +8,7 @@ using PRI.Project.Rosseel_Almanzo.Core.Interfaces.Services;
 using PRI.Project.Rosseel_Almanzo.Core.Services;
 using PRI.Project.Rosseel_Almanzo.Infrastructure.Data;
 using PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories;
+using System.Security.Claims;
 
 namespace PRI.Project.Rosseel_Almanzo.Api
 {
@@ -24,7 +25,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api
             //register identity
             builder.Services.AddIdentity<User, IdentityRole>(options =>
             {
-                //ONLY FOR TESTING PURPOSES!!!!
+                //TODO moet nog aangepast worden na testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 options.SignIn.RequireConfirmedEmail = true;
                 options.User.RequireUniqueEmail = true;
                 options.Password.RequiredUniqueChars = 0;
@@ -35,6 +36,54 @@ namespace PRI.Project.Rosseel_Almanzo.Api
                 options.Password.RequiredLength = 3;
             }).AddEntityFrameworkStores<SniffHikesDbContext>()
             .AddDefaultTokenProviders();
+
+            //Add authorisation policies          
+            builder.Services.AddAuthorization(options =>
+            {
+                //admin claim
+                options.AddPolicy("Admin", policy =>
+                {
+                    policy.RequireClaim(ClaimTypes.Role, "Admin");
+                });
+                //userclaim
+                options.AddPolicy("User", policy =>
+                {
+                    policy.RequireClaim(ClaimTypes.Role, "User");
+                });
+                //options.AddPolicy("User", policy =>
+                //{
+                //    //policy.RequireClaim(ClaimTypes.Role, "User");
+                //    policy.RequireAssertion(contex =>
+                //    {
+                //        if (contex.User.HasClaim(ClaimTypes.Role, "Admin") || contex.User.HasClaim(ClaimTypes.Role, "User"))
+                //        {
+                //            return true;
+                //        }
+                //        return false;
+                //    });
+                //});
+                //options.AddPolicy("AdultOnly", policy =>
+                //{
+                //    policy.RequireAssertion(context =>
+                //    {
+                //        //check if claims are present
+                //        if (context.User.Claims.Count() != 0)
+                //        {
+                //            //get de dateofbirth
+                //            var claimValue = context.User.Claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.DateOfBirth)).Value;
+                //            // parse the date
+                //            var dateOfBirth = DateTime.Parse(claimValue);
+                //            //calculate age
+                //            if (DateTime.Now.Year - dateOfBirth.Year >= 18)
+                //            {
+                //                return true;
+                //            }
+                //            return false;
+                //        }
+                //        return false;
+                //    });
+                //});
+            });
 
             builder.Services.AddScoped<IEventRepository, EventRepository>();
             builder.Services.AddScoped<IEventService, EventService>();
@@ -68,7 +117,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
+            app.UseAuthorization();
 
             app.MapControllers();
 
