@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PRI.Project.Rosseel_Almanzo.Api.Dtos;
 using PRI.Project.Rosseel_Almanzo.Api.Extensions;
@@ -30,6 +31,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> GetAll()
         {
             //get all events
