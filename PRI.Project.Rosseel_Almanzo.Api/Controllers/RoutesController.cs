@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PRI.Project.Rosseel_Almanzo.Api.Dtos;
 using PRI.Project.Rosseel_Almanzo.Api.Extensions;
@@ -28,6 +29,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "User")]
         public async Task<IActionResult> GetAll()
         {
             //get all events
@@ -41,6 +43,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Policy = "User")]
         public async Task<IActionResult> Get(int id)
         {
             //get the record
@@ -54,6 +57,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "User")]
         public async Task<IActionResult> Add([FromForm]RouteRequestDto routeRequestDto)
         {
             //check if images are given and store in wwwroot
@@ -94,6 +98,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "UserOrginazer")]
         public async Task<IActionResult> Delete(int id)
         {
             //get the route
@@ -129,6 +134,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
         }
 
         [HttpPut]
+        [Authorize(Policy = "UserOrginazer")]
         public async Task<IActionResult> Update([FromForm]RouteUpdateRequestDto routeUpdateRequestDto)
         {
             //check if route exists
@@ -166,6 +172,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
         }
 
         [HttpPut("{id}/image")]
+        [Authorize(Policy = "UserOrginazer")]
         public async Task<IActionResult> AddImageToRoute(int id, [FromForm]ImageRequestDto imageRequestDto)
         {
             // Check if route exists
@@ -194,6 +201,8 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
         }
 
         [HttpDelete("{id}/image")]
+        [Authorize(Policy = "UserOrginazer")]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> DeleteImage(int id)
         {
             //delete image from wwwroot
@@ -221,6 +230,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
         }
 
         [HttpGet("Search/ByTitle/{title}")]
+        [Authorize(Policy = "User")]
         public async Task<IActionResult> SearchByTitle(string title)
         {
             if (string.IsNullOrWhiteSpace(title))

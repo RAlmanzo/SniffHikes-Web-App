@@ -13,6 +13,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = "User")]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -31,7 +32,6 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> GetAll()
         {
             //get all events

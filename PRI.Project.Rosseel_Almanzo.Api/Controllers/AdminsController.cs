@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PRI.Project.Rosseel_Almanzo.Api.Extensions;
 using PRI.Project.Rosseel_Almanzo.Api.Services.Interfaces;
@@ -9,6 +10,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = "Admin")]
     public class AdminsController : ControllerBase
     {
         private readonly IEventService _eventService;
