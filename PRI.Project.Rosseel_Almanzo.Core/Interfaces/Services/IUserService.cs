@@ -20,5 +20,6 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Interfaces.Services
         Task<ResultModel<IEnumerable<User>>> SearchByFirstNameAsync(string firstName);
         Task<ResultModel<IEnumerable<User>>> SearchByLastNameAsync(string lastName);
         Task<ResultModel<string>> LoginUserAsync(string userName, string password);
+        Task<bool> SignOutUserAsync();
     }
 }

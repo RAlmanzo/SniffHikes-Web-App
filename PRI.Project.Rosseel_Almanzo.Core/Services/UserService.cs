@@ -346,5 +346,11 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 Value = serializedToken,
             };
         }
+
+        public async Task<bool> SignOutUserAsync()
+        {
+            await _signInManager.SignOutAsync();
+            return true;
+        }
     }
 }
