@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PRI.Project.Rosseel_Almanzo.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using PRI.Project.Rosseel_Almanzo.Infrastructure.Data;
 namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
 {
     [DbContext(typeof(SniffHikesDbContext))]
-    partial class SniffHikesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240426144813_updateOrginazerClaims")]
+    partial class updateOrginazerClaims
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -166,7 +168,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 21,
                             ClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
-                            ClaimValue = "Orginazer",
+                            ClaimValue = "Admin",
                             UserId = "3"
                         },
                         new
@@ -491,7 +493,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 1,
                             Content = "Gezellige avond!",
-                            DateCreated = new DateTime(2024, 4, 26, 16, 59, 31, 757, DateTimeKind.Local).AddTicks(5944),
+                            DateCreated = new DateTime(2024, 4, 26, 16, 48, 12, 484, DateTimeKind.Local).AddTicks(8116),
                             EventId = 1,
                             UserId = "1"
                         },
@@ -499,7 +501,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 2,
                             Content = "Leuke wandeling!",
-                            DateCreated = new DateTime(2024, 4, 26, 16, 59, 31, 757, DateTimeKind.Local).AddTicks(5946),
+                            DateCreated = new DateTime(2024, 4, 26, 16, 48, 12, 484, DateTimeKind.Local).AddTicks(8119),
                             EventId = 2,
                             UserId = "1"
                         },
@@ -507,7 +509,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 3,
                             Content = "Gezellige avond!",
-                            DateCreated = new DateTime(2024, 4, 26, 16, 59, 31, 757, DateTimeKind.Local).AddTicks(5947),
+                            DateCreated = new DateTime(2024, 4, 26, 16, 48, 12, 484, DateTimeKind.Local).AddTicks(8121),
                             EventId = 2,
                             UserId = "2"
                         },
@@ -515,7 +517,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 4,
                             Content = "Gezellige avond!",
-                            DateCreated = new DateTime(2024, 4, 26, 16, 59, 31, 757, DateTimeKind.Local).AddTicks(5949),
+                            DateCreated = new DateTime(2024, 4, 26, 16, 48, 12, 484, DateTimeKind.Local).AddTicks(8123),
                             EventId = 3,
                             UserId = "3"
                         },
@@ -523,7 +525,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 5,
                             Content = "Mooie route!",
-                            DateCreated = new DateTime(2024, 4, 26, 16, 59, 31, 757, DateTimeKind.Local).AddTicks(5951),
+                            DateCreated = new DateTime(2024, 4, 26, 16, 48, 12, 484, DateTimeKind.Local).AddTicks(8125),
                             RouteId = 1,
                             UserId = "1"
                         },
@@ -531,7 +533,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 6,
                             Content = "Leuke wandeling!",
-                            DateCreated = new DateTime(2024, 4, 26, 16, 59, 31, 757, DateTimeKind.Local).AddTicks(5953),
+                            DateCreated = new DateTime(2024, 4, 26, 16, 48, 12, 484, DateTimeKind.Local).AddTicks(8127),
                             RouteId = 2,
                             UserId = "2"
                         },
@@ -539,7 +541,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 7,
                             Content = "Mooie route!",
-                            DateCreated = new DateTime(2024, 4, 26, 16, 59, 31, 757, DateTimeKind.Local).AddTicks(5954),
+                            DateCreated = new DateTime(2024, 4, 26, 16, 48, 12, 484, DateTimeKind.Local).AddTicks(8128),
                             RouteId = 2,
                             UserId = "2"
                         },
@@ -547,7 +549,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 8,
                             Content = "Mooie route!",
-                            DateCreated = new DateTime(2024, 4, 26, 16, 59, 31, 757, DateTimeKind.Local).AddTicks(5956),
+                            DateCreated = new DateTime(2024, 4, 26, 16, 48, 12, 484, DateTimeKind.Local).AddTicks(8130),
                             RouteId = 3,
                             UserId = "4"
                         });
@@ -591,7 +593,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            DateOfBirth = new DateTime(2024, 4, 26, 16, 59, 31, 757, DateTimeKind.Local).AddTicks(5887),
+                            DateOfBirth = new DateTime(2024, 4, 26, 16, 48, 12, 484, DateTimeKind.Local).AddTicks(8030),
                             Gender = "Male",
                             Name = "Inca",
                             Race = "Husky",
@@ -600,7 +602,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            DateOfBirth = new DateTime(2024, 4, 26, 16, 59, 31, 757, DateTimeKind.Local).AddTicks(5925),
+                            DateOfBirth = new DateTime(2024, 4, 26, 16, 48, 12, 484, DateTimeKind.Local).AddTicks(8073),
                             Gender = "Female",
                             Name = "Zara",
                             Race = "Border-collie",
@@ -609,7 +611,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         new
                         {
                             Id = 3,
-                            DateOfBirth = new DateTime(2024, 4, 26, 16, 59, 31, 757, DateTimeKind.Local).AddTicks(5927),
+                            DateOfBirth = new DateTime(2024, 4, 26, 16, 48, 12, 484, DateTimeKind.Local).AddTicks(8075),
                             Gender = "Male",
                             Name = "Sleepy",
                             Race = "Duitse-herder",
@@ -618,7 +620,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         new
                         {
                             Id = 4,
-                            DateOfBirth = new DateTime(2024, 4, 26, 16, 59, 31, 757, DateTimeKind.Local).AddTicks(5930),
+                            DateOfBirth = new DateTime(2024, 4, 26, 16, 48, 12, 484, DateTimeKind.Local).AddTicks(8078),
                             Gender = "Male",
                             Name = "Sleepy",
                             Race = "Duitse-herder",
@@ -627,7 +629,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         new
                         {
                             Id = 5,
-                            DateOfBirth = new DateTime(2024, 4, 26, 16, 59, 31, 757, DateTimeKind.Local).AddTicks(5931),
+                            DateOfBirth = new DateTime(2024, 4, 26, 16, 48, 12, 484, DateTimeKind.Local).AddTicks(8080),
                             Gender = "Female",
                             Name = "Tunder",
                             Race = "Dog",
@@ -636,7 +638,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         new
                         {
                             Id = 6,
-                            DateOfBirth = new DateTime(2024, 4, 26, 16, 59, 31, 757, DateTimeKind.Local).AddTicks(5933),
+                            DateOfBirth = new DateTime(2024, 4, 26, 16, 48, 12, 484, DateTimeKind.Local).AddTicks(8081),
                             Gender = "Male",
                             Name = "Zira",
                             Race = "Husky",
@@ -727,7 +729,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             Id = 1,
                             AddressId = 4,
                             Date = new DateTime(2024, 4, 1, 10, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateCreated = new DateTime(2024, 4, 26, 16, 59, 31, 762, DateTimeKind.Local).AddTicks(4724),
+                            DateCreated = new DateTime(2024, 4, 26, 16, 48, 12, 489, DateTimeKind.Local).AddTicks(6562),
                             Description = "Geniet van een ontspannen wandeling met je hond in het prachtige bosgebied. Neem je viervoeter mee voor een leuke tijd in de natuur.",
                             OrganizerId = "1",
                             Price = 0m,
@@ -738,7 +740,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             Id = 2,
                             AddressId = 5,
                             Date = new DateTime(2024, 4, 5, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateCreated = new DateTime(2024, 4, 26, 16, 59, 31, 762, DateTimeKind.Local).AddTicks(4740),
+                            DateCreated = new DateTime(2024, 4, 26, 16, 48, 12, 489, DateTimeKind.Local).AddTicks(6567),
                             Description = "Kom en bewonder verschillende hondenrassen tijdens de hondenshow in Brussel. Er zijn prijzen te winnen en veel plezier te beleven!",
                             OrganizerId = "2",
                             Price = 10.50m,
@@ -749,7 +751,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             Id = 3,
                             AddressId = 6,
                             Date = new DateTime(2024, 4, 10, 10, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateCreated = new DateTime(2024, 4, 26, 16, 59, 31, 762, DateTimeKind.Local).AddTicks(4744),
+                            DateCreated = new DateTime(2024, 4, 26, 16, 48, 12, 489, DateTimeKind.Local).AddTicks(6569),
                             Description = "Geniet van een ontspannen wandeling met je hond in het prachtige bosgebied. Neem je viervoeter mee voor een leuke tijd in de natuur.",
                             OrganizerId = "3",
                             Price = 0m,
@@ -760,7 +762,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             Id = 4,
                             AddressId = 12,
                             Date = new DateTime(2024, 4, 5, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateCreated = new DateTime(2024, 4, 26, 16, 59, 31, 762, DateTimeKind.Local).AddTicks(4747),
+                            DateCreated = new DateTime(2024, 4, 26, 16, 48, 12, 489, DateTimeKind.Local).AddTicks(6571),
                             Description = "Kom en bewonder verschillende hondenrassen tijdens de hondenshow in Brussel. Er zijn prijzen te winnen en veel plezier te beleven!",
                             OrganizerId = "4",
                             Price = 10.50m,
@@ -771,7 +773,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             Id = 5,
                             AddressId = 13,
                             Date = new DateTime(2024, 4, 10, 10, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateCreated = new DateTime(2024, 4, 26, 16, 59, 31, 762, DateTimeKind.Local).AddTicks(4751),
+                            DateCreated = new DateTime(2024, 4, 26, 16, 48, 12, 489, DateTimeKind.Local).AddTicks(6573),
                             Description = "Geniet van een ontspannen wandeling met je hond in het prachtige bosgebied. Neem je viervoeter mee voor een leuke tijd in de natuur.",
                             OrganizerId = "5",
                             Price = 0m,
@@ -979,7 +981,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 1,
                             AddressId = 7,
-                            DateCreated = new DateTime(2024, 4, 26, 16, 59, 31, 757, DateTimeKind.Local).AddTicks(5970),
+                            DateCreated = new DateTime(2024, 4, 26, 16, 48, 12, 484, DateTimeKind.Local).AddTicks(8144),
                             Description = "Een mooie wandeling door het bos met je hond. Geniet van de natuur en de frisse lucht.",
                             Title = "Boswandeling",
                             UserId = "1"
@@ -988,7 +990,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 2,
                             AddressId = 8,
-                            DateCreated = new DateTime(2024, 4, 26, 16, 59, 31, 757, DateTimeKind.Local).AddTicks(5972),
+                            DateCreated = new DateTime(2024, 4, 26, 16, 48, 12, 484, DateTimeKind.Local).AddTicks(8146),
                             Description = "Een ontspannen wandeling met je hond langs het strand. Laat je viervoeter lekker uitwaaien!",
                             Title = "Strandwandeling",
                             UserId = "2"
@@ -997,7 +999,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 3,
                             AddressId = 9,
-                            DateCreated = new DateTime(2024, 4, 26, 16, 59, 31, 757, DateTimeKind.Local).AddTicks(5974),
+                            DateCreated = new DateTime(2024, 4, 26, 16, 48, 12, 484, DateTimeKind.Local).AddTicks(8148),
                             Description = "Een leuke wandeling met je hond door het park. Laat je hond lekker rennen en spelen.",
                             Title = "Parkwandeling",
                             UserId = "3"
@@ -1006,7 +1008,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 4,
                             AddressId = 14,
-                            DateCreated = new DateTime(2024, 4, 26, 16, 59, 31, 757, DateTimeKind.Local).AddTicks(5976),
+                            DateCreated = new DateTime(2024, 4, 26, 16, 48, 12, 484, DateTimeKind.Local).AddTicks(8149),
                             Description = "Een ontspannen wandeling met je hond langs het strand. Laat je viervoeter lekker uitwaaien!",
                             Title = "Strandwandeling",
                             UserId = "4"
@@ -1015,7 +1017,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                         {
                             Id = 5,
                             AddressId = 15,
-                            DateCreated = new DateTime(2024, 4, 26, 16, 59, 31, 757, DateTimeKind.Local).AddTicks(5977),
+                            DateCreated = new DateTime(2024, 4, 26, 16, 48, 12, 484, DateTimeKind.Local).AddTicks(8151),
                             Description = "Een leuke wandeling met je hond door het park. Laat je hond lekker rennen en spelen.",
                             Title = "Parkwandeling",
                             UserId = "5"
@@ -1119,7 +1121,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             Id = "1",
                             AccessFailedCount = 0,
                             AddressId = 1,
-                            ConcurrencyStamp = "289e9cce-fd43-45a3-9d30-9f337f08369b",
+                            ConcurrencyStamp = "fa4a6a7d-4617-4270-a80b-cd07435b6068",
                             DateOfBirth = new DateTime(1980, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@pri.be",
                             EmailConfirmed = true,
@@ -1129,9 +1131,9 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@PRI.BE",
                             NormalizedUserName = "ADMIN@PRI.BE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEgPOjbdeyJB3I9FfjUoMfYXE4BdieV6rrIim/k7fhoKm+z6w1i+1gixThg/h8Jyvw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIB3nPxCuAkN9J4GxAZb6t4elu0CxwdwapzfjJ1IxKpDz+MDsY8eDxan75Qn8XqNUg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7a2a1bbf-10ec-4328-a026-2f3a0f04d22b",
+                            SecurityStamp = "37f480c4-15d0-4ba0-a330-e6ccef85c89a",
                             TwoFactorEnabled = false,
                             UserName = "admin@pri.be"
                         },
@@ -1140,7 +1142,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             Id = "2",
                             AccessFailedCount = 0,
                             AddressId = 2,
-                            ConcurrencyStamp = "8c2659b8-e0cd-48c6-b71d-d091f88729a8",
+                            ConcurrencyStamp = "06971617-5465-44d3-8190-703db7c6fd64",
                             DateOfBirth = new DateTime(1985, 7, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "user@pri.be",
                             EmailConfirmed = true,
@@ -1150,9 +1152,9 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@PRI.BE",
                             NormalizedUserName = "USER@PRI.BE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHvQOP3xTyRV5z2hn0Mz+Jo/K/bHlhDTD8eot6Q2Fuo3G6Bd5iuQdxpvnC3whzSyUA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKCj8k3ZUxC/2tLDyGnTdnvtig4f2ZZXgrsi7uzZ8PnkwH17r4F2d3yNw9mYTdnjaw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ca69420b-a94e-4350-b431-435be918bb13",
+                            SecurityStamp = "c7a66e5d-d7ed-4479-bec5-a69742a0c8bd",
                             TwoFactorEnabled = false,
                             UserName = "user@pri.be"
                         },
@@ -1161,7 +1163,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             Id = "3",
                             AccessFailedCount = 0,
                             AddressId = 3,
-                            ConcurrencyStamp = "b1c636ef-b41d-46be-ab9d-a45d7bc84329",
+                            ConcurrencyStamp = "f1c0b6b3-09d0-427b-be26-241e353b2f69",
                             DateOfBirth = new DateTime(1990, 9, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "jack@pri.be",
                             EmailConfirmed = true,
@@ -1171,9 +1173,9 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "JACK@PRI.BE",
                             NormalizedUserName = "JACK@PRI.BE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDQDvvYNVQqvZRYAONoKOxtAhqi+SQG6oSEJScll1q2cByDnmDK97ZB8yfvPLHk4+A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEV0DTwuguPhClZCeXdfaxwBznxBt66AiXaLTItdfvtyPBCSfyd7s4NO9GE5x56KjQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7328b4ec-5a72-4484-8497-8f5f9da10452",
+                            SecurityStamp = "6c88f096-2115-4f2c-b65c-1e40e531e597",
                             TwoFactorEnabled = false,
                             UserName = "jack@pri.be"
                         },
@@ -1182,7 +1184,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             Id = "4",
                             AccessFailedCount = 0,
                             AddressId = 10,
-                            ConcurrencyStamp = "dff869e8-29c8-4b81-9cd0-23030475f169",
+                            ConcurrencyStamp = "e4449988-25a1-4cc6-93ed-fce85c3711c5",
                             DateOfBirth = new DateTime(1995, 11, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "jill@pri.be",
                             EmailConfirmed = true,
@@ -1192,9 +1194,9 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "JILL@PRI.BE",
                             NormalizedUserName = "JILL@PRI.BE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKoKlrtISl7GnCq7lpKfgC2B9mre8yYEwlQE78yk4OSc4EnYaL2A1bDGwWmA3FIvXg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENW2H6JbCBxyOijAIMa7bj4M8cqyhnrUipgU4FcclI4p0qR14UFviV0cuZIlxVybMg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b5758003-fd23-4465-9cd9-526f5dbc5c7f",
+                            SecurityStamp = "c7bf3284-0926-493f-b58c-1238e1245f26",
                             TwoFactorEnabled = false,
                             UserName = "jill@pri.be"
                         },
@@ -1203,7 +1205,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             Id = "5",
                             AccessFailedCount = 0,
                             AddressId = 11,
-                            ConcurrencyStamp = "cea41d55-b817-4a41-b709-c1eda938d4b0",
+                            ConcurrencyStamp = "c3665aa3-31c3-4f09-ad10-c52ad480c7dd",
                             DateOfBirth = new DateTime(2000, 1, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "jim@pri.be",
                             EmailConfirmed = true,
@@ -1213,9 +1215,9 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "JIM@PRI.BE",
                             NormalizedUserName = "JIM@PRI.BE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEL3j+UopyTGwn4T+cqHey7nzq8QkoeLW/u6w74B+XTvvTUylEXB36Y9fmSF4kAzS4w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELPlvwKgjF8+HtObFUdZmTojRprwtHfXwUGenZlLWbkHcZAlZ7mrp22k4gA+5+uACA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "219bdab9-abcc-41b3-ab0c-85047d6dda57",
+                            SecurityStamp = "b505909b-a1b8-4d61-a4ff-f99d818175a9",
                             TwoFactorEnabled = false,
                             UserName = "jim@pri.be"
                         });
