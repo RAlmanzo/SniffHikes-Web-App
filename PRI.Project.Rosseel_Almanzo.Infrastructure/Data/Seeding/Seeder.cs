@@ -22,7 +22,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                 new Image{Id = 2, File = null, EventId = 1},
                 new Image{Id = 3, File = null, RouteId = 1},
 
-                new Image{Id = 6 , File = null, EventId = 2},
+                new Image{Id = 6 ,File = null, EventId = 2},
                 new Image{Id = 7, File = null, RouteId = 2},
                 new Image{Id = 8, File = null, RouteId = 2},
 
@@ -193,43 +193,95 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
             var admin = new User
             {
                 Id = "1",
-                UserName = "admin@testing.com",
-                NormalizedUserName = "ADMIN@TESTING.COM",
+                UserName = "admin@pri.be",
+                NormalizedUserName = "ADMIN@PRI.BE",
                 FirstName = "John",
                 LastName = "DeWachter",
                 DateOfBirth = new DateTime(1980, 5, 10),
                 Gender = "male",
                 AddressId = 1,
-                Email = "admin@testing.com",
-                NormalizedEmail = "ADMIN@TESTING.COM",
+                Email = "admin@pri.be",
+                NormalizedEmail = "ADMIN@PRI.BE",
                 ConcurrencyStamp = Guid.NewGuid().ToString(),
                 SecurityStamp = Guid.NewGuid().ToString(),
                 EmailConfirmed = true,
             };
-            var user = new User
+            var user1 = new User
             {
                 Id = "2",
-                UserName = "user@testing.com",
-                NormalizedUserName = "USER@TESTING.COM",
+                UserName = "user@pri.be",
+                NormalizedUserName = "USER@PRI.BE",
                 FirstName = "Jane",
                 LastName = "DeWachter",
                 DateOfBirth = new DateTime(1985, 7, 15),
                 Gender = "female",
                 AddressId = 2,             
-                Email = "user@testing.com",
-                NormalizedEmail = "USER@TESTING.COM",
+                Email = "user@pri.be",
+                NormalizedEmail = "USER@PRI.BE",
+                ConcurrencyStamp = Guid.NewGuid().ToString(),
+                SecurityStamp = Guid.NewGuid().ToString(),
+                EmailConfirmed = true,
+            };
+            var user2 = new User
+            {
+                Id = "3",
+                UserName = "jack@pri.be",
+                NormalizedUserName = "JACK@PRI.BE",
+                FirstName = "Jack",
+                LastName = "DeVos",
+                DateOfBirth = new DateTime(1990, 9, 20),
+                Gender = "male",
+                AddressId = 3,
+                Email = "jack@pri.be",
+                NormalizedEmail = "JACK@PRI.BE",
+                ConcurrencyStamp = Guid.NewGuid().ToString(),
+                SecurityStamp = Guid.NewGuid().ToString(),
+                EmailConfirmed = true,
+            };
+            var user3 = new User
+            {
+                Id = "4",
+                UserName = "jill@pri.be",
+                NormalizedUserName = "JILL@PRI.BE",
+                FirstName = "Jill",
+                LastName = "Vogels",
+                DateOfBirth = new DateTime(1995, 11, 25),
+                Gender = "female",
+                AddressId = 10,
+                Email = "jill@pri.be",
+                NormalizedEmail = "JILL@PRI.BE",
+                ConcurrencyStamp = Guid.NewGuid().ToString(),
+                SecurityStamp = Guid.NewGuid().ToString(),
+                EmailConfirmed = true,
+            };
+            var user4 = new User
+            {
+                Id = "5",
+                UserName = "jim@pri.be",
+                NormalizedUserName = "JIM@PRI.BE",
+                FirstName = "Jim",
+                LastName = "Schoonaert",
+                DateOfBirth = new DateTime(2000, 1, 30),
+                Gender = "male",
+                AddressId = 11,
+                Email = "jim@pri.be",
+                NormalizedEmail = "JIM@PRI.BE",
                 ConcurrencyStamp = Guid.NewGuid().ToString(),
                 SecurityStamp = Guid.NewGuid().ToString(),
                 EmailConfirmed = true,
             };
             IPasswordHasher<User> passwordHasher = new PasswordHasher<User>();
             //TODO password aanpassen na testing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            admin.PasswordHash = passwordHasher.HashPassword(admin, "Test123");
-            user.PasswordHash = passwordHasher.HashPassword(user, "Test123");
+            admin.PasswordHash = passwordHasher.HashPassword(admin, "Test123?");
+            user1.PasswordHash = passwordHasher.HashPassword(user1, "Test123?");
+            user2.PasswordHash = passwordHasher.HashPassword(user2, "Test123?");
+            user3.PasswordHash = passwordHasher.HashPassword(user3, "Test123?");
+            user4.PasswordHash = passwordHasher.HashPassword(user4, "Test123?");
             //claims
             //role claims
             var userClaims = new IdentityUserClaim<string>[]
             {
+                //admin
                 new IdentityUserClaim<string>
                 {
                     Id = 1,
@@ -240,60 +292,150 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                 new IdentityUserClaim<string>
                 {
                     Id = 2,
+                    UserId = "1",
+                    ClaimType = ClaimTypes.DateOfBirth,
+                    ClaimValue = admin.DateOfBirth.ToString(),
+                },
+                new IdentityUserClaim<string>
+                {
+                    Id = 3,
+                    UserId = "1",
+                    ClaimType = ClaimTypes.Email,
+                    ClaimValue = admin.UserName,
+                },
+                new IdentityUserClaim<string>
+                {
+                    Id = 4,
+                    UserId = "1",
+                    ClaimType = "UserId",
+                    ClaimValue = admin.Id,
+                },
+
+                //user1
+                new IdentityUserClaim<string>
+                {
+                    Id = 5,
                     UserId = "2",
                     ClaimType = ClaimTypes.Role,
                     ClaimValue = "User"
+                },           
+                new IdentityUserClaim<string>
+                {
+                    Id = 6,
+                    UserId = "2",
+                    ClaimType = ClaimTypes.DateOfBirth,
+                    ClaimValue = user1.DateOfBirth.ToString(),
+                },               
+                new IdentityUserClaim<string>
+                {
+                    Id = 7,
+                    UserId = "2",
+                    ClaimType = ClaimTypes.Email,
+                    ClaimValue = user1.Email,
+                },             
+                new IdentityUserClaim<string>
+                {
+                    Id = 8,
+                    UserId = "2",
+                    ClaimType = "UserId",
+                    ClaimValue = user1.Id,
                 },
-                //new IdentityUserClaim<string>
-                //{
-                //    Id = 3,
-                //    UserId = "1",
-                //    ClaimType = ClaimTypes.DateOfBirth,
-                //    ClaimValue = admin.DateOfBirth.ToString(),
-                //},
-                //new IdentityUserClaim<string>
-                //{
-                //    Id = 4,
-                //    UserId = "2",
-                //    ClaimType = ClaimTypes.DateOfBirth,
-                //    ClaimValue = user.DateOfBirth.ToString(),
-                //},
-            };
 
-            var users = new User[]
-            {
-                new User
+                //user2
+                new IdentityUserClaim<string>
                 {
-                    Id = "3",
-                    FirstName = "Jack",
-                    LastName = "DeVos",
-                    DateOfBirth = new DateTime(1990, 9, 20),
-                    Gender = "male",
-                    AddressId = 3,
-                    Email = "",
-                    Password = "",
+                    Id = 9,
+                    UserId = "3",
+                    ClaimType = ClaimTypes.Role,
+                    ClaimValue = "User"
                 },
-                new User
+                new IdentityUserClaim<string>
                 {
-                    Id = "4",
-                    FirstName = "Jill",
-                    LastName = "Vogels",
-                    DateOfBirth = new DateTime(1995, 11, 25),
-                    Gender ="female",
-                    AddressId = 10,
-                    Email = "",
-                    Password = "",
+                    Id = 21,
+                    UserId = "3",
+                    ClaimType = ClaimTypes.Role,
+                    ClaimValue = "Orginazer"
                 },
-                new User
+                new IdentityUserClaim<string>
                 {
-                    Id = "5",
-                    FirstName = "Jim",
-                    LastName = "Schoonaert",
-                    DateOfBirth = new DateTime(2000, 1, 30),
-                    Gender = "male",
-                    AddressId = 11,
-                    Email = "",
-                    Password = "",
+                    Id = 10,
+                    UserId = "3",
+                    ClaimType = ClaimTypes.DateOfBirth,
+                    ClaimValue = user2.DateOfBirth.ToString(),
+                },
+                new IdentityUserClaim<string>
+                {
+                    Id = 11,
+                    UserId = "3",
+                    ClaimType = ClaimTypes.Email,
+                    ClaimValue = user2.Email,
+                },
+                new IdentityUserClaim<string>
+                {
+                    Id = 12,
+                    UserId = "3",
+                    ClaimType = "UserId",
+                    ClaimValue = user2.Id,
+                },
+
+                //user3
+                new IdentityUserClaim<string>
+                {
+                    Id = 13,
+                    UserId = "4",
+                    ClaimType = ClaimTypes.Role,
+                    ClaimValue = "User"
+                },
+                new IdentityUserClaim<string>
+                {
+                    Id = 14,
+                    UserId = "4",
+                    ClaimType = ClaimTypes.DateOfBirth,
+                    ClaimValue = user3.DateOfBirth.ToString(),
+                },
+                new IdentityUserClaim<string>
+                {
+                    Id = 15,
+                    UserId = "4",
+                    ClaimType = ClaimTypes.Email,
+                    ClaimValue = user3.Email,
+                },
+                new IdentityUserClaim<string>
+                {
+                    Id = 16,
+                    UserId = "4",
+                    ClaimType = "UserId",
+                    ClaimValue = user3.Id,
+                },
+
+                //user4
+                new IdentityUserClaim<string>
+                {
+                    Id = 17,
+                    UserId = "5",
+                    ClaimType = ClaimTypes.Role,
+                    ClaimValue = "User"
+                },
+                new IdentityUserClaim<string>
+                {
+                    Id = 18,
+                    UserId = "5",
+                    ClaimType = ClaimTypes.DateOfBirth,
+                    ClaimValue = user4.DateOfBirth.ToString(),
+                },
+                new IdentityUserClaim<string>
+                {
+                    Id = 19,
+                    UserId = "5",
+                    ClaimType = ClaimTypes.Email,
+                    ClaimValue = user4.Email,
+                },
+                new IdentityUserClaim<string>
+                {
+                    Id = 20,
+                    UserId = "5",
+                    ClaimType = "UserId",
+                    ClaimValue = user4.Id,
                 },
             };
 
@@ -369,15 +511,13 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                 new EventUser { UserId = "5", EventId = 5 },
             };
 
-
             modelBuilder.Entity<Image>().HasData(images);
             modelBuilder.Entity<Dog>().HasData(dogs);
             modelBuilder.Entity<Comment>().HasData(comments);
             modelBuilder.Entity<Address>().HasData(addresses);
             modelBuilder.Entity<Route>().HasData(routes);
             modelBuilder.Entity<Event>().HasData(events);
-            modelBuilder.Entity<User>().HasData(users);
-            modelBuilder.Entity<User>().HasData(admin, user);
+            modelBuilder.Entity<User>().HasData(admin, user1, user2, user3, user4);
             modelBuilder.Entity<IdentityUserClaim<string>>().HasData(userClaims);
             modelBuilder.Entity<EventUser>().HasData(eventUsers);
         }
