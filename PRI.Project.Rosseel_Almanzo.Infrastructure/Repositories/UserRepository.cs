@@ -30,15 +30,11 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
 
         public async Task<IdentityResult> AddAsync(User toAdd)
         {
-            //_targetTable.Add(toAdd);
-            //return await SaveChangesAsync();
             return await _userManager.CreateAsync(toAdd, toAdd.Password);
         }
 
         public async Task<IdentityResult> DeleteAsync(User toDelete)
         {
-            //_targetTable.Remove(toDelete);
-            //return await SaveChangesAsync();
             return await _userManager.DeleteAsync(toDelete);
         }
 
@@ -70,11 +66,12 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
                 .Include(u => u.OrganizedEvents)
                 .Include(u => u.AttendingEvents)
                 .FirstOrDefaultAsync(e => e.Id == id);
+            //return await _userManager.FindByIdAsync(id);
         }
 
         public async Task<bool> UpdateAsync(User toUpdate)
         {
-            _targetTable.Update(toUpdate);
+            await _userManager.UpdateAsync(toUpdate);
             return await SaveChangesAsync();
         }
 
