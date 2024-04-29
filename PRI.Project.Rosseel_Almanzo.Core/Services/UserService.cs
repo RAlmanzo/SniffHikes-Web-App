@@ -43,33 +43,10 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                     Errors = new List<string> { "User allready exists!" }
                 };
             }
-            //var users = await _userRepository.GetAllAsync();            
-            //if(users.Any(u => u.Email.ToUpper().Equals(userCreateRequestModel.Email.ToUpper())))
-            //{
-            //    return new ResultModel<User>
-            //    {
-            //        Success = false,
-            //        Errors = new List<string> { "User allready exists!" }
-            //    };
-            //}
 
             //create new user
             var newUser = new User
             {
-                //FirstName = userCreateRequestModel.FirstName,
-                //LastName = userCreateRequestModel.LastName,
-                //DateOfBirth = userCreateRequestModel.DateOfBirth,
-                //Gender = userCreateRequestModel.Gender,
-                //Email = userCreateRequestModel.Email,
-                //Password = userCreateRequestModel.Password,
-                //Image = userCreateRequestModel.Image,
-                //Address = new Address
-                //{
-                //    Street = userCreateRequestModel.Address.Street,
-                //    City = userCreateRequestModel.Address.City,
-                //    State = userCreateRequestModel.Address.State,
-                //    Country = userCreateRequestModel.Address.Country,
-                //},
                 UserName = userCreateRequestModel.Email,
                 FirstName = userCreateRequestModel.FirstName,
                 LastName = userCreateRequestModel.LastName,
@@ -85,22 +62,14 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                     State = userCreateRequestModel.Address.State,
                     Country = userCreateRequestModel.Address.Country,
                 },
-                Password = userCreateRequestModel.Password,
+                Password = userCreateRequestModel.Password,             
             };
 
             //call the usersrepo addAsync method
-            //var result = await _userRepository.AddAsync(newUser);
-            //var result = await _userManager.CreateAsync(newUser, userCreateRequestModel.Password);
             var result = await _userRepository.AddAsync(newUser);
             //check  result
             if (!result.Succeeded)
             {
-                //var createdRecord = await GetByIdAsync(newUser.Id);
-                //return new ResultModel<User>
-                //{
-                //    Success = true,
-                //    Value = createdRecord.Value,
-                //};
                 return new ResultModel<User>
                 {
                     Success = false,
@@ -120,23 +89,13 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             result = await _userManager.AddClaimsAsync(newUser, claims);
             if (!result.Succeeded)
             {
-                ////add to the modelstate
-                //foreach (var error in result.Errors)
-                //{
-                //    ModelState.AddModelError("", error.Description);
-                //}
-                //return BadRequest(ModelState.Values);
                 return new ResultModel<User>
                 {
                     Success = false,
                     Errors = new List<string> { "User not created!" }
                 };
             }
-            //return new ResultModel<User>
-            //{
-            //    Success = false,
-            //    Errors = new List<string> { "User not created!" }
-            //};
+
             var createdRecord = await GetByIdAsync(newUser.Id);
             return new ResultModel<User>
             {
@@ -177,6 +136,13 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             {
                 if (await _addressRepository.DeleteAsync(userAddress))
                 {
+                    if (selectedUser.Dogs.Count > 0)
+                    {
+                        foreach (var dog in selectedUser.Dogs)
+                        {
+                            await _dogRepository.DeleteAsync(dog);
+                        }
+                    }
                     return new ResultModel<User> { Success = true, };
                 }             
             }
@@ -244,20 +210,28 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             user.LastName = userUpdateRequestModel.LastName;
             user.Email = userUpdateRequestModel.Email;
             user.Gender = userUpdateRequestModel.Gender;
-            user.Password = userUpdateRequestModel.Password;
+            //user.Password = userUpdateRequestModel.Password;
             user.Address.Street = userUpdateRequestModel.Address.Street;
             user.Address.City = userUpdateRequestModel.Address.City;
             user.Address.State = userUpdateRequestModel.Address.State;
             user.Address.Country = userUpdateRequestModel.Address.Country;
             user.DateOfBirth = userUpdateRequestModel.DateOfBirth;
             
+            if (user.Password != userUpdateRequestModel.Password)
+            {
+                var result2 = await _userManager.ChangePasswordAsync(user, user.Password, userUpdateRequestModel.Password);
+                //var result3 = _userManager.PasswordHasher.HashPassword(user, userUpdateRequestModel.Password);
+                user.PasswordHash = result2.GetHashCode().ToString();
+                user.Password = userUpdateRequestModel.Password;
+            }
 
             if (!string.IsNullOrWhiteSpace(userUpdateRequestModel.Image))
             {
                 user.Image = userUpdateRequestModel.Image;
             }
 
-            if (await _userRepository.UpdateAsync(user))
+            var result = await _userRepository.UpdateAsync(user);
+            if (result.Succeeded)
             {
                 return new ResultModel<User>
                 {
