@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using PRI.Project.Rosseel_Almanzo.Core.Entities;
 using PRI.Project.Rosseel_Almanzo.Core.Interfaces.Repositories;
 using PRI.Project.Rosseel_Almanzo.Core.Interfaces.Services;
 using PRI.Project.Rosseel_Almanzo.Core.Services.Models;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -20,8 +23,10 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
         private readonly IEventRepository _eventRepository;
         private readonly IDogRepository _dogRepository;
         private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
+        private readonly IConfiguration _configuration;
 
-        public UserService(IUserRepository userRepository, IAddressRepository addressRepository, IEventUserRepository eventUserRepository, IEventRepository eventRepository, IDogRepository dogRepository, UserManager<User> userManager)
+        public UserService(IUserRepository userRepository, IAddressRepository addressRepository, IEventUserRepository eventUserRepository, IEventRepository eventRepository, IDogRepository dogRepository, UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration)
         {
             _userRepository = userRepository;
             _addressRepository = addressRepository;
@@ -29,6 +34,8 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             _eventRepository = eventRepository;
             _dogRepository = dogRepository;
             _userManager = userManager;
+            _signInManager = signInManager;
+            _configuration = configuration;
         }
 
         public async Task<ResultModel<User>> CreateUserAsync(UserCreateRequestModel userCreateRequestModel)
@@ -290,6 +297,50 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             {
                 Success = false,
                 Errors = new List<string> { "No users found" }
+            };
+        }
+
+        public async Task<ResultModel<string>> LoginUserAsync(string userName, string password)
+        {
+            //authenticate the user
+            var result = await _signInManager.PasswordSignInAsync
+                (userName, password, false, false);
+            if (!result.Succeeded)//wrong credentials
+            {
+                return new ResultModel<string>
+                {
+                    Success = false,
+                    Errors = new List<string> { "Wrong Credentials!" }
+                };
+            }
+            //get the user
+            var user = await _userManager.FindByNameAsync(userName);
+            //get the claims
+            var claims = await _userManager.GetClaimsAsync(user);
+            //generate the token
+            //set the token parameters
+            var issuer = _configuration.GetValue<string>("JWTConfiguration:Issuer");
+            var audience = _configuration.GetValue<string>("JWTConfiguration:Audience");
+            var expiration = DateTime.Now.AddDays(_configuration.GetValue<int>("JWTConfiguration:ExpirationInDays"));
+            var key = Encoding.UTF8.GetBytes(_configuration.GetValue<string>("JWTConfiguration:SecretKey"));
+            SymmetricSecurityKey securityKey = new SymmetricSecurityKey(key);
+            var signinCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            //token
+            var token = new JwtSecurityToken(
+                issuer: issuer,
+                audience: audience,
+                notBefore: DateTime.Now,
+                expires: expiration,
+                claims: claims,
+                signingCredentials: signinCredentials
+                );
+            //serialize token
+            var serializedToken = new JwtSecurityTokenHandler().WriteToken(token);
+            //return the token
+            return new ResultModel<string>
+            {
+                Success = true,
+                Value = serializedToken,
             };
         }
     }
