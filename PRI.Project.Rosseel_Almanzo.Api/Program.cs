@@ -70,39 +70,21 @@ namespace PRI.Project.Rosseel_Almanzo.Api
                 {
                     policy.RequireClaim(ClaimTypes.Role, "User");
                 });
-                //options.AddPolicy("User", policy =>
-                //{
-                //    //policy.RequireClaim(ClaimTypes.Role, "User");
-                //    policy.RequireAssertion(contex =>
-                //    {
-                //        if (contex.User.HasClaim(ClaimTypes.Role, "Admin") || contex.User.HasClaim(ClaimTypes.Role, "User"))
-                //        {
-                //            return true;
-                //        }
-                //        return false;
-                //    });
-                //});
-                //options.AddPolicy("AdultOnly", policy =>
-                //{
-                //    policy.RequireAssertion(context =>
-                //    {
-                //        //check if claims are present
-                //        if (context.User.Claims.Count() != 0)
-                //        {
-                //            //get de dateofbirth
-                //            var claimValue = context.User.Claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.DateOfBirth)).Value;
-                //            // parse the date
-                //            var dateOfBirth = DateTime.Parse(claimValue);
-                //            //calculate age
-                //            if (DateTime.Now.Year - dateOfBirth.Year >= 18)
-                //            {
-                //                return true;
-                //            }
-                //            return false;
-                //        }
-                //        return false;
-                //    });
-                //});
+                options.AddPolicy("Orginazer", policy =>
+                {
+                    policy.RequireClaim(ClaimTypes.Role, "User");
+                });
+                options.AddPolicy("UserOrginazer", policy =>
+                {
+                    policy.RequireAssertion(contex =>
+                    {
+                        if (contex.User.HasClaim(ClaimTypes.Role, "User") && contex.User.HasClaim(ClaimTypes.Role, "Orginazer"))
+                        {
+                            return true;
+                        }
+                        return false;
+                    });
+                });
             });
 
             builder.Services.AddScoped<IEventRepository, EventRepository>();
