@@ -17,7 +17,8 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Interfaces.Repositories
         Task<IdentityResult> DeleteAsync(User toDelete);
         //Task<bool> AddAsync(User toAdd);
         Task<IdentityResult> AddAsync(User toAdd);
-        Task<bool> UpdateAsync(User toUpdate);
+        //Task<bool> UpdateAsync(User toUpdate);
+        Task<IdentityResult> UpdateAsync(User toUpdate);
         Task<bool> CheckIfExistsAsync(string id);
         IQueryable<Dog> GetAllUserDogs(string id);
     }
