@@ -226,9 +226,12 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             
             if (user.Password != userUpdateRequestModel.Password)
             {
-                var result2 = await _userManager.ChangePasswordAsync(user, user.Password, userUpdateRequestModel.Password);
-                //var result3 = _userManager.PasswordHasher.HashPassword(user, userUpdateRequestModel.Password);
-                user.PasswordHash = result2.GetHashCode().ToString();
+                var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+                await _userManager.ResetPasswordAsync(user, resetToken, userUpdateRequestModel.Password);
+                //await _userManager.ChangePasswordAsync(user, user.Password, userUpdateRequestModel.Password);
+                IPasswordHasher<User> passwordHasher = new PasswordHasher<User>();
+                user.PasswordHash = passwordHasher.HashPassword(user, userUpdateRequestModel.Password);
+                //user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, userUpdateRequestModel.Password);
                 user.Password = userUpdateRequestModel.Password;
             }
 
@@ -238,7 +241,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             }
 
             var result = await _userRepository.UpdateAsync(user);
-            if (result.Succeeded)
+            if (result)
             {
                 return new ResultModel<User>
                 {
@@ -249,7 +252,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             return new ResultModel<User>
             {
                 Success = false,
-                Errors = new List<string> { "Record update failed!" }
+                Errors = new List<string> { "User update failed!" }
             };
         }
 
