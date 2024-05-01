@@ -48,21 +48,26 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 };
             }
 
-            //create new claim for user
-            var orginazerClaim = new Claim
-            (
-                ClaimTypes.Role,
-                "Orginazer"         
-            );
-
-            var claimResult = await _userManager.AddClaimAsync(orginazer, orginazerClaim);
-            if (!claimResult.Succeeded)
+            //get the claims
+            var claims = await _userManager.GetClaimsAsync(orginazer);
+            if(!claims.Any(c => c.Value == "Orginazer"))
             {
-                return new ResultModel<Event>
+                //create new claim for user
+                var orginazerClaim = new Claim
+                (
+                    ClaimTypes.Role,
+                    "Orginazer"
+                );
+
+                var claimResult = await _userManager.AddClaimAsync(orginazer, orginazerClaim);
+                if (!claimResult.Succeeded)
                 {
-                    Success = false,
-                    Errors = new List<string> { "Failed: could not add claim, please contact admin" }
-                };
+                    return new ResultModel<Event>
+                    {
+                        Success = false,
+                        Errors = new List<string> { "Failed: could not add claim, please contact admin" }
+                    };
+                }
             }
 
             //fill imageslist with added image
