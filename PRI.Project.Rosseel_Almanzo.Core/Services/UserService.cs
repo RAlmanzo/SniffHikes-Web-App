@@ -214,7 +214,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             user.Id = userUpdateRequestModel.Id;
             user.FirstName = userUpdateRequestModel.FirstName;
             user.LastName = userUpdateRequestModel.LastName;
-            user.Email = userUpdateRequestModel.Email;
+            //user.Email = userUpdateRequestModel.Email;
             user.Gender = userUpdateRequestModel.Gender;
             user.Address.Street = userUpdateRequestModel.Address.Street;
             user.Address.City = userUpdateRequestModel.Address.City;

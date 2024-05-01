@@ -180,8 +180,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
                     LastName = userUpdateRequestDto.LastName,
                     DateOfBirth = userUpdateRequestDto.DateOfBirth,
                     Gender = userUpdateRequestDto.Gender,
-                    Email = userUpdateRequestDto.Email,
-                    Password = userUpdateRequestDto.Password,
+                    //Email = userUpdateRequestDto.Email,
                     Image = filename,
                     Address = new Address
                     {
