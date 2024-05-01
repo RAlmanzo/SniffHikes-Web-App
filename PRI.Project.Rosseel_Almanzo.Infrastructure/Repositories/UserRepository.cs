@@ -28,9 +28,9 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
             _userManager = userManager;
         }
 
-        public async Task<IdentityResult> AddAsync(User toAdd)
+        public async Task<IdentityResult> AddAsync(User toAdd, string password)
         {
-            return await _userManager.CreateAsync(toAdd, toAdd.Password);
+            return await _userManager.CreateAsync(toAdd, password);
         }
 
         public async Task<IdentityResult> DeleteAsync(User toDelete)

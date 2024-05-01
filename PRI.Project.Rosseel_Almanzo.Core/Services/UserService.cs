@@ -68,12 +68,11 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                     City = userCreateRequestModel.Address.City,
                     State = userCreateRequestModel.Address.State,
                     Country = userCreateRequestModel.Address.Country,
-                },
-                Password = userCreateRequestModel.Password,             
+                },             
             };
 
             //call the usersrepo addAsync method
-            var result = await _userRepository.AddAsync(newUser);
+            var result = await _userRepository.AddAsync(newUser, userCreateRequestModel.Password);
             //check  result
             if (!result.Succeeded)
             {
