@@ -79,7 +79,6 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                 DateOfBirth = user.DateOfBirth,
                 Gender = user.Gender,
                 Email = user.Email,
-                Password = user.Password,
                 Image = user.Image,
                 Address = new BaseDto
                 {
