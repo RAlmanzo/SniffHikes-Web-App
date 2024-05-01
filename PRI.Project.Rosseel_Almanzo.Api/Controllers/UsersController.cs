@@ -202,6 +202,29 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
             return BadRequest(ModelState.Values);
         }
 
+        [HttpPut("{id}/password")]
+        public async Task<IActionResult> ResetPassword(string id, UserResetPasswordRequestDto userResetPasswordRequestDto)
+        {
+            //check if user exists
+            if (!await _userService.CheckIfExistsAsync(id))
+            {
+                return NotFound("User not found!");
+            }
+
+            //reset password
+            var result = await _userService.ResetPasswordAsync(id, userResetPasswordRequestDto.currentPassword, userResetPasswordRequestDto.newPassword);
+            
+            if (result.Success)
+            {
+                return Ok(result.Value);
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+            return BadRequest(ModelState.Values);
+        }
+
         [HttpPost("{id}/dog")]
         public async Task<IActionResult> AddDog(string id, [FromForm]DogRequestDto dogRequestDto)
         {
