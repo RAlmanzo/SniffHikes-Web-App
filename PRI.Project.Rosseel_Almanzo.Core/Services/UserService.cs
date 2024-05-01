@@ -1,10 +1,15 @@
-﻿using PRI.Project.Rosseel_Almanzo.Core.Entities;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using PRI.Project.Rosseel_Almanzo.Core.Entities;
 using PRI.Project.Rosseel_Almanzo.Core.Interfaces.Repositories;
 using PRI.Project.Rosseel_Almanzo.Core.Interfaces.Services;
 using PRI.Project.Rosseel_Almanzo.Core.Services.Models;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,38 +22,45 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
         private readonly IEventUserRepository _eventUserRepository;
         private readonly IEventRepository _eventRepository;
         private readonly IDogRepository _dogRepository;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
+        private readonly IConfiguration _configuration;
 
-        public UserService(IUserRepository userRepository, IAddressRepository addressRepository, IEventUserRepository eventUserRepository, IEventRepository eventRepository, IDogRepository dogRepository)
+        public UserService(IUserRepository userRepository, IAddressRepository addressRepository, IEventUserRepository eventUserRepository, IEventRepository eventRepository, IDogRepository dogRepository, UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration)
         {
             _userRepository = userRepository;
             _addressRepository = addressRepository;
             _eventUserRepository = eventUserRepository;
             _eventRepository = eventRepository;
             _dogRepository = dogRepository;
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _configuration = configuration;
         }
 
         public async Task<ResultModel<User>> CreateUserAsync(UserCreateRequestModel userCreateRequestModel)
         {
-            //check if user excist
-            var users = await _userRepository.GetAllAsync();            
-            if(users.Any(u => u.Email.ToUpper().Equals(userCreateRequestModel.Email.ToUpper())))
+            //check if email allready excist
+            var userResult = await _userManager.FindByEmailAsync(userCreateRequestModel.Email);
+            if(userResult != null)
             {
                 return new ResultModel<User>
                 {
                     Success = false,
-                    Errors = new List<string> { "User allready exists!" }
+                    Errors = new List<string> { "Email allready exists!" }
                 };
             }
 
             //create new user
             var newUser = new User
             {
+                UserName = userCreateRequestModel.Email,
                 FirstName = userCreateRequestModel.FirstName,
                 LastName = userCreateRequestModel.LastName,
                 DateOfBirth = userCreateRequestModel.DateOfBirth,
                 Gender = userCreateRequestModel.Gender,
                 Email = userCreateRequestModel.Email,
-                Password = userCreateRequestModel.Password,
+                EmailConfirmed = true,//ONLY FOR TESTING/DEVELOPMENT PURPOSE
                 Image = userCreateRequestModel.Image,
                 Address = new Address
                 {
@@ -56,29 +68,49 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                     City = userCreateRequestModel.Address.City,
                     State = userCreateRequestModel.Address.State,
                     Country = userCreateRequestModel.Address.Country,
-                },
+                },             
             };
 
             //call the usersrepo addAsync method
-            var result = await _userRepository.AddAsync(newUser);        
+            var result = await _userRepository.AddAsync(newUser, userCreateRequestModel.Password);
             //check  result
-            if (result)
+            if (!result.Succeeded)
             {
-                var createdRecord = await GetByIdAsync(newUser.Id);
                 return new ResultModel<User>
                 {
-                    Success = true,
-                    Value = createdRecord.Value,
+                    Success = false,
+                    Errors = new List<string> { "Registration failed!" }
                 };
             }
+
+            //add the claims
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Role,"User"),
+                new Claim(ClaimTypes.DateOfBirth,newUser.DateOfBirth.ToString()),
+                new Claim(ClaimTypes.Name,newUser.UserName),
+                new Claim(ClaimTypes.NameIdentifier,newUser.Id),
+            };
+            //add claims to user
+            result = await _userManager.AddClaimsAsync(newUser, claims);
+            if (!result.Succeeded)
+            {
+                return new ResultModel<User>
+                {
+                    Success = false,
+                    Errors = new List<string> { "Could not add claims to user" }
+                };
+            }
+
+            var createdUser = await GetByIdAsync(newUser.Id);
             return new ResultModel<User>
             {
-                Success = false,
-                Errors = new List<string> { "User not created!" }
+                Success = true,
+                Value = createdUser.Value,
             };
         }
 
-        public async Task<ResultModel<User>> DeleteUserAsync(int id)
+        public async Task<ResultModel<User>> DeleteUserAsync(string id)
         {
             //get the user
             var selectedUser = await _userRepository.GetByIdAsync(id);
@@ -105,10 +137,18 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             }
 
             //check if deleteAsync returns true
-            if (await _userRepository.DeleteAsync(selectedUser))
+            var result = await _userRepository.DeleteAsync(selectedUser);
+            if (result.Succeeded)
             {
                 if (await _addressRepository.DeleteAsync(userAddress))
                 {
+                    if (selectedUser.Dogs.Count > 0)
+                    {
+                        foreach (var dog in selectedUser.Dogs)
+                        {
+                            await _dogRepository.DeleteAsync(dog);
+                        }
+                    }
                     return new ResultModel<User> { Success = true, };
                 }             
             }
@@ -139,7 +179,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             return userResultModel;
         }
 
-        public async Task<ResultModel<User>> GetByIdAsync(int id)
+        public async Task<ResultModel<User>> GetByIdAsync(string id)
         {
             //get the user
             var user = await _userRepository.GetByIdAsync(id);
@@ -176,7 +216,6 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             user.LastName = userUpdateRequestModel.LastName;
             user.Email = userUpdateRequestModel.Email;
             user.Gender = userUpdateRequestModel.Gender;
-            user.Password = userUpdateRequestModel.Password;
             user.Address.Street = userUpdateRequestModel.Address.Street;
             user.Address.City = userUpdateRequestModel.Address.City;
             user.Address.State = userUpdateRequestModel.Address.State;
@@ -189,7 +228,8 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 user.Image = userUpdateRequestModel.Image;
             }
 
-            if (await _userRepository.UpdateAsync(user))
+            var result = await _userRepository.UpdateAsync(user);
+            if (result)
             {
                 return new ResultModel<User>
                 {
@@ -200,11 +240,11 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             return new ResultModel<User>
             {
                 Success = false,
-                Errors = new List<string> { "Record update failed!" }
+                Errors = new List<string> { "User update failed!" }
             };
         }
 
-        public async Task<bool> CheckIfExistsAsync(int id)
+        public async Task<bool> CheckIfExistsAsync(string id)
         {
             return await _userRepository.CheckIfExistsAsync(id);
         }
@@ -248,6 +288,113 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             {
                 Success = false,
                 Errors = new List<string> { "No users found" }
+            };
+        }
+
+        public async Task<ResultModel<string>> LoginUserAsync(string email, string password)
+        {
+            //authenticate the user
+            var result = await _signInManager.PasswordSignInAsync(email, password, false, false);
+            if (!result.Succeeded)
+            {
+                return new ResultModel<string>
+                {
+                    Success = false,
+                    Errors = new List<string> { "Wrong Credentials!" }
+                };
+            }
+            //get the user
+            var user = await _userManager.FindByEmailAsync(email);
+            //get the claims
+            var claims = await _userManager.GetClaimsAsync(user);
+            //generate the token
+            //set the token parameters
+            var issuer = _configuration.GetValue<string>("JWTConfiguration:Issuer");
+            var audience = _configuration.GetValue<string>("JWTConfiguration:Audience");
+            var expiration = DateTime.Now.AddDays(_configuration.GetValue<int>("JWTConfiguration:ExpirationInDays"));
+            var key = Encoding.UTF8.GetBytes(_configuration.GetValue<string>("JWTConfiguration:SecretKey"));
+            SymmetricSecurityKey securityKey = new SymmetricSecurityKey(key);
+            var signinCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            //token
+            var token = new JwtSecurityToken(
+                issuer: issuer,
+                audience: audience,
+                notBefore: DateTime.Now,
+                expires: expiration,
+                claims: claims,
+                signingCredentials: signinCredentials
+                );
+            //serialize token
+            var serializedToken = new JwtSecurityTokenHandler().WriteToken(token);
+            //return the token
+            return new ResultModel<string>
+            {
+                Success = true,
+                Value = serializedToken,
+            };
+        }
+
+        public async Task<bool> SignOutUserAsync()
+        {
+            await _signInManager.SignOutAsync();
+            return true;
+        }
+
+        public async Task<ResultModel<string>> ResetPasswordAsync(string id, string currentPassword, string newPassword)
+        {
+            //get the user
+            var user = await _userRepository.GetByIdAsync(id);
+            if (user == null)
+            {
+                return new ResultModel<string>
+                {
+                    Success = false,
+                    Errors = new List<string> { "User does not exists" }
+                };
+            }
+
+            //check if currentpassword is correct
+            var result = await _userManager.CheckPasswordAsync(user, currentPassword);
+            if (!result)
+            {
+                return new ResultModel<string>
+                {
+                    Success = false,
+                    Errors = new List<string> { "Please enter valid currentpassword" }
+                };
+            }
+
+            //reset password
+            var resetResult = await _userRepository.ResetPasswordAsync(user, currentPassword, newPassword);
+
+            if (!resetResult.Succeeded)
+            {
+                return new ResultModel<string>
+                {
+                    Success = false,
+                    Errors = new List<string> { "Password reset failed!" }
+                };
+            }
+
+            IPasswordHasher<User> passwordHasher = new PasswordHasher<User>();
+            user.PasswordHash = passwordHasher.HashPassword(user, newPassword);
+
+            //update user
+            result = await _userRepository.UpdateAsync(user);
+
+            if (!result)
+            {
+                return new ResultModel<string>
+                {
+                    Success = false,
+                    Errors = new List<string> { "Failed updating user" }
+                };
+            }
+
+            return new ResultModel<string>
+            {
+                Success = true,
+                Value = "Password reset succesfull",
             };
         }
     }

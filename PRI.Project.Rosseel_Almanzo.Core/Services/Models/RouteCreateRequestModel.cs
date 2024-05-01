@@ -14,7 +14,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services.Models
         public string City { get; set; }
         public string State { get; set; }
         public string Country { get; set; }
-        public int OrganizerId { get; set; }
+        public string OrganizerId { get; set; }
         public DateTime DateCreated { get; set; }
         public IEnumerable<string> Images { get; set; }
     }

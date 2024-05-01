@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PRI.Project.Rosseel_Almanzo.Api.Extensions;
 using PRI.Project.Rosseel_Almanzo.Api.Services.Interfaces;
@@ -9,6 +10,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = "Admin")]
     public class AdminsController : ControllerBase
     {
         private readonly IEventService _eventService;
@@ -159,7 +161,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
         }
 
         [HttpGet("{id}/user")]
-        public async Task<IActionResult> GetUser(int id)
+        public async Task<IActionResult> GetUser(string id)
         {
             //get the record
             var result = await _userService.GetByIdAsync(id);
@@ -172,7 +174,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
         }
 
         [HttpDelete("{id}/user")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteUser(string id)
         {
             var userResult = await _userService.GetByIdAsync(id);
 

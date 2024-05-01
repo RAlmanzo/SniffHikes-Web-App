@@ -8,7 +8,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Entities
 {
     public class EventUser
     {
-        public int? UserId { get; set; }
+        public string UserId { get; set; }
         public User User { get; set; }
         public int? EventId { get; set; }
         public Event Event { get; set; }

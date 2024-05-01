@@ -12,7 +12,7 @@
         public DateTime DateCreated { get; set; }
         public ICollection<Comment> Comments { get; set; }
         public User Organizer { get; set; }
-        public int? OrganizerId { get; set; }
+        public string OrganizerId { get; set; }
         public ICollection<EventUser> AttendingUsers { get; set; }
     }
 }

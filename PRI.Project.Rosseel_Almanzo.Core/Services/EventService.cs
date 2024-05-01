@@ -1,4 +1,5 @@
-﻿using PRI.Project.Rosseel_Almanzo.Core.Entities;
+﻿using Microsoft.AspNetCore.Identity;
+using PRI.Project.Rosseel_Almanzo.Core.Entities;
 using PRI.Project.Rosseel_Almanzo.Core.Interfaces.Repositories;
 using PRI.Project.Rosseel_Almanzo.Core.Interfaces.Services;
 using PRI.Project.Rosseel_Almanzo.Core.Services.Models;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,8 +22,9 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
         private readonly IImageRepository _imageRepository;
         private readonly IAddressRepository _addressRepository;
         private readonly ICommentRepository _commentRepository;
+        private readonly UserManager<User> _userManager;
 
-        public EventService(IEventRepository eventRepository, IUserRepository userRepository, IEventUserRepository eventUserRepository, IAddressRepository addressRepository, IImageRepository imageRepository, ICommentRepository commentRepository)
+        public EventService(IEventRepository eventRepository, IUserRepository userRepository, IEventUserRepository eventUserRepository, IAddressRepository addressRepository, IImageRepository imageRepository, ICommentRepository commentRepository, UserManager<User> userManager)
         {
             _eventRepository = eventRepository;
             _userRepository = userRepository;
@@ -29,17 +32,36 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             _addressRepository = addressRepository;
             _imageRepository = imageRepository;
             _commentRepository = commentRepository;
+            _userManager = userManager;
         }
 
         public async Task<ResultModel<Event>> CreateEventAsync(EventCreateRequestModel eventCreateRequestModel)
         {
-            //check if orginazerid exists
-            if (_userRepository.GetAll().Any(g => g.Id == eventCreateRequestModel.OrganizerId) == false) // waarom kan ik hier geen async gebruiken
+            //get the orginazer
+            var orginazer = await _userRepository.GetByIdAsync(eventCreateRequestModel.OrganizerId);
+            if (orginazer == null)
             {
                 return new ResultModel<Event>
                 {
                     Success = false,
                     Errors = new List<string> { "Orginazer does not exist!" }
+                };
+            }
+
+            //create new claim for user
+            var orginazerClaim = new Claim
+            (
+                ClaimTypes.Role,
+                "Orginazer"         
+            );
+
+            var claimResult = await _userManager.AddClaimAsync(orginazer, orginazerClaim);
+            if (!claimResult.Succeeded)
+            {
+                return new ResultModel<Event>
+                {
+                    Success = false,
+                    Errors = new List<string> { "Failed: could not add claim, please contact admin" }
                 };
             }
 
@@ -54,7 +76,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 };
             }
                     
-            //create new event (with address)
+            //create new event
             var newEvent = new Event
             {
                 Title = eventCreateRequestModel.Title,
@@ -179,7 +201,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             //get event attendingusers
             foreach (var attendingUser in selectedEvent.AttendingUsers)
             {
-                var result = await _userRepository.GetByIdAsync((int)attendingUser.UserId);
+                var result = await _userRepository.GetByIdAsync(attendingUser.UserId);
                 attendingUser.User = result;
             }
             //if event exists

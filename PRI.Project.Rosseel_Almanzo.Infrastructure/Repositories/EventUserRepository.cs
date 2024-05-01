@@ -29,7 +29,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
             return await SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<EventUser>> GetAllByUserId(int id)
+        public async Task<IEnumerable<EventUser>> GetAllByUserId(string id)
         {
             return await _targetTable.Where(u => u.UserId == id).ToListAsync();
         }
