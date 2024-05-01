@@ -19,7 +19,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Interfaces.Services
         Task<bool> CheckIfExistsAsync(string id);
         Task<ResultModel<IEnumerable<User>>> SearchByFirstNameAsync(string firstName);
         Task<ResultModel<IEnumerable<User>>> SearchByLastNameAsync(string lastName);
-        Task<ResultModel<string>> LoginUserAsync(string userName, string password);
+        Task<ResultModel<string>> LoginUserAsync(string email, string password);
         Task<bool> SignOutUserAsync();
     }
 }
