@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using PRI.Project.Rosseel_Almanzo.Core.Entities;
+using PRI.Project.Rosseel_Almanzo.Core.Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +14,11 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Interfaces.Repositories
         Task<User> GetByIdAsync(string id);
         IQueryable<User> GetAll();
         Task<IEnumerable<User>> GetAllAsync();
-        //Task<bool> DeleteAsync(User toDelete);
         Task<IdentityResult> DeleteAsync(User toDelete);
-        //Task<bool> AddAsync(User toAdd);
         Task<IdentityResult> AddAsync(User toAdd);
-        //Task<bool> UpdateAsync(User toUpdate);
         Task<bool> UpdateAsync(User toUpdate);
         Task<bool> CheckIfExistsAsync(string id);
         IQueryable<Dog> GetAllUserDogs(string id);
+        Task<IdentityResult> ResetPasswordAsync(User toUpdate, string currentPassword, string newPassword);
     }
 }
