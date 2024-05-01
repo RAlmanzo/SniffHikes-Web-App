@@ -28,7 +28,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
         public async Task<IActionResult> Login(AuthLoginRequestDto authLoginRequestDto)
         {
             //authenticate the user
-            var result = await _userService.LoginUserAsync(authLoginRequestDto.UserName, authLoginRequestDto.Password);
+            var result = await _userService.LoginUserAsync(authLoginRequestDto.Email, authLoginRequestDto.Password);
             if (!result.Success)
             {
                 //add to the modelstate
