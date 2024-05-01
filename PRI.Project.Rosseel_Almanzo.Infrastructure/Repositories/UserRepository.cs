@@ -100,5 +100,10 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
         {
             return await _targetTable.AnyAsync(t => t.Id == id);
         }
+
+        public async Task<IdentityResult> ResetPasswordAsync(User toUpdate, string currentPassword, string newPassword)
+        {
+            return await _userManager.ChangePasswordAsync(toUpdate, currentPassword, newPassword);
+        }
     }
 }
