@@ -40,14 +40,14 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
 
         public async Task<ResultModel<User>> CreateUserAsync(UserCreateRequestModel userCreateRequestModel)
         {
-            //check if user excist
+            //check if email allready excist
             var userResult = await _userManager.FindByEmailAsync(userCreateRequestModel.Email);
             if(userResult != null)
             {
                 return new ResultModel<User>
                 {
                     Success = false,
-                    Errors = new List<string> { "User allready exists!" }
+                    Errors = new List<string> { "Email allready exists!" }
                 };
             }
 
@@ -80,7 +80,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 return new ResultModel<User>
                 {
                     Success = false,
-                    Errors = new List<string> { "User not created!" }
+                    Errors = new List<string> { "Registration failed!" }
                 };
             }
 
@@ -303,12 +303,11 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             };
         }
 
-        public async Task<ResultModel<string>> LoginUserAsync(string userName, string password)
+        public async Task<ResultModel<string>> LoginUserAsync(string email, string password)
         {
             //authenticate the user
-            var result = await _signInManager.PasswordSignInAsync
-                (userName, password, false, false);
-            if (!result.Succeeded)//wrong credentials
+            var result = await _signInManager.PasswordSignInAsync(email, password, false, false);
+            if (!result.Succeeded)
             {
                 return new ResultModel<string>
                 {
@@ -317,7 +316,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 };
             }
             //get the user
-            var user = await _userManager.FindByNameAsync(userName);
+            var user = await _userManager.FindByEmailAsync(email);
             //get the claims
             var claims = await _userManager.GetClaimsAsync(user);
             //generate the token
