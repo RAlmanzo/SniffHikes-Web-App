@@ -99,15 +99,15 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 return new ResultModel<User>
                 {
                     Success = false,
-                    Errors = new List<string> { "User not created!" }
+                    Errors = new List<string> { "Could not add claims to user" }
                 };
             }
 
-            var createdRecord = await GetByIdAsync(newUser.Id);
+            var createdUser = await GetByIdAsync(newUser.Id);
             return new ResultModel<User>
             {
                 Success = true,
-                Value = createdRecord.Value,
+                Value = createdUser.Value,
             };
         }
 
@@ -217,23 +217,12 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             user.LastName = userUpdateRequestModel.LastName;
             user.Email = userUpdateRequestModel.Email;
             user.Gender = userUpdateRequestModel.Gender;
-            //user.Password = userUpdateRequestModel.Password;
             user.Address.Street = userUpdateRequestModel.Address.Street;
             user.Address.City = userUpdateRequestModel.Address.City;
             user.Address.State = userUpdateRequestModel.Address.State;
             user.Address.Country = userUpdateRequestModel.Address.Country;
             user.DateOfBirth = userUpdateRequestModel.DateOfBirth;
             
-            if (user.Password != userUpdateRequestModel.Password)
-            {
-                var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
-                await _userManager.ResetPasswordAsync(user, resetToken, userUpdateRequestModel.Password);
-                //await _userManager.ChangePasswordAsync(user, user.Password, userUpdateRequestModel.Password);
-                IPasswordHasher<User> passwordHasher = new PasswordHasher<User>();
-                user.PasswordHash = passwordHasher.HashPassword(user, userUpdateRequestModel.Password);
-                //user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, userUpdateRequestModel.Password);
-                user.Password = userUpdateRequestModel.Password;
-            }
 
             if (!string.IsNullOrWhiteSpace(userUpdateRequestModel.Image))
             {
@@ -350,6 +339,64 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
         {
             await _signInManager.SignOutAsync();
             return true;
+        }
+
+        public async Task<ResultModel<string>> ResetPasswordAsync(string id, string currentPassword, string newPassword)
+        {
+            //get the user
+            var user = await _userRepository.GetByIdAsync(id);
+            if (user == null)
+            {
+                return new ResultModel<string>
+                {
+                    Success = false,
+                    Errors = new List<string> { "User does not exists" }
+                };
+            }
+
+            //check if currentpassword is correct
+            var result = await _userManager.CheckPasswordAsync(user, currentPassword);
+            if (!result)
+            {
+                return new ResultModel<string>
+                {
+                    Success = false,
+                    Errors = new List<string> { "Please enter valid currentpassword" }
+                };
+            }
+
+            //reset password
+            var resetResult = await _userRepository.ResetPasswordAsync(user, currentPassword, newPassword);
+
+            if (!resetResult.Succeeded)
+            {
+                return new ResultModel<string>
+                {
+                    Success = false,
+                    Errors = new List<string> { "Password reset failed!" }
+                };
+            }
+
+            IPasswordHasher<User> passwordHasher = new PasswordHasher<User>();
+            user.PasswordHash = passwordHasher.HashPassword(user, newPassword);
+
+            //update user
+            result = await _userRepository.UpdateAsync(user);
+
+            if (!result)
+            {
+                return new ResultModel<string>
+                {
+                    Success = false,
+                    Errors = new List<string> { "Failed updating user" }
+                };
+            }
+
+            return new ResultModel<string>
+            {
+                Success = true,
+                Value = "Password reset succesfull",
+            };
         }
     }
 }
