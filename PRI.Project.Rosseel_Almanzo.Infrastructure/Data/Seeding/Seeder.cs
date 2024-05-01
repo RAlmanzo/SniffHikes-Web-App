@@ -225,15 +225,15 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
             var user2 = new User
             {
                 Id = "3",
-                UserName = "jack@pri.be",
-                NormalizedUserName = "JACK@PRI.BE",
+                UserName = "orginazer@pri.be",
+                NormalizedUserName = "ORGINAZER@PRI.BE",
                 FirstName = "Jack",
                 LastName = "DeVos",
                 DateOfBirth = new DateTime(1990, 9, 20),
                 Gender = "male",
                 AddressId = 3,
-                Email = "jack@pri.be",
-                NormalizedEmail = "JACK@PRI.BE",
+                Email = "orginazer@pri.be",
+                NormalizedEmail = "ORGINAZER@PRI.BE",
                 ConcurrencyStamp = Guid.NewGuid().ToString(),
                 SecurityStamp = Guid.NewGuid().ToString(),
                 EmailConfirmed = true,
@@ -301,13 +301,13 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                     Id = 3,
                     UserId = "1",
                     ClaimType = ClaimTypes.Email,
-                    ClaimValue = admin.UserName,
+                    ClaimValue = admin.Email,
                 },
                 new IdentityUserClaim<string>
                 {
                     Id = 4,
                     UserId = "1",
-                    ClaimType = "UserId",
+                    ClaimType = ClaimTypes.NameIdentifier,
                     ClaimValue = admin.Id,
                 },
 
@@ -337,7 +337,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                 {
                     Id = 8,
                     UserId = "2",
-                    ClaimType = "UserId",
+                    ClaimType = ClaimTypes.NameIdentifier,
                     ClaimValue = user1.Id,
                 },
 
@@ -351,90 +351,90 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                 },
                 new IdentityUserClaim<string>
                 {
-                    Id = 21,
+                    Id = 10,
                     UserId = "3",
                     ClaimType = ClaimTypes.Role,
                     ClaimValue = "Orginazer"
                 },
                 new IdentityUserClaim<string>
                 {
-                    Id = 10,
+                    Id = 11,
                     UserId = "3",
                     ClaimType = ClaimTypes.DateOfBirth,
                     ClaimValue = user2.DateOfBirth.ToString(),
                 },
                 new IdentityUserClaim<string>
                 {
-                    Id = 11,
+                    Id = 12,
                     UserId = "3",
                     ClaimType = ClaimTypes.Email,
                     ClaimValue = user2.Email,
                 },
                 new IdentityUserClaim<string>
                 {
-                    Id = 12,
+                    Id = 13,
                     UserId = "3",
-                    ClaimType = "UserId",
+                    ClaimType = ClaimTypes.NameIdentifier,
                     ClaimValue = user2.Id,
                 },
 
                 //user3
                 new IdentityUserClaim<string>
                 {
-                    Id = 13,
+                    Id = 14,
                     UserId = "4",
                     ClaimType = ClaimTypes.Role,
                     ClaimValue = "User"
                 },
                 new IdentityUserClaim<string>
                 {
-                    Id = 14,
+                    Id = 15,
                     UserId = "4",
                     ClaimType = ClaimTypes.DateOfBirth,
                     ClaimValue = user3.DateOfBirth.ToString(),
                 },
                 new IdentityUserClaim<string>
                 {
-                    Id = 15,
+                    Id = 16,
                     UserId = "4",
                     ClaimType = ClaimTypes.Email,
                     ClaimValue = user3.Email,
                 },
                 new IdentityUserClaim<string>
                 {
-                    Id = 16,
+                    Id = 17,
                     UserId = "4",
-                    ClaimType = "UserId",
+                    ClaimType = ClaimTypes.NameIdentifier,
                     ClaimValue = user3.Id,
                 },
 
                 //user4
                 new IdentityUserClaim<string>
                 {
-                    Id = 17,
+                    Id = 18,
                     UserId = "5",
                     ClaimType = ClaimTypes.Role,
                     ClaimValue = "User"
                 },
                 new IdentityUserClaim<string>
                 {
-                    Id = 18,
+                    Id = 19,
                     UserId = "5",
                     ClaimType = ClaimTypes.DateOfBirth,
                     ClaimValue = user4.DateOfBirth.ToString(),
                 },
                 new IdentityUserClaim<string>
                 {
-                    Id = 19,
+                    Id = 20,
                     UserId = "5",
                     ClaimType = ClaimTypes.Email,
                     ClaimValue = user4.Email,
                 },
                 new IdentityUserClaim<string>
                 {
-                    Id = 20,
+                    Id = 21,
                     UserId = "5",
-                    ClaimType = "UserId",
+                    ClaimType = ClaimTypes.NameIdentifier,
                     ClaimValue = user4.Id,
                 },
             };
