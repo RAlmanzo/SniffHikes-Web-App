@@ -25,6 +25,8 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Dtos
         public DateTime Date { get; set; }
         public string OrganizerId { get; set; }
         public AddressRequestDto Address { get; set; }
+
+        [Required(ErrorMessage = "Atleast 1 image required")]
         public IEnumerable<IFormFile> Images { get; set; }
     }
 }
