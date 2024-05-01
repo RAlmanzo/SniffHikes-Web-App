@@ -86,36 +86,5 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
             //call the emailservice?????
             return Ok("Registered");
         }
-
-        //[HttpPost("Logout")]
-        //[Authorize]
-        //public async Task<IActionResult> Logout()
-        //{
-        //    await _userService.SignOutUserAsync();
-        //    return Ok("Logged out successfully");
-        //}
-
-        //[HttpDelete("{id}")]
-        //[Authorize]
-        //public async Task<IActionResult> DeleteAccount()
-        //{
-        //    var user = await _userManager.FindByIdAsync(userId);
-
-        //    if (user == null)
-        //    {
-        //        return NotFound("User not found");
-        //    }
-
-        //    var result = await _userManager.DeleteAsync(user);
-
-        //    if (!result.Succeeded)
-        //    {
-        //        return BadRequest(result.Errors);
-        //    }
-
-        //    await _signInManager.SignOutAsync(); // Log de gebruiker uit na het verwijderen van het account
-        //    return Ok("Account deleted successfully");
-        //}
-
     }
 }
