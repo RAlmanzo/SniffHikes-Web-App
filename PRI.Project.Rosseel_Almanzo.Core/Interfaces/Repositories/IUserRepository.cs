@@ -20,5 +20,6 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Interfaces.Repositories
         Task<bool> CheckIfExistsAsync(string id);
         IQueryable<Dog> GetAllUserDogs(string id);
         Task<IdentityResult> ResetPasswordAsync(User toUpdate, string currentPassword, string newPassword);
+        Task<SignInResult> LoginUserAsync(string email, string password);
     }
 }

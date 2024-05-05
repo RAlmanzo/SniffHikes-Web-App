@@ -294,7 +294,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
         public async Task<ResultModel<string>> LoginUserAsync(string email, string password)
         {
             //authenticate the user
-            var result = await _signInManager.PasswordSignInAsync(email, password, false, false);
+            var result = await _userRepository.LoginUserAsync(email, password);
             if (!result.Succeeded)
             {
                 return new ResultModel<string>

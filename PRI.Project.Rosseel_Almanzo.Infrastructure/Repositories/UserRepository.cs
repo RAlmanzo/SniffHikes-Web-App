@@ -19,13 +19,15 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
         protected readonly DbSet<User> _targetTable;
         private readonly ILogger<IUserRepository> _logger;
         private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public UserRepository(SniffHikesDbContext dbContext, ILogger<IUserRepository> logger, UserManager<User> userManager)
+        public UserRepository(SniffHikesDbContext dbContext, ILogger<IUserRepository> logger, UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _dbContext = dbContext;
             _targetTable = _dbContext.Set<User>();
             _logger = logger;
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public async Task<IdentityResult> AddAsync(User toAdd, string password)
@@ -104,6 +106,11 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Repositories
         public async Task<IdentityResult> ResetPasswordAsync(User toUpdate, string currentPassword, string newPassword)
         {
             return await _userManager.ChangePasswordAsync(toUpdate, currentPassword, newPassword);
+        }
+
+        public async Task<SignInResult> LoginUserAsync(string email, string password)
+        {
+            return await _signInManager.PasswordSignInAsync(email, password, false, false);
         }
     }
 }
