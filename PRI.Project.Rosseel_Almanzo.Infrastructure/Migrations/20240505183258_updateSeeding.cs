@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
 {
-    public partial class initIdentityRoles : Migration
+    public partial class updateSeeding : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,7 +49,6 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AddressId = table.Column<int>(type: "int", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -368,14 +367,14 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "AddressId", "ConcurrencyStamp", "DateOfBirth", "Email", "EmailConfirmed", "FirstName", "Gender", "Image", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "Password", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                columns: new[] { "Id", "AccessFailedCount", "AddressId", "ConcurrencyStamp", "DateOfBirth", "Email", "EmailConfirmed", "FirstName", "Gender", "Image", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "1", 0, 1, "6b132718-9123-44a4-a335-619eae4fbebc", new DateTime(1980, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@testing.com", true, "John", "male", null, "DeWachter", false, null, "ADMIN@TESTING.COM", "ADMIN@TESTING.COM", null, "AQAAAAEAACcQAAAAEDgVxSTuaPtHpAC/6EPdDbLNOsxazted+aet90CHTgls60eB0SCdSwc/L3MHH6FDgg==", null, false, "d241b16f-18cc-4216-a413-b69724007536", false, "admin@testing.com" },
-                    { "2", 0, 2, "fe5f8cb7-b2a6-4003-8fd3-1e07e46c45f7", new DateTime(1985, 7, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "user@testing.com", true, "Jane", "female", null, "DeWachter", false, null, "USER@TESTING.COM", "USER@TESTING.COM", null, "AQAAAAEAACcQAAAAEO1X2mgFqHdvJqB288hgmqpyWPNIk+3l8vwlKlwrPUI5a/OfkVXQWabXirpqzjv3og==", null, false, "61f98943-3901-4412-895f-6978972f9554", false, "user@testing.com" },
-                    { "3", 0, 3, "ce8cff66-3706-47b2-b118-d705e73ba934", new DateTime(1990, 9, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "", false, "Jack", "male", null, "DeVos", false, null, null, null, "", null, null, false, "2c8eaff7-4352-4a20-9007-bbf0b5b268a6", false, null },
-                    { "4", 0, 10, "819c4ed9-aaff-4158-8be5-2eeff3ba263d", new DateTime(1995, 11, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "", false, "Jill", "female", null, "Vogels", false, null, null, null, "", null, null, false, "606cfe7b-588a-46ac-a17c-ab8a477feba0", false, null },
-                    { "5", 0, 11, "41400c1e-54a0-41e3-8ff3-167c23cedc13", new DateTime(2000, 1, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "", false, "Jim", "male", null, "Schoonaert", false, null, null, null, "", null, null, false, "f5db548a-9952-4471-a26f-d1980e098d8a", false, null }
+                    { "1", 0, 1, "518c2080-2525-4369-b89e-cf368256174d", new DateTime(1980, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@pri.be", true, "John", "male", null, "DeWachter", false, null, "ADMIN@PRI.BE", "ADMIN@PRI.BE", "AQAAAAEAACcQAAAAEGdvE8wdTuT7HLYUCOMLjFInWb9p5djtByhE5dBVpzE7phYQgGPuEhCMuhQfNCFk4w==", null, false, "cab5e653-9a68-4a15-8157-448c2cc8358a", false, "admin@pri.be" },
+                    { "2", 0, 2, "83e1cf39-02ee-4654-acf1-ee80f405a8c8", new DateTime(1985, 7, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "user@pri.be", true, "Jane", "female", null, "DeWachter", false, null, "USER@PRI.BE", "USER@PRI.BE", "AQAAAAEAACcQAAAAEP3NPHTP2YpjOHJFv7OxWJC/I1/R0F1XXvX0xBbYeLGRiZ6KohysDjoprXLc46hRwQ==", null, false, "dac8b120-7dc1-4150-9748-777f44181d11", false, "user@pri.be" },
+                    { "3", 0, 3, "78421e5e-8589-493b-99c4-f8eed8252e90", new DateTime(1990, 9, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "orginazer@pri.be", true, "Jack", "male", null, "DeVos", false, null, "ORGINAZER@PRI.BE", "ORGINAZER@PRI.BE", "AQAAAAEAACcQAAAAELdBpyq2CA3xd1AyTFDWgGNgeYdyNGId4/X+dANAlEaWyazlO0EDM6gB1ljuQ+MIzw==", null, false, "84259b99-1eba-4f11-b157-83d901e7409d", false, "orginazer@pri.be" },
+                    { "4", 0, 10, "e6819dbf-efa6-4cb3-a2b7-f4cc045993c7", new DateTime(1995, 11, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "jill@pri.be", true, "Jill", "female", null, "Vogels", false, null, "JILL@PRI.BE", "JILL@PRI.BE", "AQAAAAEAACcQAAAAEFhez/D3lmcte/mlOp1RllZ/qW79/dI188vxWTklUOnMaMJWt6a9NBMOyuLaxYSsVQ==", null, false, "dcdb9990-ef46-431f-82ac-aea7f9b19289", false, "jill@pri.be" },
+                    { "5", 0, 11, "5b652848-d412-4087-86b5-af8ea7cf5a7b", new DateTime(2000, 1, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "jim@pri.be", true, "Jim", "male", null, "Schoonaert", false, null, "JIM@PRI.BE", "JIM@PRI.BE", "AQAAAAEAACcQAAAAEOxvhUX/PwIE1H7CJLbdZHm+sXsZjpDKocY2EzXE+OlLccLGDrqXi5O5Jx6c10iJtw==", null, false, "9e23e212-dec3-4e91-8045-b762e71b1ccc", false, "jim@pri.be" }
                 });
 
             migrationBuilder.InsertData(
@@ -384,7 +383,26 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                 values: new object[,]
                 {
                     { 1, "http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "Admin", "1" },
-                    { 2, "http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "User", "2" }
+                    { 2, "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/dateofbirth", "10/05/1980 0:00:00", "1" },
+                    { 3, "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress", "admin@pri.be", "1" },
+                    { 4, "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", "1", "1" },
+                    { 5, "http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "User", "2" },
+                    { 6, "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/dateofbirth", "15/07/1985 0:00:00", "2" },
+                    { 7, "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress", "user@pri.be", "2" },
+                    { 8, "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", "2", "2" },
+                    { 9, "http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "User", "3" },
+                    { 10, "http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "Orginazer", "3" },
+                    { 11, "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/dateofbirth", "20/09/1990 0:00:00", "3" },
+                    { 12, "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress", "orginazer@pri.be", "3" },
+                    { 13, "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", "3", "3" },
+                    { 14, "http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "User", "4" },
+                    { 15, "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/dateofbirth", "25/11/1995 0:00:00", "4" },
+                    { 16, "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress", "jill@pri.be", "4" },
+                    { 17, "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", "4", "4" },
+                    { 18, "http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "User", "5" },
+                    { 19, "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/dateofbirth", "30/01/2000 0:00:00", "5" },
+                    { 20, "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress", "jim@pri.be", "5" },
+                    { 21, "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", "5", "5" }
                 });
 
             migrationBuilder.InsertData(
@@ -392,12 +410,12 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                 columns: new[] { "Id", "DateOfBirth", "Gender", "Image", "Name", "Race", "UserId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 4, 21, 14, 2, 54, 825, DateTimeKind.Local).AddTicks(6356), "Male", null, "Inca", "Husky", "1" },
-                    { 2, new DateTime(2024, 4, 21, 14, 2, 54, 825, DateTimeKind.Local).AddTicks(6394), "Female", null, "Zara", "Border-collie", "1" },
-                    { 3, new DateTime(2024, 4, 21, 14, 2, 54, 825, DateTimeKind.Local).AddTicks(6397), "Male", null, "Sleepy", "Duitse-herder", "2" },
-                    { 4, new DateTime(2024, 4, 21, 14, 2, 54, 825, DateTimeKind.Local).AddTicks(6399), "Male", null, "Sleepy", "Duitse-herder", "3" },
-                    { 5, new DateTime(2024, 4, 21, 14, 2, 54, 825, DateTimeKind.Local).AddTicks(6401), "Female", null, "Tunder", "Dog", "1" },
-                    { 6, new DateTime(2024, 4, 21, 14, 2, 54, 825, DateTimeKind.Local).AddTicks(6403), "Male", null, "Zira", "Husky", "2" },
+                    { 1, new DateTime(2024, 5, 5, 20, 32, 58, 302, DateTimeKind.Local).AddTicks(4560), "Male", null, "Inca", "Husky", "1" },
+                    { 2, new DateTime(2024, 5, 5, 20, 32, 58, 302, DateTimeKind.Local).AddTicks(4599), "Female", null, "Zara", "Border-collie", "1" },
+                    { 3, new DateTime(2024, 5, 5, 20, 32, 58, 302, DateTimeKind.Local).AddTicks(4601), "Male", null, "Sleepy", "Duitse-herder", "2" },
+                    { 4, new DateTime(2024, 5, 5, 20, 32, 58, 302, DateTimeKind.Local).AddTicks(4604), "Male", null, "Sleepy", "Duitse-herder", "3" },
+                    { 5, new DateTime(2024, 5, 5, 20, 32, 58, 302, DateTimeKind.Local).AddTicks(4606), "Female", null, "Tunder", "Dog", "1" },
+                    { 6, new DateTime(2024, 5, 5, 20, 32, 58, 302, DateTimeKind.Local).AddTicks(4607), "Male", null, "Zira", "Husky", "2" },
                     { 7, new DateTime(2019, 5, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), "Female", null, "Bella", "Labrador Retriever", "4" },
                     { 8, new DateTime(2018, 10, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), "Male", null, "Rocky", "German Shepherd", "4" },
                     { 9, new DateTime(2020, 3, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), "Female", null, "Luna", "Golden Retriever", "5" },
@@ -409,11 +427,11 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                 columns: new[] { "Id", "AddressId", "Date", "DateCreated", "Description", "OrganizerId", "Price", "Title" },
                 values: new object[,]
                 {
-                    { 1, 4, new DateTime(2024, 4, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 4, 21, 14, 2, 54, 827, DateTimeKind.Local).AddTicks(5591), "Geniet van een ontspannen wandeling met je hond in het prachtige bosgebied. Neem je viervoeter mee voor een leuke tijd in de natuur.", "1", 0m, "Hondenwandeling in het bos" },
-                    { 2, 5, new DateTime(2024, 4, 5, 12, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 4, 21, 14, 2, 54, 827, DateTimeKind.Local).AddTicks(5596), "Kom en bewonder verschillende hondenrassen tijdens de hondenshow in Brussel. Er zijn prijzen te winnen en veel plezier te beleven!", "2", 10.50m, "Hondenshow Brussel" },
-                    { 3, 6, new DateTime(2024, 4, 10, 10, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 4, 21, 14, 2, 54, 827, DateTimeKind.Local).AddTicks(5598), "Geniet van een ontspannen wandeling met je hond in het prachtige bosgebied. Neem je viervoeter mee voor een leuke tijd in de natuur.", "3", 0m, "Hondenwandeling aan zee" },
-                    { 4, 12, new DateTime(2024, 4, 5, 12, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 4, 21, 14, 2, 54, 827, DateTimeKind.Local).AddTicks(5600), "Kom en bewonder verschillende hondenrassen tijdens de hondenshow in Brussel. Er zijn prijzen te winnen en veel plezier te beleven!", "4", 10.50m, "Hondenshow West-Vlaanderen" },
-                    { 5, 13, new DateTime(2024, 4, 10, 10, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 4, 21, 14, 2, 54, 827, DateTimeKind.Local).AddTicks(5602), "Geniet van een ontspannen wandeling met je hond in het prachtige bosgebied. Neem je viervoeter mee voor een leuke tijd in de natuur.", "5", 0m, "Hondenwandeling Heuvelland" }
+                    { 1, 4, new DateTime(2024, 4, 1, 10, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 5, 5, 20, 32, 58, 307, DateTimeKind.Local).AddTicks(2837), "Geniet van een ontspannen wandeling met je hond in het prachtige bosgebied. Neem je viervoeter mee voor een leuke tijd in de natuur.", "1", 0m, "Hondenwandeling in het bos" },
+                    { 2, 5, new DateTime(2024, 4, 5, 12, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 5, 5, 20, 32, 58, 307, DateTimeKind.Local).AddTicks(2845), "Kom en bewonder verschillende hondenrassen tijdens de hondenshow in Brussel. Er zijn prijzen te winnen en veel plezier te beleven!", "2", 10.50m, "Hondenshow Brussel" },
+                    { 3, 6, new DateTime(2024, 4, 10, 10, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 5, 5, 20, 32, 58, 307, DateTimeKind.Local).AddTicks(2847), "Geniet van een ontspannen wandeling met je hond in het prachtige bosgebied. Neem je viervoeter mee voor een leuke tijd in de natuur.", "3", 0m, "Hondenwandeling aan zee" },
+                    { 4, 12, new DateTime(2024, 4, 5, 12, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 5, 5, 20, 32, 58, 307, DateTimeKind.Local).AddTicks(2849), "Kom en bewonder verschillende hondenrassen tijdens de hondenshow in Brussel. Er zijn prijzen te winnen en veel plezier te beleven!", "4", 10.50m, "Hondenshow West-Vlaanderen" },
+                    { 5, 13, new DateTime(2024, 4, 10, 10, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 5, 5, 20, 32, 58, 307, DateTimeKind.Local).AddTicks(2851), "Geniet van een ontspannen wandeling met je hond in het prachtige bosgebied. Neem je viervoeter mee voor een leuke tijd in de natuur.", "5", 0m, "Hondenwandeling Heuvelland" }
                 });
 
             migrationBuilder.InsertData(
@@ -421,11 +439,11 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                 columns: new[] { "Id", "AddressId", "DateCreated", "Description", "Title", "UserId" },
                 values: new object[,]
                 {
-                    { 1, 7, new DateTime(2024, 4, 21, 14, 2, 54, 825, DateTimeKind.Local).AddTicks(6440), "Een mooie wandeling door het bos met je hond. Geniet van de natuur en de frisse lucht.", "Boswandeling", "1" },
-                    { 2, 8, new DateTime(2024, 4, 21, 14, 2, 54, 825, DateTimeKind.Local).AddTicks(6442), "Een ontspannen wandeling met je hond langs het strand. Laat je viervoeter lekker uitwaaien!", "Strandwandeling", "2" },
-                    { 3, 9, new DateTime(2024, 4, 21, 14, 2, 54, 825, DateTimeKind.Local).AddTicks(6444), "Een leuke wandeling met je hond door het park. Laat je hond lekker rennen en spelen.", "Parkwandeling", "3" },
-                    { 4, 14, new DateTime(2024, 4, 21, 14, 2, 54, 825, DateTimeKind.Local).AddTicks(6446), "Een ontspannen wandeling met je hond langs het strand. Laat je viervoeter lekker uitwaaien!", "Strandwandeling", "4" },
-                    { 5, 15, new DateTime(2024, 4, 21, 14, 2, 54, 825, DateTimeKind.Local).AddTicks(6447), "Een leuke wandeling met je hond door het park. Laat je hond lekker rennen en spelen.", "Parkwandeling", "5" }
+                    { 1, 7, new DateTime(2024, 5, 5, 20, 32, 58, 302, DateTimeKind.Local).AddTicks(4644), "Een mooie wandeling door het bos met je hond. Geniet van de natuur en de frisse lucht.", "Boswandeling", "1" },
+                    { 2, 8, new DateTime(2024, 5, 5, 20, 32, 58, 302, DateTimeKind.Local).AddTicks(4646), "Een ontspannen wandeling met je hond langs het strand. Laat je viervoeter lekker uitwaaien!", "Strandwandeling", "2" },
+                    { 3, 9, new DateTime(2024, 5, 5, 20, 32, 58, 302, DateTimeKind.Local).AddTicks(4648), "Een leuke wandeling met je hond door het park. Laat je hond lekker rennen en spelen.", "Parkwandeling", "3" },
+                    { 4, 14, new DateTime(2024, 5, 5, 20, 32, 58, 302, DateTimeKind.Local).AddTicks(4650), "Een ontspannen wandeling met je hond langs het strand. Laat je viervoeter lekker uitwaaien!", "Strandwandeling", "4" },
+                    { 5, 15, new DateTime(2024, 5, 5, 20, 32, 58, 302, DateTimeKind.Local).AddTicks(4651), "Een leuke wandeling met je hond door het park. Laat je hond lekker rennen en spelen.", "Parkwandeling", "5" }
                 });
 
             migrationBuilder.InsertData(
@@ -433,14 +451,14 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Migrations
                 columns: new[] { "Id", "Content", "DateCreated", "EventId", "RouteId", "UserId" },
                 values: new object[,]
                 {
-                    { 1, "Gezellige avond!", new DateTime(2024, 4, 21, 14, 2, 54, 825, DateTimeKind.Local).AddTicks(6411), 1, null, "1" },
-                    { 2, "Leuke wandeling!", new DateTime(2024, 4, 21, 14, 2, 54, 825, DateTimeKind.Local).AddTicks(6414), 2, null, "1" },
-                    { 3, "Gezellige avond!", new DateTime(2024, 4, 21, 14, 2, 54, 825, DateTimeKind.Local).AddTicks(6416), 2, null, "2" },
-                    { 4, "Gezellige avond!", new DateTime(2024, 4, 21, 14, 2, 54, 825, DateTimeKind.Local).AddTicks(6418), 3, null, "3" },
-                    { 5, "Mooie route!", new DateTime(2024, 4, 21, 14, 2, 54, 825, DateTimeKind.Local).AddTicks(6420), null, 1, "1" },
-                    { 6, "Leuke wandeling!", new DateTime(2024, 4, 21, 14, 2, 54, 825, DateTimeKind.Local).AddTicks(6421), null, 2, "2" },
-                    { 7, "Mooie route!", new DateTime(2024, 4, 21, 14, 2, 54, 825, DateTimeKind.Local).AddTicks(6423), null, 2, "2" },
-                    { 8, "Mooie route!", new DateTime(2024, 4, 21, 14, 2, 54, 825, DateTimeKind.Local).AddTicks(6424), null, 3, "4" }
+                    { 1, "Gezellige avond!", new DateTime(2024, 5, 5, 20, 32, 58, 302, DateTimeKind.Local).AddTicks(4616), 1, null, "1" },
+                    { 2, "Leuke wandeling!", new DateTime(2024, 5, 5, 20, 32, 58, 302, DateTimeKind.Local).AddTicks(4618), 2, null, "1" },
+                    { 3, "Gezellige avond!", new DateTime(2024, 5, 5, 20, 32, 58, 302, DateTimeKind.Local).AddTicks(4619), 2, null, "2" },
+                    { 4, "Gezellige avond!", new DateTime(2024, 5, 5, 20, 32, 58, 302, DateTimeKind.Local).AddTicks(4621), 3, null, "3" },
+                    { 5, "Mooie route!", new DateTime(2024, 5, 5, 20, 32, 58, 302, DateTimeKind.Local).AddTicks(4624), null, 1, "1" },
+                    { 6, "Leuke wandeling!", new DateTime(2024, 5, 5, 20, 32, 58, 302, DateTimeKind.Local).AddTicks(4625), null, 2, "2" },
+                    { 7, "Mooie route!", new DateTime(2024, 5, 5, 20, 32, 58, 302, DateTimeKind.Local).AddTicks(4627), null, 2, "2" },
+                    { 8, "Mooie route!", new DateTime(2024, 5, 5, 20, 32, 58, 302, DateTimeKind.Local).AddTicks(4629), null, 3, "4" }
                 });
 
             migrationBuilder.InsertData(
