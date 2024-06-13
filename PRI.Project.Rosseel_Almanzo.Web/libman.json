@@ -8,6 +8,10 @@
       "files": [
         "vue.js"
       ]
+    },
+    {
+      "library": "axios@1.7.2",
+      "destination": "wwwroot/axios/"
     }
   ]
 }
