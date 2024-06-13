@@ -86,6 +86,8 @@ namespace PRI.Project.Rosseel_Almanzo.Api
                     });
                 });
             });
+            //addcors
+            builder.Services.AddCors();
 
             builder.Services.AddScoped<IEventRepository, EventRepository>();
             builder.Services.AddScoped<IEventService, EventService>();
@@ -140,6 +142,13 @@ namespace PRI.Project.Rosseel_Almanzo.Api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "JWTAuthDemo v1"));
             }
+
+            app.UseCors(options =>
+            {
+                options.AllowAnyOrigin();
+                options.AllowAnyHeader();
+                options.AllowAnyMethod();
+            });
 
             app.UseHttpsRedirection();
 
