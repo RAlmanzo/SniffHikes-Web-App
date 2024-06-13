@@ -27,6 +27,22 @@
                         </li>
                     </ul>
                 </div>
+                <div id="loginForm" class="d-flex flex-column">
+                    <form v-if="!loggedIn" v-on:submit.prevent="submitLogin" class="d-flex" role="login">
+                        <input v-model="userEmail" class="form-control me-2" type="email" placeholder="e-mail" aria-label="E-mail">
+                        <input v-model="password" class="form-control me-2" type="password" placeholder="password" aria-label="Password">
+                        <button class="btn btn-outline-primary" type="submit">Login</button>
+                        <button v-on:click="toggleModal('registerModal')" type="button" class="btn btn-outline-info">Register</button>
+                    </form>
+                    <div class="d-inline-flex">
+                        <div v-if="loggedIn" class="me-2">
+                            <p class="d-inline">{{userEmail}}</p>
+                            <img v-bind:src="profileImage" class="d-inline-block rounded-circle ms-2" width="50" height="50" />
+                        </div>
+                        <button v-if="loggedIn" v-on:click="submitLogout" class="btn btn-danger align-self-center" type="submit">Logout</button>
+                    </div>
+                    <div v-if="showError" class="alert alert-danger p-2 my-2">{{errorMessage}}</div>
+                </div>
             </div>
         </nav>
     </header>
@@ -43,9 +59,10 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/lib/vue/vue.js"></script>
     <script src="~/lib/axios/axios.js"></script>
+    <script src="~/lib/vue/vue.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/auth.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
