@@ -6,14 +6,39 @@
         loggedIn: false,
         error: false,
         errorMessage: "",
+        registerErrors: {
+            FirstName: [],
+            LastName: [],
+            DateOfBirth: [],
+            Email: [],
+            Password: [],
+            RepeatPassword: [],
+            Address: {
+                Street: [],
+                City: [],
+                State: [],
+                Country: [],  
+            },             
+        },
         decodedToken: null,
         loginUrl: "https://localhost:7038/api/Auth/Login",
+        registerUrl: "https://localhost:7038/api/Auth/Register",
+        firstName: "",
+        lastName: "",
+        dateOfBirth: "",
+        gender: "",
         email: "",
         password: "",
-        profileImage: "",
+        repeatPassword: "",
+        address: {
+            street: "",
+            city: "",
+            state: "",
+            country: "",
+        },
+        image: "",
         userEmail: "",
-        isAdmin: false,
-        dateOfBirth: "",
+        isAdmin: false,      
     },
     created: function () {
         if (sessionStorage.getItem('token') !== null) {
@@ -38,30 +63,114 @@
         submitLogin: async function () {
             this.error = false;
             this.errorMessage = "";
-            //axios post
             const loginDto = {
                 "email": this.userEmail,
                 "password": this.password
             };
             await axios.post(this.loginUrl, loginDto)
-                .then(response => {
+                .then((response) => {
+                    sessionStorage.setItem("token", response.data);
                     this.loggedIn = true;
-                    sessionStorage.setItem("token", response.data.bearerToken);
-                    //decode the token
-                    this.decodedToken = this.decodeToken(response.data.bearerToken);
-                    this.profileImage = this.decodedToken["profile-image"];
-                    this.userEmail = this.decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
-                    if (this.decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] === "Admin") {
-                        this.isAdmin = true;
-                    }
-                    console.log(this.decodedToken);
+                    this.isAdmin = hasUserAdminRole();
+                    this.email = readUserEmailFromToken();
+                    this.image = readUserProfilePictureFromToken();
+                    //this.image = "~/images/T/ec8d287a-f417-490a-b588-fa46a19ae4dd_FB_IMG_1676153444794.jpg";
+                    this.errorMessage = null;
                 })
                 .catch(error => {
                     this.error = true;
                     if (error.response.status === 400) {
                         this.errorMessage = "Wrong credentials!";
                     }
+                })
+                .finally(() => {
+                    email = "";
+                    password = ""
                 });
+        },
+        registerUser: async function () {
+            const formData = new FormData();
+            formData.append("FirstName", this.firstName);
+            formData.append("LastName", this.lastName);
+            formData.append("DateOfBirth", this.dateOfBirth);
+            formData.append("Gender", this.gender);
+            formData.append("Email", this.email);
+            formData.append("Password", this.password);
+            formData.append("RepeatPassword", this.repeatPassword);
+            formData.append("Address.Street", this.address.street);
+            formData.append("Address.City", this.address.city);
+            formData.append("Address.State", this.address.state);
+            formData.append("Address.Country", this.address.country);
+            formData.append("Image", this.image);
+
+            this.clearErrors();
+
+            await axios.post(this.registerUrl, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+                .then(response => {
+                    // Handle successful registration
+                    this.resetForm();
+                })
+                .catch(error => {
+                    if (error.response && error.response.data.errors) {
+                        this.setErrors(error.response.data.errors);
+                    } else {
+                        this.error = true;
+                        this.errorMessage = { general: ["An unexpected error occurred."] };
+                    }
+                });
+        },
+
+        resetForm() {
+            this.firstName = "";
+            this.lastName = "";
+            this.dateOfBirth = "";
+            this.gender = "";
+            this.email = "";
+            this.password = "";
+            this.repeatPassword = "";
+            this.address.street = "";
+            this.address.city = "";
+            this.address.state = "";
+            this.address.country = "";
+            this.image = "";
+        },
+        getFile: function (event) {
+            //put the file in the image
+            this.image = event.target.files[0];
+        },
+        clearErrors: function () {
+            this.error = false;
+            this.registerErrors = {
+                Email: [],
+                Password: [],
+                DateOfBirth: [],
+                FirstName: [],
+                LastName: [],
+                RepeatPassword: [],
+                Address: {
+                    Street: [],
+                    City: [],
+                    State: [],
+                    Country: [],
+                },
+            };
+        },
+        setErrors(errors) {
+            for (const key in errors) {
+                if (this.registerErrors.hasOwnProperty(key)) {
+                    this.registerErrors[key] = errors[key];            
+                }
+                else if(key.startsWith("Address.")) {
+                    const addressKey = key.split('.')[1];
+                    if (this.registerErrors.Address.hasOwnProperty(addressKey)) {
+                        this.registerErrors.Address[addressKey] = errors[key];
+                    }
+                }
+            }
         },
         submitLogout: function () {
             sessionStorage.clear();
@@ -76,13 +185,5 @@
         toggleModal: function (modalId) {
             $(`#${modalId}`).modal('toggle');
         },
-        //decodeToken: function (token) {
-        //    var base64Url = token.split('.')[1];
-        //    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        //    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
-        //        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        //    }).join(''));
-        //    return JSON.parse(jsonPayload);
-        //},
     }
 });
