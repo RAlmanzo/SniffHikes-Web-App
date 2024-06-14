@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using PRI.Project.Rosseel_Almanzo.Core.Entities;
@@ -25,8 +26,10 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IConfiguration _configuration;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly string _baseAddress;
 
-        public UserService(IUserRepository userRepository, IAddressRepository addressRepository, IEventUserRepository eventUserRepository, IEventRepository eventRepository, IDogRepository dogRepository, UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration)
+        public UserService(IUserRepository userRepository, IAddressRepository addressRepository, IEventUserRepository eventUserRepository, IEventRepository eventRepository, IDogRepository dogRepository, UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             _userRepository = userRepository;
             _addressRepository = addressRepository;
@@ -36,6 +39,8 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
+            _httpContextAccessor = httpContextAccessor;
+            _baseAddress = $"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host}";
         }
 
         public async Task<ResultModel<User>> CreateUserAsync(UserCreateRequestModel userCreateRequestModel)
@@ -90,6 +95,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 new Claim(ClaimTypes.DateOfBirth,newUser.DateOfBirth.ToString()),
                 new Claim(ClaimTypes.Name,newUser.UserName),
                 new Claim(ClaimTypes.NameIdentifier,newUser.Id),
+                new Claim("profile-image", $"{_baseAddress}/images/T/{newUser.Image}"),
             };
             //add claims to user
             result = await _userManager.AddClaimsAsync(newUser, claims);
