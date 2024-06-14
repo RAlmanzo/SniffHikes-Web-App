@@ -9,129 +9,130 @@
     <link rel="stylesheet" href="~/PRI.Project.Rosseel_Almanzo.Web.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PRI.Project.Rosseel_Almanzo.Web</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-                <div id="loginForm" class="d-flex flex-column">
-                    <form v-if="!loggedIn" v-on:submit.prevent="submitLogin" class="d-flex" role="login">
-                        <input v-model="userEmail" class="form-control me-2" type="email" placeholder="e-mail" aria-label="E-mail">
-                        <input v-model="password" class="form-control me-2" type="password" placeholder="password" aria-label="Password">
-                        <button class="btn btn-outline-primary" type="submit">Login</button>
-                        <button v-on:click="toggleModal('registerModal')" type="button" class="btn btn-outline-info">Register</button>
-                    </form>
-                    <div class="d-inline-flex">
-                        <div v-if="loggedIn" class="me-2">
-                            <p class="d-inline">{{userEmail}}</p>
-                            <img v-bind:src="image" class="d-inline-block rounded-circle ms-2" width="50" height="50" />
-                        </div>
-                        <button v-if="loggedIn" v-on:click="submitLogout" class="btn btn-danger align-self-center" type="submit">Logout</button>
+    <div id="app">
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container-fluid">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PRI.Project.Rosseel_Almanzo.Web</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
+                        </ul>
                     </div>
-                    <div v-if="error" class="alert alert-danger p-2 my-2">{{errorMessage}}</div>
-                </div>
-                @* register modal *@
-                <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModal-label" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="registerModalTitle">Register</h5>
-                                <button v-on:click="toggleModal('registerModal')" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+                    <div id="loginForm" class="d-flex flex-column">
+                        <form v-if="!loggedIn" v-on:submit.prevent="submitLogin" class="d-flex" role="login">
+                            <input v-model="userEmail" class="form-control me-2" type="email" placeholder="e-mail" aria-label="E-mail">
+                            <input v-model="password" class="form-control me-2" type="password" placeholder="password" aria-label="Password">
+                            <button class="btn btn-outline-primary" type="submit">Login</button>
+                            <button v-on:click="toggleModal('registerModal')" type="button" class="btn btn-outline-info">Register</button>
+                        </form>
+                        <div class="d-inline-flex">
+                            <div v-if="loggedIn" class="me-2">
+                                <p class="d-inline">{{userEmail}}</p>
+                                <img v-bind:src="image" class="d-inline-block rounded-circle ms-2" width="50" height="50" />
                             </div>
-                            <div class="modal-body">
-                                <!-- Modal content -->
-                                <form id="registerModal" v-on:submit.prevent="registerUser">
-                                    <div class="form-group">
-                                        <label>First Name</label>
-                                        <input v-model="firstName" type="text" class="form-control">
-                                        <div v-if="registerErrors.FirstName.length" class="alert alert-danger p-2 my-2">{{ registerErrors.FirstName[0] }}</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Last Name</label>
-                                        <input v-model="lastName" type="text" class="form-control">
-                                        <div v-if="registerErrors.LastName.length" class="alert alert-danger p-2 my-2">{{ registerErrors.LastName[0] }}</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Date of Birth</label>
-                                        <input v-model="dateOfBirth" type="date" class="form-control">
-                                        <div v-if="registerErrors.DateOfBirth.length" class="alert alert-danger p-2 my-2">{{ registerErrors.DateOfBirth[0] }}</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Gender</label>
-                                        <input v-model="gender" type="text" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Email</label>
-                                        <input v-model="email" type="email" class="form-control">
-                                        <div v-if="registerErrors.Email.length" class="alert alert-danger p-2 my-2">{{ registerErrors.Email[0] }}</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Password</label>
-                                        <input v-model="password" type="password" class="form-control">
-                                        <div v-if="registerErrors.Password.length" class="alert alert-danger p-2 my-2">{{ registerErrors.Password[0] }}</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Repeat Password</label>
-                                        <input v-model="repeatPassword" type="password" class="form-control">
-                                        <div v-if="registerErrors.RepeatPassword.length" class="alert alert-danger p-2 my-2">{{ registerErrors.RepeatPassword[0] }}</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Street</label>
-                                        <input v-model="address.street" type="text" class="form-control">
-                                        <div v-if="registerErrors.Address?.Street?.length" class="alert alert-danger p-2 my-2">{{ registerErrors.Address.Street[0] }}</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>City</label>
-                                        <input v-model="address.city" type="text" class="form-control">
-                                        <div v-if="registerErrors.Address?.City?.length" class="alert alert-danger p-2 my-2">{{ registerErrors.Address.City[0] }}</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>State</label>
-                                        <input v-model="address.state" type="text" class="form-control">
-                                        <div v-if="registerErrors.Address?.State?.length" class="alert alert-danger p-2 my-2">{{ registerErrors.Address.State[0] }}</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Country</label>
-                                        <input v-model="address.country" type="text" class="form-control">
-                                        <div v-if="registerErrors.Address?.Country?.length" class="alert alert-danger p-2 my-2">{{ registerErrors.Address.Country[0] }}</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Image</label>
-                                        <input type="file" v-on:change="getFile($event)" class="form-control">
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button v-on:click="toggleModal('registerModal')" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Register</button>
-                                    </div>
-                                </form>
+                            <button v-if="loggedIn" v-on:click="submitLogout" class="btn btn-danger align-self-center" type="submit">Logout</button>
+                        </div>
+                        <div v-if="error" class="alert alert-danger p-2 my-2">{{errorMessage}}</div>
+                    </div>
+                    @* register modal *@
+                    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModal-label" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="registerModalTitle">Register</h5>
+                                    <button v-on:click="toggleModal('registerModal')" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Modal content -->
+                                    <form id="registerModal" v-on:submit.prevent="registerUser">
+                                        <div class="form-group">
+                                            <label>First Name</label>
+                                            <input v-model="firstName" type="text" class="form-control">
+                                            <div v-if="registerErrors.FirstName.length" class="alert alert-danger p-2 my-2">{{ registerErrors.FirstName[0] }}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Last Name</label>
+                                            <input v-model="lastName" type="text" class="form-control">
+                                            <div v-if="registerErrors.LastName.length" class="alert alert-danger p-2 my-2">{{ registerErrors.LastName[0] }}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Date of Birth</label>
+                                            <input v-model="dateOfBirth" type="date" class="form-control">
+                                            <div v-if="registerErrors.DateOfBirth.length" class="alert alert-danger p-2 my-2">{{ registerErrors.DateOfBirth[0] }}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Gender</label>
+                                            <input v-model="gender" type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input v-model="email" type="email" class="form-control">
+                                            <div v-if="registerErrors.Email.length" class="alert alert-danger p-2 my-2">{{ registerErrors.Email[0] }}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Password</label>
+                                            <input v-model="password" type="password" class="form-control">
+                                            <div v-if="registerErrors.Password.length" class="alert alert-danger p-2 my-2">{{ registerErrors.Password[0] }}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Repeat Password</label>
+                                            <input v-model="repeatPassword" type="password" class="form-control">
+                                            <div v-if="registerErrors.RepeatPassword.length" class="alert alert-danger p-2 my-2">{{ registerErrors.RepeatPassword[0] }}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Street</label>
+                                            <input v-model="address.street" type="text" class="form-control">
+                                            <div v-if="registerErrors.Address?.Street?.length" class="alert alert-danger p-2 my-2">{{ registerErrors.Address.Street[0] }}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>City</label>
+                                            <input v-model="address.city" type="text" class="form-control">
+                                            <div v-if="registerErrors.Address?.City?.length" class="alert alert-danger p-2 my-2">{{ registerErrors.Address.City[0] }}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>State</label>
+                                            <input v-model="address.state" type="text" class="form-control">
+                                            <div v-if="registerErrors.Address?.State?.length" class="alert alert-danger p-2 my-2">{{ registerErrors.Address.State[0] }}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Country</label>
+                                            <input v-model="address.country" type="text" class="form-control">
+                                            <div v-if="registerErrors.Address?.Country?.length" class="alert alert-danger p-2 my-2">{{ registerErrors.Address.Country[0] }}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Image</label>
+                                            <input type="file" v-on:change="getFile($event)" class="form-control">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button v-on:click="toggleModal('registerModal')" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Register</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </nav>
-    </header>
+            </nav>
+        </header>
+    </div>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
-
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2024 - PRI.Project.Rosseel_Almanzo.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
@@ -143,6 +144,8 @@
     <script src="~/lib/vue/vue.js"></script>
     <script src="~/lib/jwt-decode/build/jwt-decode.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/index.js" asp-append-version="true"></script>
+    <script src="~/js/admin.js" asp-append-version="true"></script>
     <script src="~/js/auth.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
