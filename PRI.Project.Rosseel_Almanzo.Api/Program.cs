@@ -151,7 +151,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api
             });
 
             app.UseHttpsRedirection();
-
+            app.UseStaticFiles();
             app.UseAuthentication();
             app.UseAuthorization();
 
