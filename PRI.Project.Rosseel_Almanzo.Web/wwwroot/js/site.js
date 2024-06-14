@@ -53,10 +53,10 @@ function readUserRoleFromToken() {
     return decodedToken[roleClaimTypeKey];
 }
 
-//function readUserProfilePictureFromToken() {
-//    const decodedToken = getDecodedToken();
-//    return decodedToken[userProfileImageClaimTypeKey];
-//}
+function readUserProfilePictureFromToken() {
+    const decodedToken = getDecodedToken();
+    return decodedToken[userProfileImageClaimTypeKey];
+}
 
 function hasUserAdminRole() {
     if (readUserRoleFromToken() === adminRoleClaimTypeValue) {
