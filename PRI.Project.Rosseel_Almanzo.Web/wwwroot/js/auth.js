@@ -1,5 +1,5 @@
 ﻿var navbarVue = new Vue({
-    el: ".navbar",
+    el: "#app",
     name: "navigation",
     data: {
         //welke variabelen?
@@ -52,11 +52,6 @@
             if (this.decodedToken["profile-image"] === null) {
                 this.profileImage = this.tokenObject["profile-image"];
             }
-            this.loggedIn = true;
-            //this.getRecords();
-            //this.getArtists();
-            //this.getGenres();
-            //this.getProperties();
         }
     },
     methods: {
@@ -74,8 +69,8 @@
                     this.isAdmin = hasUserAdminRole();
                     this.email = readUserEmailFromToken();
                     this.image = readUserProfilePictureFromToken();
-                    //this.image = "~/images/T/ec8d287a-f417-490a-b588-fa46a19ae4dd_FB_IMG_1676153444794.jpg";
                     this.errorMessage = null;
+                    indexVue.checkClaims();
                 })
                 .catch(error => {
                     this.error = true;
@@ -84,8 +79,8 @@
                     }
                 })
                 .finally(() => {
-                    email = "";
-                    password = ""
+                    this.email = "";
+                    this.password = "";
                 });
         },
         registerUser: async function () {
@@ -181,6 +176,10 @@
             this.password = "";
             this.isAdmin = false;
             this.decodedToken = null;
+            //adminVue.resetData();
+            //indexVue.resetData();
+            window.location.href = '/';
+
         },
         toggleModal: function (modalId) {
             $(`#${modalId}`).modal('toggle');
