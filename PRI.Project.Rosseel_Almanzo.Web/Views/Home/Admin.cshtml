@@ -1,0 +1,56 @@
+﻿
+<div id="admin">
+    <div v-on:click="showAdminEvents" class="col col-lg-4"><button class="btn btn-outline-primary">Manage Events</button></div>
+    <div v-on:click="showAdminRoutes" class="col col-lg-4"><button class="btn btn-outline-primary">Manage Routes</button></div>
+
+
+    <div v-if="adminEventsVisible" class="row">
+        <div v-for="event in events" class="col col-lg-3 m-2">
+            <div class="card" style="width: 18rem;">
+                <!--tips: add .text-center,.text-right to the .card to change card text alignment-->
+                @*<img v-bind:src="record.imageUrl" class="card-img-top">*@
+                <div class="card-body">
+                    <h5 class="card-title">{{event.value}}</h5>
+                    <span v-if="isAdmin">
+                        <button type="button" class="btn btn-primary">info</button>
+                        <button type="button" class="btn btn-danger">Delete</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Delete product confirm -->
+    <div class="modal fade" id="deleteProductConfirmModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Verwijder {{selectedProduct.name}}?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Ben je zeker dat je {{selectedProduct.name}} wenst te verwijderen?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" v-on:click="cancelProductAction">Annuleren</button>
+                    <button type="button" class="btn btn-primary" v-on:click="deleteProduct(selectedProduct)">Verwijder</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div v-if="adminRoutesVisible" class="row">
+        <div v-for="route in routes" class="col col-lg-3 m-2">
+            <div class="card" style="width: 18rem;">
+                <!--tips: add .text-center,.text-right to the .card to change card text alignment-->
+                @*<img v-bind:src="record.imageUrl" class="card-img-top">*@
+                <div class="card-body">
+                    <h5 class="card-title">{{route.value}}</h5>
+                    <span v-if="isAdmin">
+                        <button type="button" class="btn btn-primary">info</button>
+                        <button type="button" class="btn btn-danger">Delete</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
