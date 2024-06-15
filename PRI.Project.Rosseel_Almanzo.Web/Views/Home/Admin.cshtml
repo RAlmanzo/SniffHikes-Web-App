@@ -116,4 +116,32 @@
             </tbody>
         </table>
     </div>
+    <div v-if="showUserDetailsSection">
+        <div class="card mb-3">
+            <div class="card-header">
+                <div class="row">
+                    <img v-bind:src="'https://localhost:7038/images/T/' + userDetails.image" alt="Event Image" class="img-fluid" />
+                </div>
+            </div>
+            <div class="card-body">
+                <h4 class="card-title">Name: {{userDetails.value}}</h4>
+                <p>Gender: {{userDetails.gender}}</p>
+                <p>Email: {{userDetails.email}}</p>
+                <p>Address: {{userDetails.address.value}}</p>
+                <h5>My dogs</h5>
+                <div v-for="dog in userDetails.dogs" class="col-3">
+                    <p>Name: {{dog.value}}</p>
+                </div>
+                <h5>Attending Events</h5>
+                <div v-for="attendingEvent in userDetails.attendingEvents" class="col-3">
+                    <p>Title: {{attendingEvent.value}}</p>
+                </div>
+                <h5>Organized Events</h5>
+                <div v-for="organizedEvent in userDetails.organizedEvents" class="col-3">
+                    <p>Title: {{organizedEvent.value}}</p>
+                </div>
+                <a href="#" class="btn btn-secondary" v-on:click="showAdminUsers">Terug</a>
+            </div>
+        </div>
+    </div>
 </div>
