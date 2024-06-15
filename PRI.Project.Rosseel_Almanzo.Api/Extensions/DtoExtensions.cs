@@ -15,6 +15,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                 {
                     Id = e.Id,
                     Value = e.Title,
+                    Image = e.Images.FirstOrDefault().File,
                 })
             };
         }
@@ -66,6 +67,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                 {
                     Id = e.Id,
                     Value = $"{e.LastName} {e.FirstName}",
+                    Image = e.Image,
                 })
             };
         }
@@ -89,6 +91,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                 {
                     Id = d.Id,
                     Value = d.Name,
+                    Image = d.Image,
                 }),
                 Comments = user.Comments.Select(u => new BaseDto
                 {
@@ -117,6 +120,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                 {
                     Id = e.Id,
                     Value = e.Title,
+                    Image = e.Images.FirstOrDefault().File,
                 })
             };
         }
@@ -161,6 +165,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                 {
                     Id = e.Id,
                     Value = e.Name,
+                    Image = e.Image,
                 })
             };
         }
