@@ -4,7 +4,7 @@
         <div v-on:click="showAdminEvents" class="col col-lg-4"><button class="btn btn-outline-primary">Manage Events</button></div>
         <div v-on:click="showAdminRoutes" class="col col-lg-4"><button class="btn btn-outline-primary">Manage Routes</button></div>
     </div>
-    
+
     <div v-if="adminEventsVisible" class="row">
         <table class="table table-bordered table-striped align-middle">
             <thead>
@@ -30,23 +30,21 @@
         </table>
     </div>
     <div v-if="showEventDetailsSection">
-        <div class="row">
-            <div class="col-md-3 card">
-                <div v-for="image in eventDetails.images">
-                    <img class="card-img" v-bind:src="image.value" alt="" />
-                </div>           
-            </div>
-            <div class="col-md-9">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">{{eventDetails.value}}</h5>
-                        <p class="mb-1" v-html="eventDetails.description"></p>
-                        <p>{{eventDetails.address.value}}</p>
-                        <p>{{eventDetails.date}}</p>
-                        <p>{{eventDetails.organizer}}</p>
-                        <a href="#" class="btn btn-secondary" v-on:click="showAdminEvents">Terug</a>
+        <div class="card mb-3">
+            <div class="card-header">
+                <div class="row">
+                    <div v-for="image in eventDetails.images" :key="image.value" class="col-3">
+                        <img v-bind:src="'https://localhost:7038/images/T/' + image.value" alt="Event Image" class="img-fluid" />
                     </div>
                 </div>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{eventDetails.value}}</h5>
+                <p class="mb-1" v-html="eventDetails.description"></p>
+                <p>{{eventDetails.address.value}}</p>
+                <p>{{eventDetails.date}}</p>
+                <p>{{eventDetails.organizer}}</p>
+                <a href="#" class="btn btn-secondary" v-on:click="showAdminEvents">Terug</a>
             </div>
         </div>
     </div>

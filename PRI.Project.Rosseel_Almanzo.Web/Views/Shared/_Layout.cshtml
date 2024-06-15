@@ -38,7 +38,7 @@
                         <div class="d-inline-flex">
                             <div v-if="loggedIn" class="me-2">
                                 <p class="d-inline">{{userEmail}}</p>
-                                <img v-bind:src="image" class="d-inline-block rounded-circle ms-2" width="50" height="50" />
+                                <img v-bind:src="'https://localhost:7038/images/T/' + image" class="d-inline-block rounded-circle ms-2" width="50" height="50" />
                             </div>
                             <button v-if="loggedIn" v-on:click="submitLogout" class="btn btn-danger align-self-center" type="submit">Logout</button>
                         </div>
