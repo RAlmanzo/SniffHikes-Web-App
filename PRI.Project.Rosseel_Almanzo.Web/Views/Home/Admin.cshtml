@@ -17,7 +17,7 @@
             </thead>
             <tbody>
                 <tr v-for="event in events">
-                    @*<td><img v-bind:src="product.imageUrl" width="80" /></td>*@
+                    <td><img v-bind:src="'https://localhost:7038/images/T/' + event.image" width="80" /></td>
                     <td></td>
                     <td>{{event.value}}</td>
                     <td>
@@ -61,7 +61,7 @@
             </thead>
             <tbody>
                 <tr v-for="route in routes">
-                    @*<td><img v-bind:src="product.imageUrl" width="80" /></td>*@
+                    <td><img v-bind:src="'https://localhost:7038/images/T/' + route.image" width="80" /></td>
                     <td></td>
                     <td>{{route.value}}</td>
                     <td>
@@ -103,8 +103,7 @@
             </thead>
             <tbody>
                 <tr v-for="user in users">
-                    @*<td><img v-bind:src="'https://localhost:7038/images/T/' + user.image.value" width="80" /></td>*@
-                    <td></td>
+                    <td><img v-bind:src="'https://localhost:7038/images/T/' + user.image" width="80" /></td>
                     <td>{{user.value}}</td>
                     <td>
                         <div>
@@ -130,6 +129,7 @@
                 <p>Address: {{userDetails.address.value}}</p>
                 <h5>My dogs</h5>
                 <div v-for="dog in userDetails.dogs" class="col-3">
+                    <img v-bind:src="'https://localhost:7038/images/T/' + dog.image" alt="Event Image" class="img-fluid" />
                     <p>Name: {{dog.value}}</p>
                 </div>
                 <h5>Attending Events</h5>
