@@ -173,6 +173,24 @@
                     });
             }
         },
+        deleteUser: async function (id) {
+            //confirm delete
+            if (confirm("Are u sure u want to delete User?")) {
+                const url = `https://localhost:7038/api/Admins/${id}/user`
+                //set the headers => token
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${sessionStorage.getItem("token")}`
+                    }
+                };
+                //send the request
+                await axios.delete(url, config)
+                    .then(response => {
+                        console.log(response.data);
+                        this.users = this.users.filter(el => el.id !== id);
+                    }).catch(error => console.log(error));
+            };
+        },
         showAdminEvents: async function () {
             if (this.events.length <= 0) {
                 this.getEvents();
