@@ -3,6 +3,7 @@
     <div v-if="!showDetails">
         <div v-on:click="showAdminEvents" class="col col-lg-4"><button class="btn btn-outline-primary">Manage Events</button></div>
         <div v-on:click="showAdminRoutes" class="col col-lg-4"><button class="btn btn-outline-primary">Manage Routes</button></div>
+        <div v-on:click="showAdminUsers" class="col col-lg-4"><button class="btn btn-outline-primary">Manage Users</button></div>
     </div>
 
     <div v-if="adminEventsVisible" class="row">
@@ -65,8 +66,50 @@
                     <td>{{route.value}}</td>
                     <td>
                         <div>
-                            <button type="button" class="btn btn-primary">info</button>
+                            <button class="btn btn-primary" v-on:click="showRouteDetails(route.id)">info</button>
                             <button v-on:click="deleteRoute(route.id)" type="button" class="btn btn-danger">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div v-if="showRouteDetailsSection">
+        <div class="card mb-3">
+            <div class="card-header">
+                <div class="row">
+                    <div v-for="image in routeDetails.images" :key="image.value" class="col-3">
+                        <img v-bind:src="'https://localhost:7038/images/T/' + image.value" alt="Event Image" class="img-fluid" />
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{routeDetails.value}}</h5>
+                <p class="mb-1" v-html="routeDetails.description"></p>
+                <p>{{routeDetails.address.value}}</p>
+                <a href="#" class="btn btn-secondary" v-on:click="showAdminRoutes">Terug</a>
+            </div>
+        </div>
+    </div>
+
+    <div v-if="adminUsersVisible" class="row">
+        <table class="table table-bordered table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Afbeelding</th>
+                    <th>Naam</th>
+                    <th>Acties</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="user in users">
+                    @*<td><img v-bind:src="'https://localhost:7038/images/T/' + user.image.value" width="80" /></td>*@
+                    <td></td>
+                    <td>{{user.value}}</td>
+                    <td>
+                        <div>
+                            <button class="btn btn-primary" v-on:click="showUserDetails(user.id)">info</button>
+                            <button v-on:click="deleteUser(user.id)" type="button" class="btn btn-danger">Delete</button>
                         </div>
                     </td>
                 </tr>
