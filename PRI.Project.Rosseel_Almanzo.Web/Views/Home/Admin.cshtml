@@ -1,56 +1,78 @@
 ﻿
 <div id="admin">
-    <div v-on:click="showAdminEvents" class="col col-lg-4"><button class="btn btn-outline-primary">Manage Events</button></div>
-    <div v-on:click="showAdminRoutes" class="col col-lg-4"><button class="btn btn-outline-primary">Manage Routes</button></div>
-
-
-    <div v-if="adminEventsVisible" class="row">
-        <div v-for="event in events" class="col col-lg-3 m-2">
-            <div class="card" style="width: 18rem;">
-                <!--tips: add .text-center,.text-right to the .card to change card text alignment-->
-                @*<img v-bind:src="record.imageUrl" class="card-img-top">*@
-                <div class="card-body">
-                    <h5 class="card-title">{{event.value}}</h5>
-                    <span v-if="isAdmin">
-                        <button type="button" class="btn btn-primary">info</button>
-                        <button type="button" class="btn btn-danger">Delete</button>
-                    </span>
-                </div>
-            </div>
-        </div>
+    <div v-if="!showDetails">
+        <div v-on:click="showAdminEvents" class="col col-lg-4"><button class="btn btn-outline-primary">Manage Events</button></div>
+        <div v-on:click="showAdminRoutes" class="col col-lg-4"><button class="btn btn-outline-primary">Manage Routes</button></div>
     </div>
-    <!-- Delete product confirm -->
-    <div class="modal fade" id="deleteProductConfirmModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Verwijder {{selectedProduct.name}}?</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Ben je zeker dat je {{selectedProduct.name}} wenst te verwijderen?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" v-on:click="cancelProductAction">Annuleren</button>
-                    <button type="button" class="btn btn-primary" v-on:click="deleteProduct(selectedProduct)">Verwijder</button>
+    
+    <div v-if="adminEventsVisible" class="row">
+        <table class="table table-bordered table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Afbeelding</th>
+                    <th>Naam</th>
+                    <th>Acties</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="event in events">
+                    @*<td><img v-bind:src="product.imageUrl" width="80" /></td>*@
+                    <td></td>
+                    <td>{{event.value}}</td>
+                    <td>
+                        <div>
+                            <button class="btn btn-primary" v-on:click="showEventDetails(event.id)">info</button>
+                            <button class="btn btn-danger" v-on:click="deleteEvent(event.id)">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div v-if="showEventDetailsSection">
+        <div class="row">
+            <div class="col-md-3 card">
+                <div v-for="image in eventDetails.images">
+                    <img class="card-img" v-bind:src="image.value" alt="" />
+                </div>           
+            </div>
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{eventDetails.value}}</h5>
+                        <p class="mb-1" v-html="eventDetails.description"></p>
+                        <p>{{eventDetails.address.value}}</p>
+                        <p>{{eventDetails.date}}</p>
+                        <p>{{eventDetails.organizer}}</p>
+                        <a href="#" class="btn btn-secondary" v-on:click="showAdminEvents">Terug</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <div v-if="adminRoutesVisible" class="row">
-        <div v-for="route in routes" class="col col-lg-3 m-2">
-            <div class="card" style="width: 18rem;">
-                <!--tips: add .text-center,.text-right to the .card to change card text alignment-->
-                @*<img v-bind:src="record.imageUrl" class="card-img-top">*@
-                <div class="card-body">
-                    <h5 class="card-title">{{route.value}}</h5>
-                    <span v-if="isAdmin">
-                        <button type="button" class="btn btn-primary">info</button>
-                        <button type="button" class="btn btn-danger">Delete</button>
-                    </span>
-                </div>
-            </div>
-        </div>
+        <table class="table table-bordered table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Afbeelding</th>
+                    <th>Naam</th>
+                    <th>Acties</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="route in routes">
+                    @*<td><img v-bind:src="product.imageUrl" width="80" /></td>*@
+                    <td></td>
+                    <td>{{route.value}}</td>
+                    <td>
+                        <div>
+                            <button type="button" class="btn btn-primary">info</button>
+                            <button v-on:click="deleteRoute(route.id)" type="button" class="btn btn-danger">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
