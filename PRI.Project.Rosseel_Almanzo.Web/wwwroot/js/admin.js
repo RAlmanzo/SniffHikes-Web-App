@@ -11,6 +11,9 @@
         isAdmin: false,
         isLogged: false,
         isUser: false,
+        eventDetails: null,
+        showEventDetailsSection: false,
+        showDetails: false,
     },
     created: function () {
 
@@ -40,6 +43,48 @@
                     });
             }
         },
+        showEventDetails: async function (id) {
+            const url = `https://localhost:7038/api/Admins/${id}/event`
+            //set the headers => token
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`
+                }
+            };
+
+            await axios.get(url, config)
+                .then((response) => {
+                    this.eventDetails = response.data;
+                    this.adminEventsVisible = false;
+                    this.showEventDetailsSection = true;
+                    this.showDetails = true;
+                })
+                .catch((e) => {
+                    //this.showErrorSection = true;
+                    //this.errorMessage = e.message
+                })
+        },
+        deleteEvent: async function (id) {
+            //confirm delete
+            if (confirm("Are u sure u want to delete Event?")) {
+                //build the url
+                //const url = `${this.baseUrl}artists/${id}`;
+                const url = `https://localhost:7038/api/Admins/${id}/event`
+                //set the headers => token
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${sessionStorage.getItem("token")}`
+                    }
+                };
+                //send the request
+                await axios.delete(url, config)
+                    .then(response => {
+                        console.log(response.data);
+                        //remove artist from list
+                        this.events = this.events.filter(el => el.id !== id);
+                    }).catch(error => console.log(error));
+            };
+        },
         getRoutes: async function () {
             const token = sessionStorage.getItem("token");
 
@@ -60,13 +105,42 @@
                     });
             }
         },
+        deleteRoute: async function (id) {
+            //confirm delete
+            if (confirm("Are u sure u want to delete Route?")) {
+                //build the url
+                //const url = `${this.baseUrl}artists/${id}`;
+                const url = `https://localhost:7038/api/Admins/${id}/route`
+                //set the headers => token
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${sessionStorage.getItem("token")}`
+                    }
+                };
+                //send the request
+                await axios.delete(url, config)
+                    .then(response => {
+                        console.log(response.data);
+                        //remove artist from list
+                        this.routes = this.routes.filter(el => el.id !== id);
+                    }).catch(error => console.log(error));
+            };
+        },
         showAdminEvents: async function () {
-            this.getEvents();
+            if (this.events.length <= 0) {
+                this.getEvents();
+            }
+            
+            this.showEventDetailsSection = false;
             this.adminEventsVisible = true;
             this.adminRoutesVisible = false;
+            this.showDetails = false;
         },
         showAdminRoutes: async function () {
-            this.getRoutes();
+            if (this.routes.length <= 0) {
+                this.getRoutes();
+            }
+      
             this.adminRoutesVisible = true;
             this.adminEventsVisible = false;
         },
