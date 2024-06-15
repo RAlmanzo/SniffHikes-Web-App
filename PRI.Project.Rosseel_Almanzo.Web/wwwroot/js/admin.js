@@ -16,8 +16,10 @@
         isUser: false,
         eventDetails: null,
         routeDetails: null,
+        userDetails: null,
         showEventDetailsSection: false,
         showRouteDetailsSection: false,
+        showUserDetailsSection: false,
         showDetails: false,
         image: "",
     },
@@ -172,6 +174,27 @@
                         console.log(error);
                     });
             }
+        },
+        showUserDetails: async function (id) {
+            const url = `https://localhost:7038/api/Admins/${id}/user`
+            //set the headers => token
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`
+                }
+            };
+
+            await axios.get(url, config)
+                .then((response) => {
+                    this.userDetails = response.data;
+                    this.adminUsersVisible = false;
+                    this.showUserDetailsSection = true;
+                    this.showDetails = true;
+                })
+                .catch((e) => {
+                    //this.showErrorSection = true;
+                    //this.errorMessage = e.message
+                })
         },
         deleteUser: async function (id) {
             //confirm delete
