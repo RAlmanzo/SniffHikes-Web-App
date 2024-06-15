@@ -102,11 +102,13 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                 {
                     Id = (int)e.EventId,
                     Value = e.Event.Title,
+                    Image = e.Event.Images.FirstOrDefault().File,
                 }),
                 OrganizedEvents = user.OrganizedEvents.Select(e => new BaseDto
                 {
                     Id = (int)e.Id,
                     Value = e.Title,
+                    Image = e.Images.FirstOrDefault().File,
                 }),
             };
         }

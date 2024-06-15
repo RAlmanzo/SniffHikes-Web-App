@@ -119,7 +119,7 @@
         <div class="card mb-3">
             <div class="card-header">
                 <div class="row">
-                    <img v-bind:src="'https://localhost:7038/images/T/' + userDetails.image" alt="Event Image" class="img-fluid" />
+                    <img v-bind:src="'https://localhost:7038/images/T/' + userDetails.image" alt="Event Image" class="img-fluid w-50" />
                 </div>
             </div>
             <div class="card-body">
@@ -128,17 +128,49 @@
                 <p>Email: {{userDetails.email}}</p>
                 <p>Address: {{userDetails.address.value}}</p>
                 <h5>My dogs</h5>
-                <div v-for="dog in userDetails.dogs" class="col-3">
-                    <img v-bind:src="'https://localhost:7038/images/T/' + dog.image" alt="Event Image" class="img-fluid" />
-                    <p>Name: {{dog.value}}</p>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row">
+                            <div v-for="dog in userDetails.dogs" class="col-3 mb-3">
+                                <div class="card">
+                                    <img v-bind:src="'https://localhost:7038/images/T/' + dog.image" alt="Event Image" class="card-img-top img-fluid w-50 mx-auto mt-3" />
+                                    <div class="card-body text-center">
+                                        <p class="card-title">{{dog.value}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <h5>Attending Events</h5>
-                <div v-for="attendingEvent in userDetails.attendingEvents" class="col-3">
-                    <p>Title: {{attendingEvent.value}}</p>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row">
+                            <div v-for="attendingEvent in userDetails.attendingEvents" class="col-3 mb-3">
+                                <div class="card">
+                                    <img v-bind:src="'https://localhost:7038/images/T/' + attendingEvent.image" alt="Event Image" class="card-img-top img-fluid w-50 mx-auto mt-3" />
+                                    <div class="card-body text-center">
+                                        <p class="card-title">{{attendingEvent.value}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <h5>Organized Events</h5>
-                <div v-for="organizedEvent in userDetails.organizedEvents" class="col-3">
-                    <p>Title: {{organizedEvent.value}}</p>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row">
+                            <div v-for="organizedEvent in userDetails.organizedEvents" class="col-3 mb-3">
+                                <div class="card">
+                                    <img v-bind:src="'https://localhost:7038/images/T/' + organizedEvent.image" alt="Event Image" class="card-img-top img-fluid w-50 mx-auto mt-3" />
+                                    <div class="card-body text-center">
+                                        <p class="card-title">{{organizedEvent.value}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <a href="#" class="btn btn-secondary" v-on:click="showAdminUsers">Terug</a>
             </div>
