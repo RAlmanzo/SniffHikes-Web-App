@@ -231,20 +231,20 @@
             }
 
             this.showRouteDetailsSection = false;
-            this.adminRoutesVisible = true;
             this.adminEventsVisible = false;
             this.adminUsersVisible = false;
+            this.adminRoutesVisible = true;        
             this.showDetails = false;
         },
         showAdminUsers: async function () {
-            if (this.routes.length <= 0) {
+            if (this.users.length <= 0) {
                 this.getUsers();
             }
 
             this.showUserDetailsSection = false;
-            this.adminUsersVisible = true;
             this.adminRoutesVisible = false;
             this.adminEventsVisible = false;
+            this.adminUsersVisible = true;         
             this.showDetails = false;
         },
         toggleModal: function (modalId) {
