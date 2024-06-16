@@ -15,6 +15,8 @@ const userProfileImageClaimTypeKey = "profile-image";
 
 //Values of ClaimTypes
 const adminRoleClaimTypeValue = "Admin";
+const userRoleClaimTypeValue = "User";
+const organizerRoleClaimTypeValue = "Orginazer";
 
 // Axios configuration
 let axiosConfig = {
@@ -58,11 +60,29 @@ function readUserProfilePictureFromToken() {
     return decodedToken[userProfileImageClaimTypeKey];
 }
 
-function hasUserAdminRole() {
+function hasAdminRole() {
     if (readUserRoleFromToken() === adminRoleClaimTypeValue) {
         return true;
     }
     else {
+        return false;
+    }
+}
+
+function hasUserRole() {
+    var roles = readUserRoleFromToken();
+    if (Array.isArray(roles) && roles.includes(userRoleClaimTypeValue)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function hasOrganizerRole() {
+    var roles = readUserRoleFromToken();
+    if (Array.isArray(roles) && roles.includes(organizerRoleClaimTypeValue)) {
+        return true;
+    } else {
         return false;
     }
 }
