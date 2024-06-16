@@ -36,5 +36,9 @@ namespace PRI.Project.Rosseel_Almanzo.Web.Controllers
         {
             return View();
         }
+        public IActionResult Routes()
+        {
+            return View();
+        }
     }
 }

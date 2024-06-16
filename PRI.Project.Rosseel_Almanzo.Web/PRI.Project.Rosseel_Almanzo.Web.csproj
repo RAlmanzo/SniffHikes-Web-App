@@ -6,4 +6,16 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="wwwroot\js\routes.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\routes.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\routes.js" />
+  </ItemGroup>
+
 </Project>
