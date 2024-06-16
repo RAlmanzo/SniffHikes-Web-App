@@ -1,6 +1,8 @@
 ﻿
 <div id="events">
     <button v-on:click="toggleModal('crudEventModal')" type="button" class="btn btn-outline-info">Create Event</button>
+
+    <a class="nav-link btn btn-outline-primary text-dark" asp-area="" asp-controller="Home" asp-action="Index">Return</a>
     <div class="row" v-if="!showDetails">
         <table class="table table-bordered table-striped align-middle">
             <thead>
@@ -17,7 +19,7 @@
                     <td>
                         <div>
                             <button class="btn btn-primary" v-on:click="showEventDetails(event.id)">info</button>
-                            <button class="btn btn-danger" v-on:click="showUpdateEventModal(event.id)">Update</button>
+                            <button v-if="event.organizerId == userId" class="btn btn-danger" v-on:click="showUpdateEventModal(event.id)">Update</button>
                         </div>
                     </td>
                 </tr>
@@ -36,9 +38,12 @@
             <div class="card-body">
                 <h5 class="card-title">{{eventDetails.value}}</h5>
                 <p class="mb-1" v-html="eventDetails.description"></p>
-                <p>{{eventDetails.address.value}}</p>
+                <p>{{eventDetails.address.street}}</p>
+                <p>{{eventDetails.address.city}}</p>
+                <p>{{eventDetails.address.state}}</p>
+                <p>{{eventDetails.address.country}}</p>
                 <p>{{eventDetails.date}}</p>
-                <p>{{eventDetails.organizer}}</p>
+                <p>{{organizer}}</p>
                 <a href="#" class="btn btn-secondary" v-on:click="showEvents">Terug</a>
             </div>
         </div>
@@ -162,7 +167,7 @@
                         </div>
                         <div class="modal-footer">
                             <button v-on:click="toggleModal('updateEventModal')" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Create</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
                         </div>
                     </form>
                 </div>
