@@ -127,6 +127,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                     Id = e.Id,
                     Value = e.Title,
                     Image = e.Images.FirstOrDefault().File,
+                    organizerId = e.UserId,
                 })
             };
         }
