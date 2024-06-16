@@ -135,7 +135,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
 
         [HttpPut]
         [Authorize(Policy = "UserOrginazer")]
-        public async Task<IActionResult> Update([FromForm]RouteUpdateRequestDto routeUpdateRequestDto)
+        public async Task<IActionResult> Update(RouteUpdateRequestDto routeUpdateRequestDto)
         {
             //check if route exists
             if (!await _routeService.CheckIfExistsAsync(routeUpdateRequestDto.Id))
