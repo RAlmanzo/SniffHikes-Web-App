@@ -16,6 +16,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                     Id = e.Id,
                     Value = e.Title,
                     Image = e.Images.FirstOrDefault().File,
+                    organizerId = e.OrganizerId,
                 })
             };
         }
@@ -143,10 +144,13 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                     Id = route.UserId,
                     Value = $"{route.User.FirstName} {route.User.LastName}",
                 },
-                Address = new BaseDto
+                Address = new AddressDto
                 {
                     Id = route.AddressId,
-                    Value = $"{route.Address.Street} {route.Address.City} {route.Address.State} {route.Address.Country}",
+                    Street = route.Address.Street,
+                    City = route.Address.City,
+                    State = route.Address.State,
+                    Country = route.Address.Country,
                 },
                 Images = route.Images.Select(i => new BaseDto
                 {
