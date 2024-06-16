@@ -7,7 +7,7 @@
         public DateTime Date { get; set; }
         public DateTime DateCreated { get; set; }
         public BaseUserDto Orginazer { get; set; }
-        public BaseDto Address { get; set; }
+        public AddressDto Address { get; set; }
         public IEnumerable<BaseDto> Images { get; set; }
         public IEnumerable<BaseDto> Comments { get; set; }
         public IEnumerable<BaseUserDto> Users { get; set; }

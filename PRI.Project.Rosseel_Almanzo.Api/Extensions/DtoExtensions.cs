@@ -35,10 +35,13 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                     Id = selectedEvent.OrganizerId,
                     Value = $"{selectedEvent.Organizer.FirstName} {selectedEvent.Organizer.LastName}",
                 },
-                Address = new BaseDto
+                Address = new AddressDto
                 {
                     Id = selectedEvent.AddressId,
-                    Value = $"{selectedEvent.Address.Street} {selectedEvent.Address.City} {selectedEvent.Address.State} {selectedEvent.Address.Country}",
+                    Street = selectedEvent.Address.Street,
+                    City = selectedEvent.Address.City,
+                    State = selectedEvent.Address.State,
+                    Country = selectedEvent.Address.Country,
                 },
                 Images = selectedEvent.Images.Select(i => new BaseDto
                 {
