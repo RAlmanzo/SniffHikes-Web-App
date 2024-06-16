@@ -1,1 +1,171 @@
-﻿
+﻿<div id="routes">
+    <button v-if="!showRouteDetailsSection" v-on:click="toggleModal('crudRouteModal')" type="button" class="btn btn-outline-info">Create Route</button>
+
+    <a v-if="!showRouteDetailsSection" class="nav-link btn btn-outline-primary text-dark" asp-area="" asp-controller="Home" asp-action="Index">Return</a>
+    <div class="row" v-if="!showDetails">
+        <table class="table table-bordered table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Afbeelding</th>
+                    <th>Naam</th>
+                    <th>Acties</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="route in routes">
+                    <td><img v-bind:src="'https://localhost:7038/images/T/' + route.image" width="80" /></td>
+                    <td>{{route.value}}</td>
+                    <td>
+                        <div>
+                            <button class="btn btn-primary" v-on:click="showRouteDetails(route.id)">info</button>
+                            <button v-if="route.organizerId == userId" class="btn btn-danger" v-on:click="showUpdateRouteModal(route.id)">Update</button>
+                            <button v-if="route.organizerId == userId" class="btn btn-danger" v-on:click="deleteRoute(route.id)">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div v-if="showRouteDetailsSection">
+        <div class="card mb-3">
+            <a href="#" class="btn btn-secondary" v-on:click="showRoutes">Terug</a>
+            <div class="card-header">
+                <div class="row">
+                    <div v-for="image in routeDetails.images" :key="image.value" class="col-3">
+                        <img v-bind:src="'https://localhost:7038/images/T/' + image.value" alt="Route Image" class="img-fluid" />
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{routeDetails.value}}</h5>
+                <p class="mb-1" v-html="routeDetails.description"></p>
+                <p>{{routeDetails.address.street}}</p>
+                <p>{{routeDetails.address.city}}</p>
+                <p>{{routeDetails.address.state}}</p>
+                <p>{{routeDetails.address.country}}</p>
+                <p>{{routeDetails.date}}</p>
+                <p>{{organizer}}</p>
+            </div>
+        </div>
+        <h5>Comments</h5>
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div v-for="comment in routeDetails.comments" class="col-3 mb-3">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <p class="card-title">{{comment.value}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="crudRouteModal" tabindex="-1" role="dialog" aria-labelledby="crudRouteModal-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="crudRouteModalTitle">Create Route</h5>
+                    <button v-on:click="toggleModal('crudRouteModal')" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Modal content -->
+                    <form id="crudRouteModal" v-on:submit.prevent="createRoute">
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input v-model="title" type="text" class="form-control">
+                            <div v-if="createErrors.Title.length" class="alert alert-danger p-2 my-2">{{ createErrors.Title[0] }}</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <input v-model="description" type="text" class="form-control">
+                            <div v-if="createErrors.Description.length" class="alert alert-danger p-2 my-2">{{ createErrors.Description[0] }}</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Street</label>
+                            <input v-model="address.street" type="text" class="form-control">
+                            <div v-if="createErrors.Address?.Street?.length" class="alert alert-danger p-2 my-2">{{ createErrors.Address.Street[0] }}</div>
+                        </div>
+                        <div class="form-group">
+                            <label>City</label>
+                            <input v-model="address.city" type="text" class="form-control">
+                            <div v-if="createErrors.Address?.City?.length" class="alert alert-danger p-2 my-2">{{ createErrors.Address.City[0] }}</div>
+                        </div>
+                        <div class="form-group">
+                            <label>State</label>
+                            <input v-model="address.state" type="text" class="form-control">
+                            <div v-if="createErrors.Address?.State?.length" class="alert alert-danger p-2 my-2">{{ createErrors.Address.State[0] }}</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Country</label>
+                            <input v-model="address.country" type="text" class="form-control">
+                            <div v-if="createErrors.Address?.Country?.length" class="alert alert-danger p-2 my-2">{{ createErrors.Address.Country[0] }}</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Image</label>
+                            <input type="file" v-on:change="getFile($event)" class="form-control" multiple>
+                        </div>
+                        <div class="modal-footer">
+                            <button v-on:click="toggleModal('crudRouteModal')" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Create</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="updateRouteModal" tabindex="-1" role="dialog" aria-labelledby="updateRouteModal-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateRouteModalTitle">Update Route</h5>
+                    <button v-on:click="toggleModal('updateRouteModal')" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Modal content -->
+                    <form id="updateRouteModal" v-on:submit.prevent="updateRoute">
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input v-model="title" type="text" class="form-control">
+                            <div v-if="createErrors.Title.length" class="alert alert-danger p-2 my-2">{{ createErrors.Title[0] }}</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <input v-model="description" type="text" class="form-control">
+                            <div v-if="createErrors.Description.length" class="alert alert-danger p-2 my-2">{{ createErrors.Description[0] }}</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Street</label>
+                            <input v-model="address.street" type="text" class="form-control">
+                            @*<div v-if="createErrors.Address?.Street?.length" class="alert alert-danger p-2 my-2">{{ createErrors.Address.Street[0] }}</div>*@
+                        </div>
+                        <div class="form-group">
+                            <label>City</label>
+                            <input v-model="address.city" type="text" class="form-control">
+                            @*<div v-if="createErrors.Address?.City?.length" class="alert alert-danger p-2 my-2">{{ createErrors.Address.City[0] }}</div>*@
+                        </div>
+                        <div class="form-group">
+                            <label>State</label>
+                            <input v-model="address.state" type="text" class="form-control">
+                            @*<div v-if="createErrors.Address?.State?.length" class="alert alert-danger p-2 my-2">{{ createErrors.Address.State[0] }}</div>*@
+                        </div>
+                        <div class="form-group">
+                            <label>Country</label>
+                            <input v-model="address.country" type="text" class="form-control">
+                            @*<div v-if="createErrors.Address?.Country?.length" class="alert alert-danger p-2 my-2">{{ createErrors.Address.Country[0] }}</div>*@
+                        </div>
+                        <div class="modal-footer">
+                            <button v-on:click="toggleModal('updateRouteModal')" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
