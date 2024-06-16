@@ -206,11 +206,8 @@
                 })
         },
         deleteEvent: async function (id) {
-            //confirm delete
             if (confirm("Are u sure u want to delete Event?")) {
-                //build the url
-                //const url = `${this.baseUrl}artists/${id}`;
-                const url = `https://localhost:7038/api/Admins/${id}/event`
+                const url = `https://localhost:7038/api/Events/${id}`
                 //set the headers => token
                 const config = {
                     headers: {
@@ -221,9 +218,11 @@
                 await axios.delete(url, config)
                     .then(response => {
                         console.log(response.data);
-                        //remove artist from list
                         this.events = this.events.filter(el => el.id !== id);
-                    }).catch(error => console.log(error));
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
             };
         },
         showEvents: async function () {
