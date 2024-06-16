@@ -8,6 +8,8 @@
         eventDetails: null,
         showEventDetailsSection: false,
         showDetails: false,
+        organizerId: "",
+        id: "",
         title: "",
         description: "",
         date: "",
@@ -31,12 +33,80 @@
                 Country: [],
             },
         },
-        organizerId: "",
     },
     created: function () {
         this.getEvents();
     },
     methods: {
+        showUpdateEventModal: async function (id) {
+            const url = `https://localhost:7038/api/Events/${id}`
+
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`
+                }
+            };
+
+            await axios.get(url, config)
+                .then((response) => {
+                    this.id = response.data.id;
+                    this.title = response.data.value;
+                    this.description = response.data.description;
+                    this.price = response.data.price;
+                    this.date = response.data.date;
+                    this.address.street = response.data.address.street;
+                    this.address.city = response.data.address.city;
+                    this.address.state = response.data.address.state;
+                    this.address.country = response.data.address.country;
+                    this.organizerId = response.data.orginazer.id;
+                })
+                .catch((e) => {
+                    //this.showErrorSection = true;
+                    //this.errorMessage = e.message
+                })
+
+            this.toggleModal("updateEventModal");
+        },
+        updateEvent: async function () {
+
+            //set the data
+            data = {
+                "id": this.id,
+                "title": this.title,
+                "description": this.description,
+                "date": this.date,
+                "price": this.price,
+                "address": {
+                    street: this.address.street,
+                    city: this.address.city,
+                    state: this.address.state,
+                    country: this.address.country
+                },
+                "organizerId": this.organizerId,
+            }
+
+            var token = sessionStorage.getItem("token");
+            //config headers => token
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`
+                }
+            };
+            //call the api
+            await axios.put(this.eventsUrl, data, config)
+                .then(response => {
+                    console.log(response);
+                    this.toggleModal("updateEventModal");
+                })
+                .catch(error => {
+                    if (error.response && error.response.data.errors) {
+                        this.setErrors(error.response.data.errors);
+                    } else {
+                        //this.error = true;
+                        //this.errorMessage = { general: ["An unexpected error occurred."] };
+                    }
+                });
+        },
         createEvent: async function () {
             this.clearErrors();
             const token = sessionStorage.getItem("token");
