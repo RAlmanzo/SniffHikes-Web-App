@@ -24,7 +24,7 @@
         image: "",
     },
     created: function () {
-        this.isAdmin = hasUserAdminRole();
+        this.isAdmin = hasAdminRole();
     },
     methods: {
         getEvents: async function () {
