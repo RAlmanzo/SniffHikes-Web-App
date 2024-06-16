@@ -139,7 +139,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
 
         [HttpPut]
         [Authorize(Policy = "UserOrginazer")]
-        public async Task<IActionResult> Update([FromForm]EventUpdateRequestDto eventUpdateRequestDto)
+        public async Task<IActionResult> Update(EventUpdateRequestDto eventUpdateRequestDto)
         {
             //check if event exists
             if (!await _eventService.CheckIfExistsAsync(eventUpdateRequestDto.Id))
