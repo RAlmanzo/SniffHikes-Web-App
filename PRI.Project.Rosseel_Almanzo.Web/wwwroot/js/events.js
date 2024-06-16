@@ -8,6 +8,7 @@
         eventDetails: null,
         showEventDetailsSection: false,
         showDetails: false,
+        organizer: "",
         organizerId: "",
         id: "",
         title: "",
@@ -33,8 +34,12 @@
                 Country: [],
             },
         },
+        isUser: false,
+        isOrganizer: false,
+        userId: "",
     },
     created: function () {
+        this.checkClaims();
         this.getEvents();
     },
     methods: {
@@ -97,6 +102,7 @@
                 .then(response => {
                     console.log(response);
                     this.toggleModal("updateEventModal");
+                    this.getEvents();
                 })
                 .catch(error => {
                     if (error.response && error.response.data.errors) {
@@ -109,6 +115,7 @@
         },
         createEvent: async function () {
             this.clearErrors();
+            this.eventDetails = null;
             const token = sessionStorage.getItem("token");
 
             if (token !== null) {
@@ -141,8 +148,10 @@
                     }
                 })
                     .then(response => {
-                        // Handle successful registration
+                        console.log(response);
+                        this.toggleModal("crudEventModal");
                         this.resetForm();
+                        this.getEvents();
                     })
                     .catch(error => {
                         if (error.response && error.response.data.errors) {
@@ -186,6 +195,7 @@
             await axios.get(url, config)
                 .then((response) => {
                     this.eventDetails = response.data;
+                    this.organizer = response.data.orginazer.value;
                     this.adminEventsVisible = false;
                     this.showEventDetailsSection = true;
                     this.showDetails = true;
@@ -226,6 +236,10 @@
             this.showDetails = false;
         },
         toggleModal: function (modalId) {
+            if (modalId === "crudEventModal") {
+                this.resetForm();
+            }
+
             $(`#${modalId}`).modal('toggle');
         },
         getFile: function (event) {
@@ -271,6 +285,17 @@
             this.address.country = "";
             this.images = [];
             this.organizerId = "";
+        },
+
+        checkClaims: async function () {
+            const token = sessionStorage.getItem("token");
+
+            if (token !== null) {
+                this.isUser = hasUserRole();
+                this.isOrganizer = hasOrganizerRole();
+
+                this.userId = readUserIdFromToken();
+            }
         },
     }
 });
