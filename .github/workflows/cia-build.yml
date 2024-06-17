@@ -1,0 +1,19 @@
+name: CIA Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-projects:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '6.0.x'
+
+    - name: Build Projects
+      run: dotnet build
