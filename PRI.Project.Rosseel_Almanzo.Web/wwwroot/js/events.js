@@ -25,7 +25,7 @@
         createErrors: {
             Title: [],
             Description: [],
-            DateEvent: [],
+            Date: [],
             Price: [],
             Address: {
                 Street: [],
