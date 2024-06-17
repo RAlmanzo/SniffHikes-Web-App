@@ -44,6 +44,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                     City = selectedEvent.Address.City,
                     State = selectedEvent.Address.State,
                     Country = selectedEvent.Address.Country,
+                    Value = $"{selectedEvent.Address.Street} {selectedEvent.Address.City} {selectedEvent.Address.State} {selectedEvent.Address.Country}",
                 },
                 Images = selectedEvent.Images.Select(i => new BaseDto
                 {
@@ -96,6 +97,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                     City = user.Address.City,
                     State = user.Address.State,
                     Country = user.Address.Country,
+                    Value = $"{user.Address.Street} {user.Address.City} {user.Address.State} {user.Address.Country}",
                 },
                 Dogs = user.Dogs.Select(d => new BaseDto
                 {
@@ -158,6 +160,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                     City = route.Address.City,
                     State = route.Address.State,
                     Country = route.Address.Country,
+                    Value = $"{route.Address.Street} {route.Address.City} {route.Address.State} {route.Address.Country}",
                 },
                 Images = route.Images.Select(i => new BaseDto
                 {
