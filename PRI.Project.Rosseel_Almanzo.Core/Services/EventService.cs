@@ -204,11 +204,15 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 return eventResultModel;
             }
             //get event attendingusers
-            foreach (var attendingUser in selectedEvent.AttendingUsers)
+            if (selectedEvent.AttendingUsers != null)
             {
-                var result = await _userRepository.GetByIdAsync(attendingUser.UserId);
-                attendingUser.User = result;
+                foreach (var attendingUser in selectedEvent.AttendingUsers)
+                {
+                    var result = await _userRepository.GetByIdAsync(attendingUser.UserId);
+                    attendingUser.User = result;
+                }
             }
+            
             //if event exists
             eventResultModel.Success = true;
             eventResultModel.Value = selectedEvent;

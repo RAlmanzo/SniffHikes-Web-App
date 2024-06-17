@@ -43,7 +43,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             return new ResultModel<Image>
             {
                 Success = false,
-                Errors = new List<string> { "Image not created!" }
+                Errors = new List<string> { "Image not deleted!" }
             };
         }
 

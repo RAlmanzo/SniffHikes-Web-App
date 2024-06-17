@@ -90,7 +90,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 return new ResultModel<Dog>
                 {
                     Success = false,
-                    Errors = new List<string> { "User does not exist!" }
+                    Errors = new List<string> { "Dog does not exist!" }
                 };
             }
 
@@ -118,7 +118,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             if (dog == null)
             {
                 dogResultModel.Success = false;
-                dogResultModel.Errors = new List<string> { "User not found" };
+                dogResultModel.Errors = new List<string> { "Dog not found" };
                 return dogResultModel;
             }
 

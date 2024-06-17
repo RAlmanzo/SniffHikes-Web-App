@@ -121,8 +121,12 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             //get the user
             var selectedUser = await _userRepository.GetByIdAsync(id);
             //get user address
-            var userAddress = await _addressRepository.GetByIdAsync(selectedUser.AddressId);
-
+            var userAddress = new Address();
+            if (selectedUser != null)
+            {
+                userAddress = await _addressRepository.GetByIdAsync(selectedUser.AddressId);
+            }
+            
             //check iff user exists
             if (selectedUser == null)
             {
@@ -148,7 +152,7 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             {
                 if (await _addressRepository.DeleteAsync(userAddress))
                 {
-                    if (selectedUser.Dogs.Count > 0)
+                    if (selectedUser.Dogs != null && selectedUser.Dogs.Count > 0)
                     {
                         foreach (var dog in selectedUser.Dogs)
                         {
@@ -199,12 +203,15 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
                 return userResultModel;
             }
 
-            foreach (var attendingEvent in user.AttendingEvents) 
+            if (user.AttendingEvents != null)
             {
-                var result = await _eventRepository.GetByIdAsync((int)attendingEvent.EventId);
-                attendingEvent.Event = result;
+                foreach (var attendingEvent in user.AttendingEvents)
+                {
+                    var result = await _eventRepository.GetByIdAsync((int)attendingEvent.EventId);
+                    attendingEvent.Event = result;
+                }
             }
-
+            
             //if yes
             userResultModel.Success = true;
             userResultModel.Value = user;
@@ -217,32 +224,36 @@ namespace PRI.Project.Rosseel_Almanzo.Core.Services
             var user = await _userRepository.GetByIdAsync(userUpdateRequestModel.Id);
 
             //update
-            user.Id = userUpdateRequestModel.Id;
-            user.FirstName = userUpdateRequestModel.FirstName;
-            user.LastName = userUpdateRequestModel.LastName;
-            //user.Email = userUpdateRequestModel.Email;
-            user.Gender = userUpdateRequestModel.Gender;
-            user.Address.Street = userUpdateRequestModel.Address.Street;
-            user.Address.City = userUpdateRequestModel.Address.City;
-            user.Address.State = userUpdateRequestModel.Address.State;
-            user.Address.Country = userUpdateRequestModel.Address.Country;
-            user.DateOfBirth = userUpdateRequestModel.DateOfBirth;
-            
-
-            if (!string.IsNullOrWhiteSpace(userUpdateRequestModel.Image))
+            if (user != null) 
             {
-                user.Image = userUpdateRequestModel.Image;
-            }
+                user.Id = userUpdateRequestModel.Id;
+                user.FirstName = userUpdateRequestModel.FirstName;
+                user.LastName = userUpdateRequestModel.LastName;
+                //user.Email = userUpdateRequestModel.Email;
+                user.Gender = userUpdateRequestModel.Gender;
+                user.Address.Street = userUpdateRequestModel.Address.Street;
+                user.Address.City = userUpdateRequestModel.Address.City;
+                user.Address.State = userUpdateRequestModel.Address.State;
+                user.Address.Country = userUpdateRequestModel.Address.Country;
+                user.DateOfBirth = userUpdateRequestModel.DateOfBirth;
 
-            var result = await _userRepository.UpdateAsync(user);
-            if (result)
-            {
-                return new ResultModel<User>
+
+                if (!string.IsNullOrWhiteSpace(userUpdateRequestModel.Image))
                 {
-                    Success = true,
-                    Value = user,
-                };
+                    user.Image = userUpdateRequestModel.Image;
+                }
+
+                var result = await _userRepository.UpdateAsync(user);
+                if (result)
+                {
+                    return new ResultModel<User>
+                    {
+                        Success = true,
+                        Value = user,
+                    };
+                }
             }
+            
             return new ResultModel<User>
             {
                 Success = false,
