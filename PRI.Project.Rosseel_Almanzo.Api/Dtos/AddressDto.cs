@@ -9,5 +9,6 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Dtos
         public string City { get; set; }
         public string State { get; set; }
         public string Country { get; set; }
+        public string Value { get; set; }
     }
 }
