@@ -66,6 +66,7 @@
                     this.adminEventsVisible = false;
                     this.showEventDetailsSection = true;
                     this.showDetails = true;
+                    console.log(this.eventDetails);
                 })
                 .catch((e) => {
                     //this.showErrorSection = true;
@@ -187,6 +188,7 @@
                     this.adminUsersVisible = false;
                     this.showUserDetailsSection = true;
                     this.showDetails = true;
+                    console.log(this.userDetails);
                 })
                 .catch((e) => {
                     //this.showErrorSection = true;
