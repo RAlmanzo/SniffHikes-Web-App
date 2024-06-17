@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PRI.Project.Rosseel_Almanzo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PRI.Project.Rosseel_Almanzo.Infrastructure", "PRI.Project.Rosseel_Almanzo.Infrastructure\PRI.Project.Rosseel_Almanzo.Infrastructure.csproj", "{4DD03D7F-F9B6-407C-BB9C-B296A0E74BC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRI.Project.Rosseel_Almanzo.Web", "PRI.Project.Rosseel_Almanzo.Web\PRI.Project.Rosseel_Almanzo.Web.csproj", "{27AA24F3-BF9C-4272-9261-D5975A5263A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PRI.Project.Rosseel_Almanzo.Web", "PRI.Project.Rosseel_Almanzo.Web\PRI.Project.Rosseel_Almanzo.Web.csproj", "{27AA24F3-BF9C-4272-9261-D5975A5263A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRI.Project.Rosseel_Almanzo.Core.Tests", "PRI.Project.Rosseel_Almanzo.Core.Tests\PRI.Project.Rosseel_Almanzo.Core.Tests.csproj", "{06806316-EA8D-4AC4-AB52-7FEEE6E98C67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{27AA24F3-BF9C-4272-9261-D5975A5263A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27AA24F3-BF9C-4272-9261-D5975A5263A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27AA24F3-BF9C-4272-9261-D5975A5263A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06806316-EA8D-4AC4-AB52-7FEEE6E98C67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06806316-EA8D-4AC4-AB52-7FEEE6E98C67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06806316-EA8D-4AC4-AB52-7FEEE6E98C67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06806316-EA8D-4AC4-AB52-7FEEE6E98C67}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
