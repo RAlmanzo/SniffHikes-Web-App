@@ -1,0 +1,25 @@
+name: CIA Test
+
+on:
+  workflow_run:
+    workflows: ["CIA Build"]
+    types:
+      - completed
+
+jobs:
+  run-tests:
+    runs-on: windows-latest
+
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '6.0.x'
+
+    - name: Run unit tests
+      working-directory: ./PRI.Project.Rosseel_Almanzo.Core.Tests
+      run: dotnet test
