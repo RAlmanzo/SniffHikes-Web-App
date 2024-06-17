@@ -18,38 +18,38 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
         {
             var images = new Image[]
             {
-                new Image{Id = 1, File = null, EventId = 1},
-                new Image{Id = 2, File = null, EventId = 1},
-                new Image{Id = 3, File = null, RouteId = 1},
+                new Image{Id = 1, File = "AHiken.jpeg", EventId = 1},
+                new Image{Id = 2, File = "IMG_20210516_165116.jpg", EventId = 1},
+                new Image{Id = 3, File = "IMG_20210516_171528.jpg", EventId = 1},
+                new Image{Id = 4 ,File = "Schermafbeelding 2024-06-15 173550.png", EventId = 2},
+                new Image{Id = 5, File = "Schermafbeelding 2023-11-03 203719.png", EventId = 2},
+                new Image{Id = 6, File = "Schermafbeelding 2024-06-15 173812.png", EventId = 2},
+                new Image{Id = 7, File = "FB_IMG_1676153401593.jpg", EventId = 3},
+                new Image{Id = 8, File = "IMG_20210613_150444.jpg", EventId = 3},
+                new Image{Id = 9, File = "Schermafbeelding 2024-06-15 175152.png", EventId = 4},
+                new Image{Id = 10, File = "IMG_20210620_161504.jpg", EventId = 5},
 
-                new Image{Id = 6 ,File = null, EventId = 2},
-                new Image{Id = 7, File = null, RouteId = 2},
-                new Image{Id = 8, File = null, RouteId = 2},
-
-                new Image{Id = 9, File = null, EventId = 2},
-                new Image{Id = 10, File = null, RouteId = 2},
-
-                new Image{Id = 12, File = null, EventId = 3},
-                new Image{Id = 13, File = null, EventId = 2},
-
-                new Image{Id = 14, File = null, RouteId = 3},
-                new Image{Id = 15, File = null, EventId = 1},
-                new Image{Id = 16, File = null, RouteId = 1},
-                new Image{Id = 17, File = null, RouteId = 3},
+                new Image{Id = 11, File = "IMG_20210620_152407.jpg", RouteId = 1},
+                new Image{Id = 12, File = "IMG_20210620_154507.jpg", RouteId = 1},
+                new Image{Id = 13, File = "IMG_20210620_154515.jpg", RouteId = 1},   
+                new Image{Id = 14, File = "Schermafbeelding 2024-06-15 180613.png", RouteId = 2},
+                new Image{Id = 15, File = "Schermafbeelding 2024-06-15 180627.png", RouteId = 2},            
+                new Image{Id = 16, File = "Schermafbeelding 2024-06-15 180646.png", RouteId = 2},
+                new Image{Id = 17, File = "Schermafbeelding 2024-06-15 180856.png", RouteId = 3},
+                new Image{Id = 18, File = "Schermafbeelding 2024-06-15 180954.png", RouteId = 3},
+                new Image{Id = 19, File = "Schermafbeelding 2024-06-15 181114.png", RouteId = 4},
+                new Image{Id = 20, File = "Schermafbeelding 2024-06-15 181021.png", RouteId = 5},
             };
 
             var dogs = new Dog[]
             {
-                new Dog{Id = 1, Name = "Inca", Race = "Husky", Gender ="Male", DateOfBirth = DateTime.Now, Image = null, UserId = "1"},
-                new Dog{Id = 2, Name = "Zara", Race = "Border-collie", Gender ="Female", DateOfBirth = DateTime.Now, Image = null, UserId = "1"},
-                new Dog{Id = 3, Name = "Sleepy", Race = "Duitse-herder", Gender ="Male", DateOfBirth = DateTime.Now, Image = null, UserId = "2"},
-                new Dog{Id = 4, Name = "Sleepy", Race = "Duitse-herder", Gender ="Male", DateOfBirth = DateTime.Now, Image = null, UserId = "3"},
-                new Dog{Id = 5, Name = "Tunder", Race = "Dog", Gender ="Female", DateOfBirth = DateTime.Now, Image = null, UserId = "1"},
-                new Dog{Id = 6, Name = "Zira", Race = "Husky", Gender ="Male", DateOfBirth = DateTime.Now, Image = null, UserId = "2"},
-                new Dog{Id = 7, Name = "Bella", Race = "Labrador Retriever", Gender = "Female", DateOfBirth = new DateTime(2019, 5, 12), Image = null, UserId = "4"},
-                new Dog{Id = 8, Name = "Rocky", Race = "German Shepherd", Gender = "Male", DateOfBirth = new DateTime(2018, 10, 8), Image = null, UserId = "4"},
-                new Dog{Id = 9, Name = "Luna", Race = "Golden Retriever", Gender = "Female", DateOfBirth = new DateTime(2020, 3, 21), Image = null, UserId = "5"},
-                new Dog{Id = 10, Name = "Max", Race = "Poodle", Gender = "Male", DateOfBirth = new DateTime(2017, 12, 3), Image = null, UserId = "5"},
+                new Dog{Id = 1, Name = "Inca", Race = "Husky", Gender ="Male", DateOfBirth = DateTime.Now, Image = "inca2.jpg", UserId = "1"},
+                new Dog{Id = 2, Name = "Zara", Race = "Border-collie", Gender ="Female", DateOfBirth = DateTime.Now, Image = "FB_IMG_1676153391880.jpg", UserId = "1"},
+                new Dog{Id = 3, Name = "Zira", Race = "Husky", Gender ="Male", DateOfBirth = DateTime.Now, Image = "IMG_20201118_121810.jpg", UserId = "2"},
+                new Dog{Id = 4, Name = "Sleepy", Race = "Duitse-herder", Gender ="Male", DateOfBirth = DateTime.Now, Image = "received_455341335122662.jpeg", UserId = "2"},
+                new Dog{Id = 5, Name = "Sleepy", Race = "Duitse-herder", Gender ="Male", DateOfBirth = DateTime.Now, Image = "IMG_20210613_142801.jpg", UserId = "3"},             
+                new Dog{Id = 7, Name = "Luna", Race = "Golden Retriever", Gender = "Female", DateOfBirth = new DateTime(2020, 3, 21), Image = "IMG_20210619_162819.jpg", UserId = "4"},
+                new Dog{Id = 8, Name = "Max", Race = "Poodle", Gender = "Male", DateOfBirth = new DateTime(2017, 12, 3), Image = "received_421419258529965.jpeg", UserId = "5"},
             };
 
             var comments = new Comment[]
@@ -146,7 +146,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                 {
                     Id = 1,
                     UserId = "1",
-                    Title = "Boswandeling",
+                    Title = "HellegatBos wandeling",
                     Description = "Een mooie wandeling door het bos met je hond. Geniet van de natuur en de frisse lucht.",
                     AddressId = 7,
                     DateCreated = DateTime.Now,
@@ -155,7 +155,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                 {
                     Id = 2,
                     UserId = "2",
-                    Title = "Strandwandeling",
+                    Title = "Strandwandeling DePanne",
                     Description = "Een ontspannen wandeling met je hond langs het strand. Laat je viervoeter lekker uitwaaien!",
                     AddressId = 8,
                     DateCreated = DateTime.Now,
@@ -164,7 +164,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                 {
                     Id = 3,
                     UserId = "3",
-                    Title = "Parkwandeling",
+                    Title = "Parkwandeling Brussel",
                     Description = "Een leuke wandeling met je hond door het park. Laat je hond lekker rennen en spelen.",
                     AddressId = 9,
                     DateCreated = DateTime.Now,
@@ -173,7 +173,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                 {
                     Id = 4,
                     UserId = "4",
-                    Title = "Strandwandeling",
+                    Title = "Strandwandeling Oostende",
                     Description = "Een ontspannen wandeling met je hond langs het strand. Laat je viervoeter lekker uitwaaien!",
                     AddressId = 14,
                     DateCreated = DateTime.Now,
@@ -182,7 +182,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                 {
                     Id = 5,
                     UserId = "5",
-                    Title = "Parkwandeling",
+                    Title = "Parkwandeling Brugge",
                     Description = "Een leuke wandeling met je hond door het park. Laat je hond lekker rennen en spelen.",
                     AddressId = 15,
                     DateCreated = DateTime.Now,
@@ -205,6 +205,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                 ConcurrencyStamp = Guid.NewGuid().ToString(),
                 SecurityStamp = Guid.NewGuid().ToString(),
                 EmailConfirmed = true,
+                Image = "FB_IMG_1676153444794.jpg",
             };
             var user1 = new User
             {
@@ -215,12 +216,13 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                 LastName = "DeWachter",
                 DateOfBirth = new DateTime(1985, 7, 15),
                 Gender = "female",
-                AddressId = 2,             
+                AddressId = 2,
                 Email = "user@pri.be",
                 NormalizedEmail = "USER@PRI.BE",
                 ConcurrencyStamp = Guid.NewGuid().ToString(),
                 SecurityStamp = Guid.NewGuid().ToString(),
                 EmailConfirmed = true,
+                Image = "AInca&me_153848.jpeg",
             };
             var user2 = new User
             {
@@ -237,6 +239,7 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                 ConcurrencyStamp = Guid.NewGuid().ToString(),
                 SecurityStamp = Guid.NewGuid().ToString(),
                 EmailConfirmed = true,
+                Image = "received_3074607475886000.jpeg",
             };
             var user3 = new User
             {
@@ -310,7 +313,6 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                     ClaimType = ClaimTypes.NameIdentifier,
                     ClaimValue = admin.Id,
                 },
-
                 //user1
                 new IdentityUserClaim<string>
                 {
@@ -436,6 +438,28 @@ namespace PRI.Project.Rosseel_Almanzo.Infrastructure.Data.Seeding
                     UserId = "5",
                     ClaimType = ClaimTypes.NameIdentifier,
                     ClaimValue = user4.Id,
+                },
+
+                new IdentityUserClaim<string>
+                {
+                    Id = 22,
+                    UserId = "1",
+                    ClaimType = "profile-image",
+                    ClaimValue = admin.Image,
+                },
+                new IdentityUserClaim<string>
+                {
+                    Id = 23,
+                    UserId = "2",
+                    ClaimType = "profile-image",
+                    ClaimValue = user1.Image,
+                },
+                new IdentityUserClaim<string>
+                {
+                    Id = 24,
+                    UserId = "3",
+                    ClaimType = "profile-image",
+                    ClaimValue = user2.Image,
                 },
             };
 

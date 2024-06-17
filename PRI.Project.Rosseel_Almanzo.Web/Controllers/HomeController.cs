@@ -28,5 +28,21 @@ namespace PRI.Project.Rosseel_Almanzo.Web.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        public IActionResult Admin()
+        {
+            return View();
+        }
+        public IActionResult Events()
+        {
+            return View();
+        }
+        public IActionResult Routes()
+        {
+            return View();
+        }
+        public IActionResult Profile()
+        {
+            return View();
+        }
     }
 }

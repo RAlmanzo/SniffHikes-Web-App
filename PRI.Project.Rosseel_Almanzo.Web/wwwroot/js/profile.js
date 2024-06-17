@@ -1,0 +1,186 @@
+﻿var profileVue = new Vue({
+    el: "#profile",
+    name: "userProfile",
+    data: {
+        userUrl: "https://localhost:7038/api/Users",
+        isUser: false,
+        isOrganizer: false,
+        userId: "",
+        id: "",
+        firstName: "",
+        lastName: "",
+        dateOfBirth: "",
+        gender: "",
+        email: "",
+        address: {
+            street: "",
+            city: "",
+            state: "",
+            country: "",
+        },
+        image: "",
+        showUserDetailsSection: false,
+        userDetails: null,
+        registerErrors: {
+            FirstName: [],
+            LastName: [],
+            DateOfBirth: [],
+            Email: [],
+            Address: {
+                Street: [],
+                City: [],
+                State: [],
+                Country: [],
+            },
+        },
+    },
+    created: function () {
+        this.checkClaims();
+        this.getUser();
+    },
+    methods: {
+        getUser: async function () {
+            const url = `https://localhost:7038/api/Users/${this.userId}`
+            //set the headers => token
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`
+                }
+            };
+
+            await axios.get(url, config)
+                .then((response) => {
+                    this.userDetails = response.data;
+                    this.showUserDetailsSection = true;
+                })
+                .catch((e) => {
+                    //this.showErrorSection = true;
+                    //this.errorMessage = e.message
+                })
+        },
+        showUpdateUserModal: async function () {
+            this.clearErrors();
+            const url = `https://localhost:7038/api/Users/${this.userId}`
+
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`
+                }
+            };
+
+            await axios.get(url, config)
+                .then((response) => {
+                    this.id = response.data.id;
+                    this.firstName = response.data.firstName;
+                    this.lastName = response.data.lastName;
+                    this.dateOfBirth = response.data.dateOfBirth;
+                    this.gender = response.data.gender;
+                    this.email = response.data.email;
+                    this.address.street = response.data.address.street;
+                    this.address.city = response.data.address.city;
+                    this.address.state = response.data.address.state;
+                    this.address.country = response.data.address.country;
+                })
+                .catch((e) => {
+                    //this.showErrorSection = true;
+                    //this.errorMessage = e.message
+                })
+
+            this.toggleModal("updateUserModal");
+        },
+        updateUser: async function () {
+            const formData = new FormData();
+            formData.append("Id", this.id);
+            formData.append("FirstName", this.firstName);
+            formData.append("LastName", this.lastName);
+            formData.append("DateOfBirth", this.dateOfBirth);
+            formData.append("Gender", this.gender);
+            formData.append("Email", this.email);
+            formData.append("Address.Street", this.address.street);
+            formData.append("Address.City", this.address.city);
+            formData.append("Address.State", this.address.state);
+            formData.append("Address.Country", this.address.country);
+            formData.append("Image", this.image);
+
+            this.clearErrors();
+
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`
+                }
+            };
+
+            await axios.put(this.userUrl, formData, config)
+                .then(response => {
+                    console.log(response);
+                    this.getUser();
+                    this.toggleModal("updateUserModal");
+                })
+                .catch(error => {
+                    if (error.response && error.response.data.errors) {
+                        this.setErrors(error.response.data.errors);
+                    } else {
+                        //this.error = true;
+                        //this.errorMessage = { general: ["An unexpected error occurred."] };
+                    }
+                });
+        },
+        clearErrors: function () {
+            this.error = false;
+            this.registerErrors = {
+                Email: [],
+                DateOfBirth: [],
+                FirstName: [],
+                LastName: [],
+                Address: {
+                    Street: [],
+                    City: [],
+                    State: [],
+                    Country: [],
+                },
+            };
+        },
+        setErrors(errors) {
+            for (const key in errors) {
+                if (this.registerErrors.hasOwnProperty(key)) {
+                    this.registerErrors[key] = errors[key];
+                }
+                else if (key.startsWith("Address.")) {
+                    const addressKey = key.split('.')[1];
+                    if (this.registerErrors.Address.hasOwnProperty(addressKey)) {
+                        this.registerErrors.Address[addressKey] = errors[key];
+                    }
+                }
+            }
+        },
+        checkClaims: async function () {
+            const token = sessionStorage.getItem("token");
+
+            if (token !== null) {
+                this.isUser = hasUserRole();
+                this.isOrganizer = hasOrganizerRole();
+
+                this.userId = readUserIdFromToken();
+            }
+        },
+        toggleModal: function (modalId) {
+            $(`#${modalId}`).modal('toggle');
+        },
+        getFile: function (event) {
+            //put the file in the image
+            this.image = event.target.files[0];
+        },
+        resetForm() {
+            this.firstName = "";
+            this.lastName = "";
+            this.dateOfBirth = "";
+            this.gender = "";
+            this.email = "";
+            this.address.street = "";
+            this.address.city = "";
+            this.address.state = "";
+            this.address.country = "";
+            this.image = "";
+        },
+    }
+});

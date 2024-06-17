@@ -1,0 +1,220 @@
+﻿
+<div id="admin">
+    <div v-if="!showDetails" class="row text-center">
+        <div class="col">
+            <button v-if="!adminEventsVisible" v-on:click="showAdminEvents" class="btn btn-outline-primary w-100">Manage Events</button>
+        </div>
+        <div class="col">
+            <button v-if="!adminRoutesVisible" v-on:click="showAdminRoutes" class="btn btn-outline-primary w-100">Manage Routes</button>
+        </div>
+        <div class="col">
+            <button v-if="!adminUsersVisible" v-on:click="showAdminUsers" class="btn btn-outline-primary w-100">Manage Users</button>
+        </div>
+    </div>
+
+
+    <div v-if="adminEventsVisible" class="row">
+        <table class="table table-bordered table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Afbeelding</th>
+                    <th>Naam</th>
+                    <th>Acties</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="event in events">
+                    <td><img v-bind:src="'https://localhost:7038/images/T/' + event.image" width="80" /></td>
+                    <td></td>
+                    <td>{{event.value}}</td>
+                    <td>
+                        <div>
+                            <button class="btn btn-primary" v-on:click="showEventDetails(event.id)">info</button>
+                            <button class="btn btn-danger" v-on:click="deleteEvent(event.id)">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div v-if="showEventDetailsSection">
+        <div class="card mb-3">
+            <a href="#" class="btn btn-secondary" v-on:click="showAdminEvents">Terug</a>
+            <div class="card-header">
+                <div class="row">
+                    <div v-for="image in eventDetails.images" :key="image.value" class="col-3">
+                        <img v-bind:src="'https://localhost:7038/images/T/' + image.value" alt="Event Image" class="img-fluid" />
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{eventDetails.value}}</h5>
+                <p class="mb-1" v-html="eventDetails.description"></p>
+                <p>{{eventDetails.address.value}}</p>
+                <p>{{eventDetails.date}}</p>
+                <p>{{eventDetails.orginazer.value}}</p>
+            </div>
+        </div>
+        <h5>Comments</h5>
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div v-for="comment in eventDetails.comments" class="col-3 mb-3">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <p class="card-title">{{comment.value}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div v-if="adminRoutesVisible" class="row">
+        <table class="table table-bordered table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Afbeelding</th>
+                    <th>Naam</th>
+                    <th>Acties</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="route in routes">
+                    <td><img v-bind:src="'https://localhost:7038/images/T/' + route.image" width="80" /></td>
+                    <td></td>
+                    <td>{{route.value}}</td>
+                    <td>
+                        <div>
+                            <button class="btn btn-primary" v-on:click="showRouteDetails(route.id)">info</button>
+                            <button v-on:click="deleteRoute(route.id)" type="button" class="btn btn-danger">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div v-if="showRouteDetailsSection">
+        <div class="card mb-3">
+            <a href="#" class="btn btn-secondary" v-on:click="showAdminRoutes">Terug</a>
+            <div class="card-header">
+                <div class="row">
+                    <div v-for="image in routeDetails.images" :key="image.value" class="col-3">
+                        <img v-bind:src="'https://localhost:7038/images/T/' + image.value" alt="Event Image" class="img-fluid" />
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{routeDetails.value}}</h5>
+                <p class="mb-1" v-html="routeDetails.description"></p>
+                <p>{{routeDetails.address.value}}</p>
+                <p>{{routeDetails.date}}</p>
+                <p>{{routeDetails.orginazer.value}}</p>
+            </div>
+        </div>
+        <h5>Comments</h5>
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div v-for="comment in routeDetails.comments" class="col-3 mb-3">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <p class="card-title">{{comment.value}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div v-if="adminUsersVisible" class="row">
+        <table class="table table-bordered table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Afbeelding</th>
+                    <th>Naam</th>
+                    <th>Acties</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="user in users">
+                    <td><img v-bind:src="'https://localhost:7038/images/T/' + user.image" width="80" /></td>
+                    <td>{{user.value}}</td>
+                    <td>
+                        <div>
+                            <button class="btn btn-primary" v-on:click="showUserDetails(user.id)">info</button>
+                            <button v-on:click="deleteUser(user.id)" type="button" class="btn btn-danger">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div v-if="showUserDetailsSection">
+        <div class="card mb-3">
+            <a href="#" class="btn btn-secondary" v-on:click="showAdminUsers">Terug</a>
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <div class="card-header">
+                        <img v-bind:src="'https://localhost:7038/images/T/' + userDetails.image" alt="Event Image" class="img-fluid w-100" />
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h4 class="card-title">{{userDetails.value}}</h4>
+                        <p>Gender: {{userDetails.gender}}</p>
+                        <p>Email: {{userDetails.email}}</p>
+                        <p>Address: {{userDetails.address.value}}</p>
+                        <h5>My dogs</h5>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div v-for="dog in userDetails.dogs" class="col-3 mb-3">
+                                        <div class="card">
+                                            <img v-bind:src="'https://localhost:7038/images/T/' + dog.image" alt="Dog Image" class="card-img-top img-fluid w-50 mx-auto mt-3" />
+                                            <div class="card-body text-center">
+                                                <p class="card-title">{{dog.value}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h5>Attending Events</h5>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div v-for="attendingEvent in userDetails.attendingEvents" class="col-3 mb-3">
+                                        <div class="card">
+                                            <img v-bind:src="'https://localhost:7038/images/T/' + attendingEvent.image" alt="Event Image" class="card-img-top img-fluid w-50 mx-auto mt-3" />
+                                            <div class="card-body text-center">
+                                                <p class="card-title">{{attendingEvent.value}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h5>Organized Events</h5>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div v-for="organizedEvent in userDetails.organizedEvents" class="col-3 mb-3">
+                                        <div class="card">
+                                            <img v-bind:src="'https://localhost:7038/images/T/' + organizedEvent.image" alt="Event Image" class="card-img-top img-fluid w-50 mx-auto mt-3" />
+                                            <div class="card-body text-center">
+                                                <p class="card-title">{{organizedEvent.value}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

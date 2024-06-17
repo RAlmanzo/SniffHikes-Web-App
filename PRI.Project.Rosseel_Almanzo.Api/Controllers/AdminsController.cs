@@ -18,11 +18,12 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
         private readonly IUserService _userService;
         private readonly IFileService _fileService;
 
-        public AdminsController(IEventService eventService, IRouteService routeService, IUserService userService)
+        public AdminsController(IEventService eventService, IRouteService routeService, IUserService userService, IFileService fileService)
         {
             _eventService = eventService;
             _routeService = routeService;
             _userService = userService;
+            _fileService = fileService;
         }
 
         [HttpGet("events")]

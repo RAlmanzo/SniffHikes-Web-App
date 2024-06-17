@@ -36,7 +36,6 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Dtos
         [Compare("Password")]
         public string RepeatPassword { get; set; }
 
-        [Required(ErrorMessage = "Address is required")]
         public AddressRequestDto Address { get; set; }
         public IFormFile Image { get; set; }
     }
