@@ -226,7 +226,7 @@
             this.showDetails = false;
         },
         toggleModal: function (modalId) {
-            if (modalId === "crudEventModal") {
+            if (modalId === "crudRouteModal") {
                 this.resetForm();
             }
 
