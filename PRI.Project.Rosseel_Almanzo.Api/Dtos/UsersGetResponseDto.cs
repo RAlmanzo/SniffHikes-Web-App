@@ -8,7 +8,7 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Dtos
         public string Gender { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public BaseDto Address { get; set; }
+        public AddressDto Address { get; set; }
         public IEnumerable<BaseDto> Dogs { get; set; }
         public string Image { get; set; }
         public IEnumerable<BaseDto> Comments { get; set; }
