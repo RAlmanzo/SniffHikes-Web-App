@@ -50,12 +50,23 @@
             <div class="card-body">
                 <h5 class="card-title">{{eventDetails.value}}</h5>
                 <p class="mb-1" v-html="eventDetails.description"></p>
-                <p>{{eventDetails.address.street}}</p>
-                <p>{{eventDetails.address.city}}</p>
-                <p>{{eventDetails.address.state}}</p>
-                <p>{{eventDetails.address.country}}</p>
+                <p>{{eventDetails.address.value}}</p>
                 <p>{{eventDetails.date}}</p>
                 <p>{{eventDetails.orginazer.value}}</p>
+            </div>
+        </div>
+        <h5>Comments</h5>
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div v-for="comment in eventDetails.comments" class="col-3 mb-3">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <p class="card-title">{{comment.value}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -97,12 +108,23 @@
             <div class="card-body">
                 <h5 class="card-title">{{routeDetails.value}}</h5>
                 <p class="mb-1" v-html="routeDetails.description"></p>
-                <p>{{routeDetails.address.street}}</p>
-                <p>{{routeDetails.address.city}}</p>
-                <p>{{routeDetails.address.state}}</p>
-                <p>{{routeDetails.address.country}}</p>
+                <p>{{routeDetails.address.value}}</p>
                 <p>{{routeDetails.date}}</p>
                 <p>{{routeDetails.orginazer.value}}</p>
+            </div>
+        </div>
+        <h5>Comments</h5>
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div v-for="comment in routeDetails.comments" class="col-3 mb-3">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <p class="card-title">{{comment.value}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
