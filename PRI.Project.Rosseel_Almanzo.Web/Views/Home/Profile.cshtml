@@ -1,1 +1,138 @@
-﻿
+﻿<div id="profile">
+    <div v-if="showUserDetailsSection">
+        <div class="card mb-3">
+            <a class="nav-link btn btn-outline-primary text-dark" asp-area="" asp-controller="Home" asp-action="Index">Return</a>
+            <a class="nav-link btn btn-outline-primary text-dark" v-on:click="showUpdateUserModal">Update Profile</a>
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <div class="card-header">
+                        <img v-bind:src="'https://localhost:7038/images/T/' + userDetails.image" alt="Event Image" class="img-fluid w-100" />
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h4 class="card-title">{{userDetails.value}}</h4>
+                        <p>Gender: {{userDetails.gender}}</p>
+                        <p>Email: {{userDetails.email}}</p>
+                        <p>Address: {{userDetails.address.value}}</p>
+                        <h5>My dogs</h5>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div v-for="dog in userDetails.dogs" class="col-3 mb-3">
+                                        <div class="card">
+                                            <img v-bind:src="'https://localhost:7038/images/T/' + dog.image" alt="Dog Image" class="card-img-top img-fluid w-50 mx-auto mt-3" />
+                                            <div class="card-body text-center">
+                                                <p class="card-title">{{dog.value}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h5>Attending Events</h5>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div v-for="attendingEvent in userDetails.attendingEvents" class="col-3 mb-3">
+                                        <div class="card">
+                                            <img v-bind:src="'https://localhost:7038/images/T/' + attendingEvent.image" alt="Event Image" class="card-img-top img-fluid w-50 mx-auto mt-3" />
+                                            <div class="card-body text-center">
+                                                <p class="card-title">{{attendingEvent.value}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h5>Organized Events</h5>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div v-for="organizedEvent in userDetails.organizedEvents" class="col-3 mb-3">
+                                        <div class="card">
+                                            <img v-bind:src="'https://localhost:7038/images/T/' + organizedEvent.image" alt="Event Image" class="card-img-top img-fluid w-50 mx-auto mt-3" />
+                                            <div class="card-body text-center">
+                                                <p class="card-title">{{organizedEvent.value}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="updateUserModal" tabindex="-1" role="dialog" aria-labelledby="updateUserModal-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateUserModalTitle">Update Pofile</h5>
+                    <button v-on:click="toggleModal('updateUserModal')" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Modal content -->
+                    <form id="updateUserModal" v-on:submit.prevent="updateUser">
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input v-model="firstName" type="text" class="form-control">
+                            <div v-if="registerErrors.FirstName.length" class="alert alert-danger p-2 my-2">{{ registerErrors.FirstName[0] }}</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input v-model="lastName" type="text" class="form-control">
+                            <div v-if="registerErrors.LastName.length" class="alert alert-danger p-2 my-2">{{ registerErrors.LastName[0] }}</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Date of Birth</label>
+                            <input v-model="dateOfBirth" type="date" class="form-control">
+                            <div v-if="registerErrors.DateOfBirth.length" class="alert alert-danger p-2 my-2">{{ registerErrors.DateOfBirth[0] }}</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <input v-model="gender" type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input v-model="email" type="email" class="form-control">
+                            <div v-if="registerErrors.Email.length" class="alert alert-danger p-2 my-2">{{ registerErrors.Email[0] }}</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Street</label>
+                            <input v-model="address.street" type="text" class="form-control">
+                            <div v-if="registerErrors.Address?.Street?.length" class="alert alert-danger p-2 my-2">{{ registerErrors.Address.Street[0] }}</div>
+                        </div>
+                        <div class="form-group">
+                            <label>City</label>
+                            <input v-model="address.city" type="text" class="form-control">
+                            <div v-if="registerErrors.Address?.City?.length" class="alert alert-danger p-2 my-2">{{ registerErrors.Address.City[0] }}</div>
+                        </div>
+                        <div class="form-group">
+                            <label>State</label>
+                            <input v-model="address.state" type="text" class="form-control">
+                            <div v-if="registerErrors.Address?.State?.length" class="alert alert-danger p-2 my-2">{{ registerErrors.Address.State[0] }}</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Country</label>
+                            <input v-model="address.country" type="text" class="form-control">
+                            <div v-if="registerErrors.Address?.Country?.length" class="alert alert-danger p-2 my-2">{{ registerErrors.Address.Country[0] }}</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Image</label>
+                            <input type="file" v-on:change="getFile($event)" class="form-control">
+                        </div>
+                        <div class="modal-footer">
+                            <button v-on:click="toggleModal('updateUserModal')" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
