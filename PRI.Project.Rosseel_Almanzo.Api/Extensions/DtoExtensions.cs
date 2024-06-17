@@ -1,4 +1,5 @@
-﻿using PRI.Project.Rosseel_Almanzo.Api.Dtos;
+﻿using Microsoft.AspNetCore.Routing;
+using PRI.Project.Rosseel_Almanzo.Api.Dtos;
 using PRI.Project.Rosseel_Almanzo.Core.Entities;
 using Route = PRI.Project.Rosseel_Almanzo.Core.Entities.Route;
 
@@ -81,15 +82,20 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
             return new UsersGetResponseDto
             {
                 Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
                 Value = $"{user.LastName} {user.FirstName}",
                 DateOfBirth = user.DateOfBirth,
                 Gender = user.Gender,
                 Email = user.Email,
                 Image = user.Image,
-                Address = new BaseDto
+                Address = new AddressDto
                 {
                     Id = user.AddressId,
-                    Value = $"{user.Address.Street} {user.Address.City} {user.Address.State} {user.Address.Country}",
+                    Street = user.Address.Street,
+                    City = user.Address.City,
+                    State = user.Address.State,
+                    Country = user.Address.Country,
                 },
                 Dogs = user.Dogs.Select(d => new BaseDto
                 {
