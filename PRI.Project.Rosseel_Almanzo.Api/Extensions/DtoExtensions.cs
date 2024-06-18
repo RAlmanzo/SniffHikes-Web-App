@@ -120,8 +120,8 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                 {
                     Id = (int)e.Id,
                     Value = e.Title,
-                    Image = e.Images.FirstOrDefault().File,
-                }),
+                    Image = e.Images != null ? e.Images.FirstOrDefault()?.File : null
+                }).ToList(),
             };
         }
 

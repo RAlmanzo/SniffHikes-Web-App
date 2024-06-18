@@ -202,7 +202,6 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Controllers
 
         [HttpDelete("{id}/image")]
         [Authorize(Policy = "UserOrginazer")]
-        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> DeleteImage(int id)
         {
             //delete image from wwwroot
