@@ -84,6 +84,11 @@
                 });
         },
         registerUser: async function () {
+            if (!this.image) {
+                alert("Please select an image to upload.");
+                return;
+            }
+
             const formData = new FormData();
             formData.append("FirstName", this.firstName);
             formData.append("LastName", this.lastName);

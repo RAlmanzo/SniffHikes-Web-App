@@ -37,6 +37,7 @@
         isUser: false,
         isOrganizer: false,
         userId: "",
+        newImage: "",
     },
     created: function () {
         this.checkClaims();
@@ -64,6 +65,7 @@
                     this.address.state = response.data.address.state;
                     this.address.country = response.data.address.country;
                     this.organizerId = response.data.orginazer.id;
+                    this.images = response.data.images;
                 })
                 .catch((e) => {
                     //this.showErrorSection = true;
@@ -114,6 +116,11 @@
                 });
         },
         createEvent: async function () {
+            if (this.images.length <= 0) {
+                alert("Please select atleast 1 image to upload.");
+                return;
+            }
+
             this.clearErrors();
             this.eventDetails = null;
             const token = sessionStorage.getItem("token");
@@ -225,6 +232,57 @@
                     });
             };
         },
+        deleteImage: async function (id) {
+            if (confirm("Are u sure u want to delete Image?")) {
+                const url = `https://localhost:7038/api/Events/${id}/image`
+                //set the headers => token
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${sessionStorage.getItem("token")}`
+                    }
+                };
+                //send the request
+                await axios.delete(url, config)
+                    .then(response => {
+                        console.log(response.data);
+                        this.images = this.images.filter(el => el.id !== id);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            };
+        },
+        addImage: async function () {
+            if (!this.newImage) {
+                alert("Please select an image to upload.");
+                return;
+            }
+
+            const url = `https://localhost:7038/api/Events/${this.id}/image`
+
+            let formData = new FormData();
+            formData.append('image', this.newImage);
+
+            //set the headers => token
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`
+                }
+            };
+            //send the request
+            await axios.put(url, formData, config, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+                .then(response => {
+                    console.log(response.data);
+                    this.images = response.data.images;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
         showEvents: async function () {
             if (this.events.length <= 0) {
                 this.getEvents();
@@ -241,9 +299,13 @@
 
             $(`#${modalId}`).modal('toggle');
         },
-        getFile: function (event) {
+        getFiles: function (event) {
             //put the file in the image
             this.images = event.target.files;
+        },
+        getFile: function (event) {
+            //put the file in the image
+            this.newImage = event.target.files[0];
         },
         setErrors(errors) {
             for (const key in errors) {

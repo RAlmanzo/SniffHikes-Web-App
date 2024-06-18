@@ -33,12 +33,80 @@
                 Country: [],
             },
         },
+        dogs: [],
+        dogName: "",
+        dogDateOfBirth: "",
+        dogGender: "",
+        dogRace: "",
+        dogImage: "",
     },
     created: function () {
         this.checkClaims();
         this.getUser();
     },
     methods: {
+        addDog: async function () {
+            if (!this.dogImage) {
+                alert("Please select an image to upload.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("Name", this.dogName);
+            formData.append("DateOfBirth", this.dogDateOfBirth);
+            formData.append("Gender", this.dogGender);
+            formData.append("Race", this.dogRace);
+            formData.append("Image", this.dogImage);
+
+            //this.clearErrors();
+
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`
+                }
+            };
+
+            const url = `https://localhost:7038/api/Users/${this.userId}/dog`
+
+            await axios.post(url, formData, config,{
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+                .then(response => {
+                    this.dogs = response.data.dogs;                  
+                    this.toggleModal("createDogModal");
+                    this.resetdogForm();
+                })
+                .catch(error => {
+                    if (error.response && error.response.data.errors) {
+                        this.setErrors(error.response.data.errors);
+                    } else {
+                        this.error = true;
+                        this.errorMessage = { general: ["An unexpected error occurred."] };
+                    }
+                });
+        },
+        deleteDog: async function (id) {
+            if (confirm("Are u sure u want to delete Dog?")) {
+                const url = `https://localhost:7038/api/Users/${id}/dog`
+                //set the headers => token
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${sessionStorage.getItem("token")}`
+                    }
+                };
+                //send the request
+                await axios.delete(url, config)
+                    .then(response => {
+                        console.log(response.data);
+                        this.dogs = this.dogs.filter(el => el.id !== id);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            };
+        },
         getUser: async function () {
             const url = `https://localhost:7038/api/Users/${this.userId}`
             //set the headers => token
@@ -80,6 +148,7 @@
                     this.address.city = response.data.address.city;
                     this.address.state = response.data.address.state;
                     this.address.country = response.data.address.country;
+                    this.dogs = response.data.dogs;
                 })
                 .catch((e) => {
                     //this.showErrorSection = true;
@@ -170,6 +239,10 @@
             //put the file in the image
             this.image = event.target.files[0];
         },
+        getDogFile: function (event) {
+            //put the file in the image
+            this.dogImage = event.target.files[0];
+        },
         resetForm() {
             this.firstName = "";
             this.lastName = "";
@@ -181,6 +254,13 @@
             this.address.state = "";
             this.address.country = "";
             this.image = "";
+        },
+        resetDogForm() {
+            this.dogName = "";
+            this.dogDateOfBirth = "";
+            this.dogGender = "";
+            this.dogRace = "";
+            this.dogImage = "";
         },
     }
 });
