@@ -103,7 +103,7 @@
                         </div>
                         <div class="form-group">
                             <label>Image</label>
-                            <input type="file" v-on:change="getFile($event)" class="form-control" multiple>
+                            <input type="file" v-on:change="getFiles($event)" class="form-control" multiple>
                         </div>
                         <div class="modal-footer">
                             <button v-on:click="toggleModal('crudRouteModal')" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -125,6 +125,15 @@
                 </div>
                 <div class="modal-body">
                     <!-- Modal content -->
+                    <div class="row">
+                        <div v-for="image in images" :key="image.value" class="col-3">
+                            <img v-on:click="deleteImage(image.id)" v-bind:src="'https://localhost:7038/images/T/' + image.value" alt="Event Image" class="img-fluid" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="file" v-on:change="getFile($event)" class="form-control">
+                        <button v-on:click="addImage">Add Image</button>
+                    </div>
                     <form id="updateRouteModal" v-on:submit.prevent="updateRoute">
                         <div class="form-group">
                             <label>Title</label>
@@ -139,22 +148,22 @@
                         <div class="form-group">
                             <label>Street</label>
                             <input v-model="address.street" type="text" class="form-control">
-                            @*<div v-if="createErrors.Address?.Street?.length" class="alert alert-danger p-2 my-2">{{ createErrors.Address.Street[0] }}</div>*@
+                            <div v-if="createErrors.Address?.Street?.length" class="alert alert-danger p-2 my-2">{{ createErrors.Address.Street[0] }}</div>
                         </div>
                         <div class="form-group">
                             <label>City</label>
                             <input v-model="address.city" type="text" class="form-control">
-                            @*<div v-if="createErrors.Address?.City?.length" class="alert alert-danger p-2 my-2">{{ createErrors.Address.City[0] }}</div>*@
+                            <div v-if="createErrors.Address?.City?.length" class="alert alert-danger p-2 my-2">{{ createErrors.Address.City[0] }}</div>
                         </div>
                         <div class="form-group">
                             <label>State</label>
                             <input v-model="address.state" type="text" class="form-control">
-                            @*<div v-if="createErrors.Address?.State?.length" class="alert alert-danger p-2 my-2">{{ createErrors.Address.State[0] }}</div>*@
+                            <div v-if="createErrors.Address?.State?.length" class="alert alert-danger p-2 my-2">{{ createErrors.Address.State[0] }}</div>
                         </div>
                         <div class="form-group">
                             <label>Country</label>
                             <input v-model="address.country" type="text" class="form-control">
-                            @*<div v-if="createErrors.Address?.Country?.length" class="alert alert-danger p-2 my-2">{{ createErrors.Address.Country[0] }}</div>*@
+                            <div v-if="createErrors.Address?.Country?.length" class="alert alert-danger p-2 my-2">{{ createErrors.Address.Country[0] }}</div>
                         </div>
                         <div class="modal-footer">
                             <button v-on:click="toggleModal('updateRouteModal')" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

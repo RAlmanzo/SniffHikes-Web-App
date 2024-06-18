@@ -123,12 +123,72 @@
                             <div v-if="registerErrors.Address?.Country?.length" class="alert alert-danger p-2 my-2">{{ registerErrors.Address.Country[0] }}</div>
                         </div>
                         <div class="form-group">
-                            <label>Image</label>
+                            <label>Add Image</label>
                             <input type="file" v-on:change="getFile($event)" class="form-control">
                         </div>
                         <div class="modal-footer">
                             <button v-on:click="toggleModal('updateUserModal')" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </form>
+                    <div class="row">
+                        <div class="d-flex align-items-center">
+                            <h5 class="me-2">My dogs</h5>
+                            <button v-on:click="toggleModal('createDogModal')" class="btn btn-primary ms-auto">Add dog</button>
+                        </div>
+                        <div v-for="dog in dogs" class="col-3 mb-3">
+                            <div class="card" v-on:click="deleteDog(dog.id)">
+                                <img v-bind:src="'https://localhost:7038/images/T/' + dog.image" alt="Dog Image" class="card-img-top img-fluid w-50 mx-auto mt-3" />
+                                <div class="card-body text-center">
+                                    <p class="card-title">{{dog.value}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="createDogModal" tabindex="-1" role="dialog" aria-labelledby="createDogModal-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createDogModalTitle">Create Dog</h5>
+                    <button v-on:click="toggleModal('createDogModal')" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Modal content -->
+                    <form id="createDogModal" v-on:submit.prevent="addDog">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input v-model="dogName" type="text" class="form-control">
+                            @*<div v-if="createErrors.Title.length" class="alert alert-danger p-2 my-2">{{ createErrors.Title[0] }}</div>*@
+                        </div>
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <input v-model="dogGender" type="text" class="form-control">
+                            @*<div v-if="createErrors.Description.length" class="alert alert-danger p-2 my-2">{{ createErrors.Description[0] }}</div>*@
+                        </div>
+                        <div class="form-group">
+                            <label>Race</label>
+                            <input v-model="dogRace" type="text" class="form-control">
+                            @*<div v-if="createErrors.Description.length" class="alert alert-danger p-2 my-2">{{ createErrors.Description[0] }}</div>*@
+                        </div>
+                        <div class="form-group">
+                            <label>Date of Birth</label>
+                            <input v-model="dogDateOfBirth" type="date" class="form-control">
+                            @*<div v-if="registerErrors.DateOfBirth.length" class="alert alert-danger p-2 my-2">{{ registerErrors.DateOfBirth[0] }}</div>*@
+                        </div>
+                        <div class="form-group">
+                            <label>Image</label>
+                            <input type="file" v-on:change="getDogFile($event)" class="form-control" multiple>
+                        </div>
+                        <div class="modal-footer">
+                            <button v-on:click="toggleModal('createDogModal')" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Create</button>
                         </div>
                     </form>
                 </div>

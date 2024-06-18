@@ -114,7 +114,7 @@
                         </div>
                         <div class="form-group">
                             <label>Image</label>
-                            <input type="file" v-on:change="getFile($event)" class="form-control" multiple>
+                            <input type="file" v-on:change="getFiles($event)" class="form-control" multiple>
                         </div>
                         <div class="modal-footer">
                             <button v-on:click="toggleModal('crudEventModal')" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -135,6 +135,15 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <div class="row">
+                        <div v-for="image in images" :key="image.value" class="col-3">
+                            <img v-on:click="deleteImage(image.id)" v-bind:src="'https://localhost:7038/images/T/' + image.value" alt="Event Image" class="img-fluid" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="file" v-on:change="getFile($event)" class="form-control">
+                        <button v-on:click="addImage">Add Image</button>
+                    </div>
                     <!-- Modal content -->
                     <form id="updateEventModal" v-on:submit.prevent="updateEvent">
                         <div class="form-group">
