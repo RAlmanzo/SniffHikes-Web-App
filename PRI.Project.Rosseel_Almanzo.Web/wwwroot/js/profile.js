@@ -39,6 +39,10 @@
         dogGender: "",
         dogRace: "",
         dogImage: "",
+        createDogErrors: {
+            Name: [],
+            DateOfBirth: [],
+        },
     },
     created: function () {
         this.checkClaims();
@@ -58,8 +62,6 @@
             formData.append("Race", this.dogRace);
             formData.append("Image", this.dogImage);
 
-            //this.clearErrors();
-
             const config = {
                 headers: {
                     Authorization: `Bearer ${sessionStorage.getItem("token")}`
@@ -76,11 +78,13 @@
                 .then(response => {
                     this.dogs = response.data.dogs;                  
                     this.toggleModal("createDogModal");
+                    this.toggleModal("updateUserModal");
                     this.resetdogForm();
+                    this.clearDogErrors();
                 })
                 .catch(error => {
                     if (error.response && error.response.data.errors) {
-                        this.setErrors(error.response.data.errors);
+                        this.setDogErrors(error.response.data.errors);
                     } else {
                         this.error = true;
                         this.errorMessage = { general: ["An unexpected error occurred."] };
@@ -171,8 +175,6 @@
             formData.append("Address.Country", this.address.country);
             formData.append("Image", this.image);
 
-            this.clearErrors();
-
             const config = {
                 headers: {
                     Authorization: `Bearer ${sessionStorage.getItem("token")}`
@@ -183,6 +185,7 @@
                 .then(response => {
                     console.log(response);
                     this.getUser();
+                    this.clearErrors();
                     this.toggleModal("updateUserModal");
                 })
                 .catch(error => {
@@ -229,7 +232,16 @@
                 },
             };
         },
+        clearDogErrors: function () {
+            this.error = false;
+            this.createDogErrors = {
+                Name: [],
+                DateOfBirth: [],
+            };
+        },
         setErrors(errors) {
+            this.clearErrors();
+
             for (const key in errors) {
                 if (this.registerErrors.hasOwnProperty(key)) {
                     this.registerErrors[key] = errors[key];
@@ -239,6 +251,15 @@
                     if (this.registerErrors.Address.hasOwnProperty(addressKey)) {
                         this.registerErrors.Address[addressKey] = errors[key];
                     }
+                }
+            }
+        },
+        setDogErrors(errors) {
+            this.clearDogErrors();
+
+            for (const key in errors) {
+                if (this.createDogErrors.hasOwnProperty(key)) {
+                    this.createDogErrors[key] = errors[key];
                 }
             }
         },
