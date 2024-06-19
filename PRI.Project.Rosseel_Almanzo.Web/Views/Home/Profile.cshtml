@@ -3,7 +3,7 @@
         <div class="card mb-3">
             <a class="nav-link btn btn-outline-primary text-dark" asp-area="" asp-controller="Home" asp-action="Index">Return</a>
             <a class="nav-link btn btn-outline-primary text-dark" v-on:click="showUpdateUserModal">Update Profile</a>
-            <a class="nav-link btn btn-outline-danger text-dark" v-on:click="deleteUser">Update Profile</a>
+            <a class="nav-link btn btn-outline-danger text-dark" v-on:click="deleteUser">Delete Profile</a>
             <div class="row no-gutters">
                 <div class="col-md-4">
                     <div class="card-header">
@@ -82,17 +82,17 @@
                         <div class="form-group">
                             <label>First Name</label>
                             <input v-model="firstName" type="text" class="form-control">
-                            <div v-if="registerErrors.FirstName.length" class="alert alert-danger p-2 my-2">{{ registerErrors.FirstName[0] }}</div>
+                            <div v-if="registerErrors.FirstName?.length" class="alert alert-danger p-2 my-2">{{ registerErrors.FirstName[0] }}</div>
                         </div>
                         <div class="form-group">
                             <label>Last Name</label>
                             <input v-model="lastName" type="text" class="form-control">
-                            <div v-if="registerErrors.LastName.length" class="alert alert-danger p-2 my-2">{{ registerErrors.LastName[0] }}</div>
+                            <div v-if="registerErrors.LastName?.length" class="alert alert-danger p-2 my-2">{{ registerErrors.LastName[0] }}</div>
                         </div>
                         <div class="form-group">
                             <label>Date of Birth</label>
                             <input v-model="dateOfBirth" type="date" class="form-control">
-                            <div v-if="registerErrors.DateOfBirth.length" class="alert alert-danger p-2 my-2">{{ registerErrors.DateOfBirth[0] }}</div>
+                            <div v-if="registerErrors.DateOfBirth?.length" class="alert alert-danger p-2 my-2">{{ registerErrors.DateOfBirth[0] }}</div>
                         </div>
                         <div class="form-group">
                             <label>Gender</label>
@@ -101,7 +101,7 @@
                         <div class="form-group">
                             <label>Email</label>
                             <input v-model="email" type="email" class="form-control">
-                            <div v-if="registerErrors.Email.length" class="alert alert-danger p-2 my-2">{{ registerErrors.Email[0] }}</div>
+                            <div v-if="registerErrors.Email?.length" class="alert alert-danger p-2 my-2">{{ registerErrors.Email[0] }}</div>
                         </div>
                         <div class="form-group">
                             <label>Street</label>
@@ -135,7 +135,7 @@
                     <div class="row">
                         <div class="d-flex align-items-center">
                             <h5 class="me-2">My dogs</h5>
-                            <button v-on:click="toggleModal('createDogModal')" class="btn btn-primary ms-auto">Add dog</button>
+                            <button v-on:click="() => { toggleModal('createDogModal'); toggleModal('updateUserModal'); }" class="btn btn-primary ms-auto">Add dog</button>
                         </div>
                         <div v-for="dog in dogs" class="col-3 mb-3">
                             <div class="card" v-on:click="deleteDog(dog.id)">
@@ -156,7 +156,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="createDogModalTitle">Create Dog</h5>
-                    <button v-on:click="toggleModal('createDogModal')" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button v-on:click="() => { toggleModal('createDogModal'); toggleModal('updateUserModal'); }" type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -166,29 +166,27 @@
                         <div class="form-group">
                             <label>Name</label>
                             <input v-model="dogName" type="text" class="form-control">
-                            @*<div v-if="createErrors.Title.length" class="alert alert-danger p-2 my-2">{{ createErrors.Title[0] }}</div>*@
+                            <div v-if="createDogErrors.Name?.length" class="alert alert-danger p-2 my-2">{{ createDogErrors.Name[0] }}</div>
                         </div>
                         <div class="form-group">
                             <label>Gender</label>
                             <input v-model="dogGender" type="text" class="form-control">
-                            @*<div v-if="createErrors.Description.length" class="alert alert-danger p-2 my-2">{{ createErrors.Description[0] }}</div>*@
                         </div>
                         <div class="form-group">
                             <label>Race</label>
                             <input v-model="dogRace" type="text" class="form-control">
-                            @*<div v-if="createErrors.Description.length" class="alert alert-danger p-2 my-2">{{ createErrors.Description[0] }}</div>*@
                         </div>
                         <div class="form-group">
                             <label>Date of Birth</label>
                             <input v-model="dogDateOfBirth" type="date" class="form-control">
-                            @*<div v-if="registerErrors.DateOfBirth.length" class="alert alert-danger p-2 my-2">{{ registerErrors.DateOfBirth[0] }}</div>*@
+                            <div v-if="createDogErrors.DateOfBirth?.length" class="alert alert-danger p-2 my-2">{{ createDogErrors.DateOfBirth[0] }}</div>
                         </div>
                         <div class="form-group">
                             <label>Image</label>
                             <input type="file" v-on:change="getDogFile($event)" class="form-control" multiple>
                         </div>
                         <div class="modal-footer">
-                            <button v-on:click="toggleModal('createDogModal')" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button v-on:click="() => { toggleModal('createDogModal'); toggleModal('updateUserModal'); }" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Create</button>
                         </div>
                     </form>

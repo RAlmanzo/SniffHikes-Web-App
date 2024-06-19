@@ -1,6 +1,6 @@
 ﻿
 <div id="events">
-    <button v-if="!showEventDetailsSection" v-on:click="toggleModal('crudEventModal')" type="button" class="btn btn-outline-info">Create Event</button>
+    <button v-if="!showEventDetailsSection && isOrganizer" v-on:click="toggleModal('crudEventModal')" type="button" class="btn btn-outline-info">Create Event</button>
 
     <a v-if="!showEventDetailsSection" class="nav-link btn btn-outline-primary text-dark" asp-area="" asp-controller="Home" asp-action="Index">Return</a>
     <div class="row" v-if="!showDetails">
@@ -75,22 +75,22 @@
                         <div class="form-group">
                             <label>Title</label>
                             <input v-model="title" type="text" class="form-control">
-                            <div v-if="createErrors.Title.length" class="alert alert-danger p-2 my-2">{{ createErrors.Title[0] }}</div>
+                            <div v-if="createErrors.Title?.length" class="alert alert-danger p-2 my-2">{{ createErrors.Title[0] }}</div>
                         </div>
                         <div class="form-group">
                             <label>Description</label>
                             <input v-model="description" type="text" class="form-control">
-                            <div v-if="createErrors.Description.length" class="alert alert-danger p-2 my-2">{{ createErrors.Description[0] }}</div>
+                            <div v-if="createErrors.Description?.length" class="alert alert-danger p-2 my-2">{{ createErrors.Description[0] }}</div>
                         </div>
                         <div class="form-group">
                             <label>Date Event</label>
                             <input v-model="date" type="date" class="form-control">
-                            <div v-if="createErrors.Date.length" class="alert alert-danger p-2 my-2">{{ createErrors.Date[0] }}</div>
+                            <div v-if="createErrors.Date?.length" class="alert alert-danger p-2 my-2">{{ createErrors.Date[0] }}</div>
                         </div>
                         <div class="form-group">
                             <label>Price</label>
                             <input v-model="price" type="number" class="form-control">
-                            <div v-if="createErrors.Price.length" class="alert alert-danger p-2 my-2">{{ createErrors.Price[0] }}</div>
+                            <div v-if="createErrors.Price?.length" class="alert alert-danger p-2 my-2">{{ createErrors.Price[0] }}</div>
                         </div>
                         <div class="form-group">
                             <label>Street</label>
@@ -149,22 +149,22 @@
                         <div class="form-group">
                             <label>Title</label>
                             <input v-model="title" type="text" class="form-control">
-                            <div v-if="createErrors.Title.length" class="alert alert-danger p-2 my-2">{{ createErrors.Title[0] }}</div>
+                            <div v-if="createErrors.Title?.length" class="alert alert-danger p-2 my-2">{{ createErrors.Title[0] }}</div>
                         </div>
                         <div class="form-group">
                             <label>Description</label>
                             <input v-model="description" type="text" class="form-control">
-                            <div v-if="createErrors.Description.length" class="alert alert-danger p-2 my-2">{{ createErrors.Description[0] }}</div>
+                            <div v-if="createErrors.Description?.length" class="alert alert-danger p-2 my-2">{{ createErrors.Description[0] }}</div>
                         </div>
                         <div class="form-group">
                             <label>Date Event</label>
                             <input v-model="date" type="date" class="form-control">
-                            <div v-if="createErrors.Date.length" class="alert alert-danger p-2 my-2">{{ createErrors.Date[0] }}</div>
+                            <div v-if="createErrors.Date?.length" class="alert alert-danger p-2 my-2">{{ createErrors.Date[0] }}</div>
                         </div>
                         <div class="form-group">
                             <label>Price</label>
                             <input v-model="price" type="number" class="form-control">
-                            <div v-if="createErrors.Price.length" class="alert alert-danger p-2 my-2">{{ createErrors.Price[0] }}</div>
+                            <div v-if="createErrors.Price?.length" class="alert alert-danger p-2 my-2">{{ createErrors.Price[0] }}</div>
                         </div>
                         <div class="form-group">
                             <label>Street</label>

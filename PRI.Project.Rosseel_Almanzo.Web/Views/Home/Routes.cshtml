@@ -1,5 +1,5 @@
 ﻿<div id="routes">
-    <button v-if="!showRouteDetailsSection" v-on:click="toggleModal('crudRouteModal')" type="button" class="btn btn-outline-info">Create Route</button>
+    <button v-if="!showRouteDetailsSection && isOrganizer" v-on:click="toggleModal('crudRouteModal')" type="button" class="btn btn-outline-info">Create Route</button>
 
     <a v-if="!showRouteDetailsSection" class="nav-link btn btn-outline-primary text-dark" asp-area="" asp-controller="Home" asp-action="Index">Return</a>
     <div class="row" v-if="!showDetails">
@@ -74,12 +74,12 @@
                         <div class="form-group">
                             <label>Title</label>
                             <input v-model="title" type="text" class="form-control">
-                            <div v-if="createErrors.Title.length" class="alert alert-danger p-2 my-2">{{ createErrors.Title[0] }}</div>
+                            <div v-if="createErrors.Title?.length" class="alert alert-danger p-2 my-2">{{ createErrors.Title[0] }}</div>
                         </div>
                         <div class="form-group">
                             <label>Description</label>
                             <input v-model="description" type="text" class="form-control">
-                            <div v-if="createErrors.Description.length" class="alert alert-danger p-2 my-2">{{ createErrors.Description[0] }}</div>
+                            <div v-if="createErrors.Description?.length" class="alert alert-danger p-2 my-2">{{ createErrors.Description[0] }}</div>
                         </div>
                         <div class="form-group">
                             <label>Street</label>
@@ -138,12 +138,12 @@
                         <div class="form-group">
                             <label>Title</label>
                             <input v-model="title" type="text" class="form-control">
-                            <div v-if="createErrors.Title.length" class="alert alert-danger p-2 my-2">{{ createErrors.Title[0] }}</div>
+                            <div v-if="createErrors.Title?.length" class="alert alert-danger p-2 my-2">{{ createErrors.Title[0] }}</div>
                         </div>
                         <div class="form-group">
                             <label>Description</label>
                             <input v-model="description" type="text" class="form-control">
-                            <div v-if="createErrors.Description.length" class="alert alert-danger p-2 my-2">{{ createErrors.Description[0] }}</div>
+                            <div v-if="createErrors.Description?.length" class="alert alert-danger p-2 my-2">{{ createErrors.Description[0] }}</div>
                         </div>
                         <div class="form-group">
                             <label>Street</label>
