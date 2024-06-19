@@ -34,8 +34,8 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                 DateCreated = DateTime.Now,
                 Orginazer = new BaseUserDto
                 {
-                    Id = selectedEvent.OrganizerId,
-                    Value = $"{selectedEvent.Organizer.FirstName} {selectedEvent.Organizer.LastName}",
+                    Id = selectedEvent.OrganizerId != null ? selectedEvent.OrganizerId : "",
+                    Value = selectedEvent.Organizer != null? $"{selectedEvent.Organizer.FirstName} {selectedEvent.Organizer.LastName}" : "",
                 },
                 Address = new AddressDto
                 {
@@ -150,8 +150,8 @@ namespace PRI.Project.Rosseel_Almanzo.Api.Extensions
                 DateCreated = DateTime.Now,
                 Orginazer = new BaseUserDto
                 {
-                    Id = route.UserId,
-                    Value = $"{route.User.FirstName} {route.User.LastName}",
+                    Id = route.UserId ?? "",
+                    Value = route.User != null ? $"{route.User.FirstName} {route.User.LastName}" : "",
                 },
                 Address = new AddressDto
                 {
