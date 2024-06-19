@@ -147,6 +147,7 @@
             await axios.put(this.routesUrl, data, config)
                 .then(response => {
                     console.log(response);
+                    this.clearErrors();
                     this.toggleModal("updateRouteModal");
                     this.getRoutes();
                 })
@@ -165,7 +166,6 @@
                 return;
             }
 
-            this.clearErrors();
             this.routeDetails = null;
             const token = sessionStorage.getItem("token");
 
@@ -198,6 +198,7 @@
                 })
                     .then(response => {
                         console.log(response);
+                        this.clearErrors();
                         this.toggleModal("crudRouteModal");
                         this.resetForm();
                         this.getRoutes();
@@ -299,6 +300,8 @@
             this.newImage = event.target.files[0];
         },
         setErrors(errors) {
+            this.clearErrors();
+
             for (const key in errors) {
                 if (this.createErrors.hasOwnProperty(key)) {
                     this.createErrors[key] = errors[key];
@@ -313,7 +316,7 @@
         },
         clearErrors: function () {
             /*this.error = false;*/
-            this.registerErrors = {
+            this.createErrors = {
                 Title: [],
                 Description: [],
                 Address: {

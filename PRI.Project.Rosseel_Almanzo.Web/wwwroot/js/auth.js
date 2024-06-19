@@ -103,8 +103,6 @@
             formData.append("Address.Country", this.address.country);
             formData.append("Image", this.image);
 
-            this.clearErrors();
-
             await axios.post(this.registerUrl, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
@@ -113,6 +111,7 @@
                 .then(response => {
                     // Handle successful registration
                     this.resetForm();
+                    this.clearErrors();
                 })
                 .catch(error => {
                     if (error.response && error.response.data.errors) {
@@ -160,6 +159,8 @@
             };
         },
         setErrors(errors) {
+            this.clearErrors();
+
             for (const key in errors) {
                 if (this.registerErrors.hasOwnProperty(key)) {
                     this.registerErrors[key] = errors[key];            

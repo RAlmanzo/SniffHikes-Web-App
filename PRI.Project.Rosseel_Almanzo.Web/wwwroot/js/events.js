@@ -45,6 +45,8 @@
     },
     methods: {
         showUpdateEventModal: async function (id) {
+            this.clearErrors();
+
             const url = `https://localhost:7038/api/Events/${id}`
 
             const config = {
@@ -103,6 +105,7 @@
             await axios.put(this.eventsUrl, data, config)
                 .then(response => {
                     console.log(response);
+                    this.clearErrors();
                     this.toggleModal("updateEventModal");
                     this.getEvents();
                 })
@@ -120,8 +123,7 @@
                 alert("Please select atleast 1 image to upload.");
                 return;
             }
-
-            this.clearErrors();
+           
             this.eventDetails = null;
             const token = sessionStorage.getItem("token");
 
@@ -156,6 +158,7 @@
                 })
                     .then(response => {
                         console.log(response);
+                        this.clearErrors();
                         this.toggleModal("crudEventModal");
                         this.resetForm();
                         this.getEvents();
@@ -308,6 +311,8 @@
             this.newImage = event.target.files[0];
         },
         setErrors(errors) {
+            this.clearErrors();
+
             for (const key in errors) {
                 if (this.createErrors.hasOwnProperty(key)) {
                     this.createErrors[key] = errors[key];
@@ -321,11 +326,11 @@
             }
         },
         clearErrors: function () {
-            /*this.error = false;*/
-            this.registerErrors = {
+            this.error = false;
+            this.createErrors = {
                 Title: [],
                 Description: [],
-                DateEvent: [],
+                Date: [],
                 Price: [],
                 Address: {
                     Street: [],
