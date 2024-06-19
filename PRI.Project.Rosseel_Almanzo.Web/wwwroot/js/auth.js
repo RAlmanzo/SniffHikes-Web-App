@@ -112,6 +112,7 @@
                     // Handle successful registration
                     this.resetForm();
                     this.clearErrors();
+                    window.location.href = '/'; 
                 })
                 .catch(error => {
                     if (error.response && error.response.data.errors) {

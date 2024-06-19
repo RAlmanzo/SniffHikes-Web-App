@@ -214,6 +214,7 @@
                         sessionStorage.clear();
                         this.isUser = false;
                         this.isOrganizer = false;
+                        window.location.href = '/'; 
                     }).catch(error => console.log(error));
             };
         },
