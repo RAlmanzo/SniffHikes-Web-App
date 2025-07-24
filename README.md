@@ -42,17 +42,19 @@
 
 This project uses the **Onion (Clean) Architecture**, promoting separation of concerns and testability:
 
-SniffHikes/
-│
-├── SniffHikes.API/ # API entry point (controllers, Swagger config)
-├── SniffHikes.Core/ # Domain entities, interfaces, DTOs, validation
-├── SniffHikes.Infrastructure/ # EF Core, Identity, repository implementations
-├── SniffHikes.Web/ # MVC + Vue2 frontend
-└── SniffHikes.Tests/ # xUnit test project with mocking
+PRI.Project.Rosseel_Almanzo/
 
-yaml
-Kopiëren
-Bewerken
+│
+
+├── PRI.Project.Rosseel_Almanzo.API/ # API entry point (controllers, Swagger config)
+
+├── PRI.Project.Rosseel_Almanzo.Core/ # Domain entities, interfaces, DTOs, validation
+
+├── PRI.Project.Rosseel_Almanzo.Infrastructure/ # EF Core, Identity, repository implementations
+
+├── PRI.Project.Rosseel_Almanzo.Web/ # MVC + Vue2 frontend
+
+└── PRI.Project.Rosseel_Almanzo.Tests/ # xUnit test project with mocking
 
 ---
 
@@ -69,34 +71,38 @@ Bewerken
 
 - ✅ Unit testing with **xUnit**
 - 🔁 Mocks and dependency injection for isolation
-- 🧪 Tests for services, validators, and critical logic
+- 🧪 Tests for services
 
 Run all tests:
 
 ```bash
 dotnet test
-🐳 Database & Migrations
+```
+
+## 🐳 Database & Migrations
 Uses SQL Server as the primary database
 
-Configured via appsettings.json
+Configured via secrets.json
 
 EF Core Migrations are used for schema changes
 
-bash
-Kopiëren
-Bewerken
+```bash
 dotnet ef migrations add MigrationName
 dotnet ef database update
-📘 Swagger
+```
+
+### 📘 Swagger
+
 Swagger is integrated for all API endpoints:
 
-Accessible at: https://localhost:5001/swagger
+Accessible at: https://localhost:7038/swagger
 
 Supports JWT token entry for authorized endpoints
 
 Auto-generated from attributes and annotations
 
-⚙️ GitHub Actions – CI/CD
+### ⚙️ GitHub Actions – CI/CD (to be implemented)
+
 A GitHub Actions workflow is set up to ensure quality and stability.
 
 ✅ On every push or pull request to main or dev:
@@ -109,7 +115,8 @@ Fails early if build or tests don't pass
 
 This ensures reliable merges and production readiness.
 
-🧠 What I Learned
+### 🧠 What I Learned
+
 This project gave me hands-on experience with:
 
 🔧 Building full-stack .NET applications with MVC + Web API
@@ -126,11 +133,12 @@ This project gave me hands-on experience with:
 
 🧪 Writing and structuring unit tests
 
-🚀 Getting Started
-Requirements
+## 🚀 Getting Started
+
+### Requirements
 .NET 8 SDK
 
-SQL Server (local or cloud)
+SQL Server
 
 Node.js (for Vue build support)
 
@@ -146,7 +154,8 @@ Kopiëren
 Bewerken
 cd SniffHikes.Web
 dotnet run
-📬 Contact
+
+### 📬 Contact
 Want to connect or ask questions?
 
 📧 Email: your.email@example.com
