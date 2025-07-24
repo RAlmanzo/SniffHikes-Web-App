@@ -79,6 +79,8 @@ Run all tests:
 dotnet test
 ```
 
+---
+
 ## 🐳 Database & Migrations
 Uses SQL Server as the primary database
 
@@ -98,7 +100,7 @@ Add-Migration InitialCreate
 Update-Database
 Drop-Database
 ```
-
+---
 
 ### 📘 Swagger
 
@@ -124,23 +126,37 @@ Fails early if build or tests don't pass
 
 This ensures reliable merges and production readiness.
 
-### 🧠 What I Learned
+---
 
-This project gave me hands-on experience with:
+🧠 What I Learned
+During the development of this project, I gained valuable experience in both backend and frontend architecture. Some of the key concepts and skills I learned include:
 
 🔧 Building full-stack .NET applications with MVC + Web API
 
-🔐 Implementing JWT-based authentication and policy authorization
-
-🧩 Working with modular Onion architecture
+🏗️ Structuring a backend using Onion (Clean) Architecture for scalability and separation of concerns
 
 📦 Integrating frontend (Vue) within an ASP.NET Core MVC app
 
 💬 Managing real user-generated content (comments, routes, events)
 
-📘 API documentation with Swagger
+🔐 Implementing user authentication and authorization using JWT tokens, Identity, and role-based policies
 
-🧪 Writing and structuring unit tests
+📦 Building and documenting RESTful APIs with ASP.NET Core Web API and Swagger
+
+🧱 Designing and managing a relational SQL Server database
+
+🧭 Using Entity Framework Core to:
+
+Create and configure data models
+
+Use ModelBuilder and fluent API for relationships and validation rules
+
+Create and apply database migrations
+
+Work with DbContext to interact with the database
+
+🧪 Writing unit tests with xUnit and mocking dependencies
+---
 
 ## 🚀 Getting Started
 
@@ -150,25 +166,13 @@ This project gave me hands-on experience with:
 SQL Server
 
 Node.js (for Vue build support)
-
-Run the backend API:
-bash
-Kopiëren
-Bewerken
-cd SniffHikes.API
-dotnet run
-Run the frontend (if split):
-bash
-Kopiëren
-Bewerken
-cd SniffHikes.Web
-dotnet run
+---
 
 ### 📬 Contact
 Want to connect or ask questions?
 
-📧 Email: your.email@example.com
+📧 Email: ralmanzo@gmail.com
 
-💼 LinkedIn: Your Name
+💼 LinkedIn: https://www.linkedin.com/in/rosseel-almanzo-5241172ba/
 
-🐙 GitHub: your-username
+🐙 GitHub: https://github.com/RAlmanzo
