@@ -112,7 +112,7 @@ Supports JWT token entry for authorized endpoints
 
 Auto-generated from attributes and annotations
 
-### ⚙️ GitHub Actions – CI/CD (to be implemented)
+### ⚙️ GitHub Actions – CI
 
 A GitHub Actions workflow is set up to ensure quality and stability.
 
@@ -120,7 +120,7 @@ A GitHub Actions workflow is set up to ensure quality and stability.
 
 Builds the solution with dotnet build
 
-Runs all unit tests with dotnet test
+Runs all unit tests with dotnet test after succesfull build
 
 Fails early if build or tests don't pass
 
