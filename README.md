@@ -147,15 +147,16 @@ During the development of this project, I gained valuable experience in both bac
 
 🧭 Using Entity Framework Core to:
 
-Create and configure data models
+  Create and configure data models
 
-Use ModelBuilder and fluent API for relationships and validation rules
+  Use ModelBuilder and fluent API for relationships and validation rules
 
-Create and apply database migrations
+  Create and apply database migrations
 
-Work with DbContext to interact with the database
+  Work with DbContext to interact with the database
 
 🧪 Writing unit tests with xUnit and mocking dependencies
+
 ---
 
 ## 🚀 Getting Started
