@@ -89,7 +89,16 @@ EF Core Migrations are used for schema changes
 ```bash
 dotnet ef migrations add MigrationName
 dotnet ef database update
+dotnet ef database drop
 ```
+or with nuget package:  Microsoft.EntityFrameworkCore.Tools
+
+```bash
+Add-Migration InitialCreate
+Update-Database
+Drop-Database
+```
+
 
 ### 📘 Swagger
 
