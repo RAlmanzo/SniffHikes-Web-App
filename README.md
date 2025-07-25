@@ -112,6 +112,8 @@ Supports JWT token entry for authorized endpoints
 
 Auto-generated from attributes and annotations
 
+---
+
 ### ⚙️ GitHub Actions – CI
 
 A GitHub Actions workflow is set up to ensure quality and stability.
@@ -145,6 +147,8 @@ During the development of this project, I gained valuable experience in both bac
 
 🧱 Designing and managing a relational SQL Server database
 
+🧪 Writing unit tests with xUnit and mocking dependencies
+
 🧭 Using Entity Framework Core to:
 
   Create and configure data models
@@ -154,8 +158,6 @@ During the development of this project, I gained valuable experience in both bac
   Create and apply database migrations
 
   Work with DbContext to interact with the database
-
-🧪 Writing unit tests with xUnit and mocking dependencies
 
 ---
 
@@ -167,6 +169,7 @@ During the development of this project, I gained valuable experience in both bac
 SQL Server
 
 Node.js (for Vue build support)
+
 ---
 
 ### 📬 Contact
